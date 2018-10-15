@@ -70,3 +70,11 @@
     border: 1px solid $black;
   }
 }
+
+.sidebar-toggle {
+  position: absolute;
+  left: $sidebar-width;
+  padding: .25rem;
+  color: $black;
+  background-color: $mid-gray;
+}

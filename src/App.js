@@ -6,6 +6,7 @@ class App extends Component {
     return (
       <div className="app">
         <div className="sidebar">
+          <div className="sidebar-toggle">&laquo;</div>
           <div className="search">Search</div>
           <div className="outbreak">Outbreak</div>
           <div className="reported-cases">Reported Cases</div>
