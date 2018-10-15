@@ -22,6 +22,8 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: $header-height;
 }
@@ -36,4 +38,35 @@
 .epicurve {
   padding-left: $sidebar-width;
   height: $epicurve-height;
+}
+
+/*
+** Navigation
+*/
+
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav--inline {
+  display: flex;
+  li {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    &.is-active {
+      background-color: $lightest-gray;
+    }
+  }
+}
+
+.nav--toggle {
+  display: flex;
+  justify-content: center;
+  li {
+    background-color: $white;
+    border: 1px solid $black;
+  }
 }
