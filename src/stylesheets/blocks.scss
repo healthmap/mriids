@@ -1,0 +1,21 @@
+/*
+** Block styles
+** for general content containers
+*/
+
+.block {
+  padding: 1rem;
+}
+
+.block--sidebar {
+
+}
+
+.block--floating {
+  display: inline-block; // to hug content - bring it in
+  font-size: .8em; /* may move to more specific css block later */
+  padding: .5rem;
+  box-shadow: $box-shadow--default;
+  border-radius: .5rem;
+  background-color: #fff;
+}

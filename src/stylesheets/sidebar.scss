@@ -4,10 +4,14 @@
 
 .sidebar-toggle {
   position: absolute;
+  top: 1rem;
   left: $sidebar-width;
   padding: .25rem;
   color: $black;
   background-color: $mid-gray;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  cursor: pointer;
 }
 
 .search {

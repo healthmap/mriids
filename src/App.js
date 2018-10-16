@@ -7,9 +7,9 @@ class App extends Component {
       <div className="app">
         <div className="sidebar">
           <div className="sidebar-toggle">&laquo;</div>
-          <div className="search">Search</div>
-          <div className="outbreak">Outbreak</div>
-          <div className="reported-cases">Reported Cases</div>
+          <div className="block search">Search</div>
+          <div className="block outbreak">Outbreak</div>
+          <div className="block reported-cases">Reported Cases</div>
         </div>
         <header className="header">
           <div className="logo">
@@ -24,11 +24,13 @@ class App extends Component {
           <div className="nav nav--inline">icon nav</div>
         </header>
         <div className="map">
-          <ul class="nav nav--inline nav--toggle">
-            <li><a href="">Snapshot</a></li>
+          <ul class="nav nav--toggle">
+            <li class="is-active"><a href="">Snapshot</a></li>
             <li><a href="">Risk</a></li>
           </ul>
           map here
+          <div class="block block--floating">legend here</div>
+          <div class="block block--floating">filters here</div>
         </div>
         <div className="epicurve">
           epicurve here

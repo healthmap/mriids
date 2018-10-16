@@ -1,5 +1,6 @@
 @import "stylesheets/normalize.scss";
 @import "stylesheets/variables.scss";
+@import "stylesheets/blocks.scss";
 @import "stylesheets/header.scss";
 @import "stylesheets/nav.scss";
 @import "stylesheets/sidebar.scss";
@@ -22,20 +23,26 @@
   bottom: 0;
   width: $sidebar-width;
   background-color: $lightest-gray;
+  z-index: $z-index--sidebar;
 }
 
 .header {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
   width: 100%;
   height: $header-height;
+  box-shadow: $box-shadow--bottom;
+  z-index: $z-index--header;
 }
 
 .map {
+  position: relative;
   flex: 1;
   width: 100%;
   text-align: center; // temp style
   background-color: #c9e7f0; //temp style
+  z-index: $z-index--map;
 }
 
 .epicurve {

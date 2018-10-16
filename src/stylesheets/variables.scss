@@ -16,3 +16,15 @@ $white:                               #fff;
 $header-height:                       4rem;
 $sidebar-width:                       15rem;
 $epicurve-height:                     20rem;
+
+// BORDERS
+$nav-toggle-border-radius:            .3rem;
+
+// BOXSHADOWS
+$box-shadow--default:                  1px 1px 6px 0px rgba(0,0,0,0.10);
+$box-shadow--bottom:                   0 10px 12px -8px rgba(0,0,0,0.10);
+
+// GLOBAL Z-INDEXES
+$z-index--header:                      3;
+$z-index--sidebar:                     2;
+$z-index--map:                         1;
