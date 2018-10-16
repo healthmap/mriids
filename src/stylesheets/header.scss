@@ -1,0 +1,14 @@
+/*
+** Header Styles
+*/
+
+.logo {
+  display: flex;
+  width: $sidebar-width;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: auto;
+    height: 2rem;
+  }
+}

@@ -1,0 +1,21 @@
+/*
+** Sidebar Styles
+*/
+
+.sidebar-toggle {
+  position: absolute;
+  left: $sidebar-width;
+  padding: .25rem;
+  color: $black;
+  background-color: $mid-gray;
+}
+
+.search {
+  color: $white;
+  background-color: $black;
+}
+
+.outbreak {
+  color: $white;
+  background-color: $red;
+}

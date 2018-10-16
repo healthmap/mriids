@@ -1,5 +1,8 @@
 @import "stylesheets/normalize.scss";
 @import "stylesheets/variables.scss";
+@import "stylesheets/header.scss";
+@import "stylesheets/nav.scss";
+@import "stylesheets/sidebar.scss";
 
 /*
 ** Layout
@@ -38,43 +41,4 @@
 .epicurve {
   padding-left: $sidebar-width;
   height: $epicurve-height;
-}
-
-/*
-** Navigation
-*/
-
-.nav {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav--inline {
-  display: flex;
-  li {
-    display: flex;
-    align-items: center;
-    padding: 0 1rem;
-    &.is-active {
-      background-color: $lightest-gray;
-    }
-  }
-}
-
-.nav--toggle {
-  display: flex;
-  justify-content: center;
-  li {
-    background-color: $white;
-    border: 1px solid $black;
-  }
-}
-
-.sidebar-toggle {
-  position: absolute;
-  left: $sidebar-width;
-  padding: .25rem;
-  color: $black;
-  background-color: $mid-gray;
 }
