@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import MapContainer from './components/styled-components/MapContainer'
-import Map from './containers/Map'
+import MapParent from './containers/MapParent'
+import Root from './components/styled-components/Root'
+import RightColumn from  './components/styled-components/RightColumn'
+import Header from './components/styled-components/Header'
 
 class App extends Component {
   render() {
     return (
-        <MapContainer>
-          <Map />
-        </MapContainer>
+      <Root>
+        <RightColumn>
+          <MapParent />
+        </RightColumn>
+      </Root>
     );
   }
 }
