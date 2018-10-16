@@ -15,7 +15,7 @@ class App extends Component {
           <div className="logo">
             <img src="/mriids.svg" alt="mriids" />
           </div>
-          <ul className="nav nav--inline">
+          <ul className="nav nav--main nav--inline">
             <li className="is-active"><a href="">Outbreak</a></li>
             <li><a href="">Historic</a></li>
             <li><a href="">About</a></li>
@@ -32,8 +32,8 @@ class App extends Component {
           <div class="block block--floating">legend here</div>
           <div class="block block--floating">filters here</div>
         </div>
-        <div className="epicurve">
-          epicurve here
+        <div className="risk">
+          epicurve/risk here
         </div>
       </div>
     );

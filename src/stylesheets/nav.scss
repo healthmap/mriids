@@ -13,7 +13,17 @@
   li {
     display: flex;
     align-items: center;
-    padding: 0 1rem;
+  }
+}
+
+.nav--main {
+  li {
+    @include nav-item();
+    a, a:visited, a:focus, a:hover, a:active {
+      display: inline-block;
+      padding: 0 2rem;
+      color: $black;
+    }
     &.is-active {
       background-color: $light-gray;
     }
@@ -24,6 +34,7 @@
   display: flex;
   justify-content: center;
   li {
+    @include nav-item();
     &:first-child {
       a, a:visited, a:focus, a:hover, a:active {
         border-bottom-left-radius: $nav-toggle-border-radius;
@@ -37,14 +48,11 @@
     a, a:visited, a:focus, a:hover, a:active {
       display: inline-block;
       min-width: 5rem;
-      padding: .3rem .8rem;
-      font-size: .7em;
-      font-weight: bold;
+      padding: .4rem .8rem .3rem .8rem;
       color: $black;
-      text-transform: uppercase;
-      text-decoration: none;
       background-color: $white;
       border: 1px solid $black;
+      border-top: 0;
     }
     &.is-active {
       a, a:visited, a:focus, a:hover, a:active {

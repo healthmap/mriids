@@ -1,0 +1,8 @@
+@mixin nav-item() {
+  a, a:visited, a:hover, a:focus, a:active {
+    font-size: .7em;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+}

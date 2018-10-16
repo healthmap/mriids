@@ -1,5 +1,6 @@
 @import "stylesheets/normalize.scss";
 @import "stylesheets/variables.scss";
+@import "stylesheets/mixins.scss";
 @import "stylesheets/blocks.scss";
 @import "stylesheets/header.scss";
 @import "stylesheets/nav.scss";
@@ -45,7 +46,7 @@
   z-index: $z-index--map;
 }
 
-.epicurve {
+.risk {
   padding-left: $sidebar-width;
   height: $epicurve-height;
 }
