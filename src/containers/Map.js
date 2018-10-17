@@ -100,6 +100,7 @@ class Map extends Component {
         mapStylesLoaded: true
       })
     })
+    // console.log("[Map.js][componentDidMount()] Before updating the style, the map is: ", map)
   }
 
   componentWillUnmount() {
@@ -127,10 +128,10 @@ class Map extends Component {
   };
 
   _resolveColor = (country) => {
-    console.log("[Map.js][_resolveColor] The country data is: ", country)
+    // console.log("[Map.js][_resolveColor] The country data is: ", country)
     const {data, scale, colorFunction} = this.props;
     const percentage = data[country] / scale
-    console.log("[Map.js][_resolveColor] The percentage for this country is: ", percentage)
+    // console.log("[Map.js][_resolveColor] The percentage for this country is: ", percentage)
     // colorFunction refers to the _resolveColor function in MapParent.js
     return colorFunction(percentage)
   }

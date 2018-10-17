@@ -11,9 +11,8 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
-import Root from '../components/styled-components/Root'
 import Header from '../components/styled-components/Header'
-import RightColumn from '../components/styled-components/RightColumn'
+import Container from '../components/styled-components/Container'
 import ModalButton from '../components/styled-components/ModalButton'
 import {
   LegendWrapper,
@@ -237,7 +236,7 @@ class MapComponent extends Component {
       })
     })
 
-    console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
+    // console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
     return mapData
   }
 
@@ -269,7 +268,7 @@ class MapComponent extends Component {
         newData[country][item.projection_from]['value'] = item[country]
       })
     })
-    console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
+    // console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
     return newData
   }
 
@@ -336,22 +335,6 @@ class MapComponent extends Component {
   }
 
   _resolveColor = (value) => {
-    console.log("[MapParent.js][_resolveColor] The value that is passed is: ", value)
-    // console.log('For this level, the value is', value)
-    // var hue, s, l
-
-    // if (value > 0.1) {
-    //   hue = 360
-    //   s = (((value) * 90) - 4).toString(10) // s = '46%' / 87
-    //   l = (((-133 * value) + 163)).toString(10) // l = '90%' / 30
-    // } else {
-    //   hue = 0
-    //   s = 100
-    //   l = 100
-    // }
-
-    // return ['hsl(', hue, ',', s, '%,', l, '%)'].join('')
-
     let color 
     if (value === 0) {
       color = "#FDF1DD"
@@ -398,16 +381,18 @@ class MapComponent extends Component {
 
   _renderLegend = (scale) => {
     // This represents the number of levels in the legend
+    // console.log("[MapParent.js][_renderLegend] The scale is: ", scale)
     let len = 9
     let components = []
     for (var i = 0; i <= len; i++) {
       let additionalStyles = {}
       let additionalStylesForText = {}
-      if (i === 0) {
+      // This sets the rounded corners for the first and last labels
+      if (i === 9) {
         additionalStyles['borderTopLeftRadius'] = 6
         additionalStyles['borderTopRightRadius'] = 6
         additionalStylesForText['borderTopLeftRadius'] = 6
-      } else if (i === 9) {
+      } else if (i === 0) {
         additionalStyles['borderBottomLeftRadius'] = 6
         additionalStyles['borderBottomRightRadius'] = 6
         additionalStylesForText['borderBottomLeftRadius'] = 6
@@ -423,7 +408,8 @@ class MapComponent extends Component {
           </LegendInfo>
         </LegendLevel>)
     }
-    return components
+    // console.log("[MapParent.js][_renderLegend] The components are: ", components)
+    return components.reverse()
   }
 
   _handleModalHide = () => {
@@ -514,25 +500,28 @@ class MapComponent extends Component {
     }
 
     return (
-      <Root>
-        {this._renderModal()}
-
-        <RightColumn style={{width: rightColumnWidth}}>
+        <Container>
           <MapContainer>
             {
               dataLoading ? <Spinner/> : <Map data={mapData} scale={scale} colorFunction={this._resolveColor}/>
             }
           </MapContainer>
           {
-            dataLoading ? <Spinner/> : <div style={{margin: '0'}}>
+            dataLoading ? <Spinner/> : <div style={
+              {
+              width: '100px',
+              height: '100%',
+              position: 'absolute',
+              top: '30%',
+              left: '5%' 
+              }}>
               <Header>Case Counts</Header>
               <LegendWrapper>
                 {this._renderLegend(scale)}
               </LegendWrapper>
             </div>
           }
-        </RightColumn>
-      </Root>
+          </Container>
     )
   }
 }
