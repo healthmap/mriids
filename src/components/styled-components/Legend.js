@@ -3,7 +3,7 @@ import { media } from '../../assets/style-utils'
 
 export const LegendWrapper = styled.div`
   margin-bottom: 10px;
-  width: 200px;
+  width: 100px;
 `
 
 export const LegendInfo = styled.div`
@@ -17,7 +17,7 @@ export const LegendInfo = styled.div`
 export const LegendLevel = styled.div`
   margin-bottom: 1px;
   min-height: 14px;
-  height: 1.8vh;
+  height: 2.5vh;
   ${media.handheld`
     height: 20px;
   `}

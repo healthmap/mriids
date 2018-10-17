@@ -14,7 +14,6 @@ import {
 import Root from '../components/styled-components/Root'
 import Header from '../components/styled-components/Header'
 import RightColumn from '../components/styled-components/RightColumn'
-import Info from '../components/styled-components/Info'
 import ModalButton from '../components/styled-components/ModalButton'
 import {
   LegendWrapper,
@@ -81,7 +80,8 @@ class MapComponent extends Component {
   }
 
   _importDataFromCsv = async () => {
-    const filePath = csvLocationPath + 'ebola_epicurve_data' + csvExtension
+    // const filePath = csvLocationPath + 'ebola_epicurve_data' + csvExtension
+    const filePath = csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension
     const data = await d3.csv(filePath)
     let newState = {}
     newState['ebolaData'] = this._prepareEbolaData(data)
@@ -237,6 +237,7 @@ class MapComponent extends Component {
       })
     })
 
+    console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
     return mapData
   }
 
@@ -255,18 +256,20 @@ class MapComponent extends Component {
 
     COUNTRIES.forEach((country) => {
       inputData.forEach((item) => {
-        newData[country][item.Projections_from] = {}
-        newData[country][item.Projections_from]['projections'] = {}
+        // console.log("[_prepareEbolaData] Each item is: ", item)
+        newData[country][item.projection_from] = {}
+        newData[country][item.projection_from]['projections'] = {}
         projections.forEach((projection) => {
-          newData[country][item.Projections_from]['projections'][projection] = {}
-          newData[country][item.Projections_from]['projections']['originalValue'] = parseFloat(item[country])
+          newData[country][item.projection_from]['projections'][projection] = {}
+          newData[country][item.projection_from]['projections']['originalValue'] = parseFloat(item[country])
           keys.forEach((key) => {
-            newData[country][item.Projections_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
+            newData[country][item.projection_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
           })
         })
-        newData[country][item.Projections_from]['value'] = item[country]
+        newData[country][item.projection_from]['value'] = item[country]
       })
     })
+    console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
     return newData
   }
 
@@ -333,21 +336,45 @@ class MapComponent extends Component {
   }
 
   _resolveColor = (value) => {
-    var hue, s, l
-    if (value < 0.5) {
-      hue = 175
-      s = ((-145 * value) + 105).toString(10) // s = '98%' / 40
-      l = (((value) * 180) + 11).toString(10) // l = '20%' / 92
-    } else if (value > 0.5) {
-      hue = 40
-      s = (((value) * 90) - 4).toString(10) // s = '46%' / 87
-      l = (((-133 * value) + 163)).toString(10) // l = '90%' / 30
-    } else {
-      hue = 0
-      s = 100
-      l = 100
+    console.log("[MapParent.js][_resolveColor] The value that is passed is: ", value)
+    // console.log('For this level, the value is', value)
+    // var hue, s, l
+
+    // if (value > 0.1) {
+    //   hue = 360
+    //   s = (((value) * 90) - 4).toString(10) // s = '46%' / 87
+    //   l = (((-133 * value) + 163)).toString(10) // l = '90%' / 30
+    // } else {
+    //   hue = 0
+    //   s = 100
+    //   l = 100
+    // }
+
+    // return ['hsl(', hue, ',', s, '%,', l, '%)'].join('')
+
+    let color 
+    if (value === 0) {
+      color = "#FDF1DD"
+    } else if (value > 0 && value <= 0.1) {
+      color = "#FBE7C6"
+    } else if (value > 0.1 && value <= 0.2) {
+      color = "#F8D1B6"
+    } else if (value > 0.2 && value <= 0.3) {
+      color = "#F5BCA7"
+    } else if (value > 0.3 && value <= 0.4) {
+      color = "#F1A697"
+    } else if (value > 0.4 && value <= 0.5) {
+      color = "#EE9187"
+    } else if (value > 0.5 && value <= 0.6) {
+      color = "#EB7C77"
+    } else if (value > 0.6 && value <= 0.7) {
+      color = "#E86769"
+    } else if (value > 0.7 && value <= 0.8) {
+      color = "#E55259"
+    } else if (value > 0.8) {
+      color = "#E23D4A"
     }
-    return ['hsl(', hue, ',', s, '%,', l, '%)'].join('')
+    return color
   }
 
   _resolveScale = (mapData) => {
@@ -370,7 +397,8 @@ class MapComponent extends Component {
   }
 
   _renderLegend = (scale) => {
-    let len = 20
+    // This represents the number of levels in the legend
+    let len = 9
     let components = []
     for (var i = 0; i <= len; i++) {
       let additionalStyles = {}
@@ -379,7 +407,7 @@ class MapComponent extends Component {
         additionalStyles['borderTopLeftRadius'] = 6
         additionalStyles['borderTopRightRadius'] = 6
         additionalStylesForText['borderTopLeftRadius'] = 6
-      } else if (i === 20) {
+      } else if (i === 9) {
         additionalStyles['borderBottomLeftRadius'] = 6
         additionalStyles['borderBottomRightRadius'] = 6
         additionalStylesForText['borderBottomLeftRadius'] = 6
@@ -497,8 +525,7 @@ class MapComponent extends Component {
           </MapContainer>
           {
             dataLoading ? <Spinner/> : <div style={{margin: '0'}}>
-              <Header>Map Legend</Header>
-              <Info>Total Ebola Cases in Time Range</Info>
+              <Header>Case Counts</Header>
               <LegendWrapper>
                 {this._renderLegend(scale)}
               </LegendWrapper>
