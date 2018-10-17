@@ -2,14 +2,16 @@
 ** Button styles
 */
 
+$button-toggle-border-radius: .3rem;
+
 .button {
   position: relative;
   display: inline-block;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   text-decoration: none;
-  color: $black;
-  background-color: $white;
+  color: #000;
+  background-color: #fff;
   border: 0;
   cursor: pointer;
   user-select: none;
@@ -30,7 +32,8 @@
 }
 
 /*
-** Button styled to looks like a toggle
+** Button styled to look like a toggle
+** put one after another to make a segmented control
 */
 
 .button--toggle {
@@ -38,16 +41,20 @@
   padding: .4rem .8rem .3rem .8rem;
   font-weight: bold;
   text-transform: uppercase;
-  border: 1px solid $black;
+  border: 1px solid #000;
   border-top: 0;
+  transition: background-color .3s ease;
   &:first-child {
     border-bottom-left-radius: $button-toggle-border-radius;
   }
   &:last-child {
     border-bottom-right-radius: $button-toggle-border-radius;
   }
+  &:hover, &:focus {
+    background-color: #ececec;
+  }
   &.is-active {
-    color: $white;
-    background-color: $black;
+    color: #fff;
+    background-color: #000;
   }
 }
