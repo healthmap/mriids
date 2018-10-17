@@ -1,0 +1,53 @@
+/*
+** Button styles
+*/
+
+.button {
+  position: relative;
+  display: inline-block;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  text-decoration: none;
+  color: $black;
+  background-color: $white;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  &:focus,
+  &.focus {
+    text-decoration: none;
+  }
+  &:active,
+  &.is-active {
+    background-image: none;
+    outline: 0;
+  }
+  &:disabled {
+    cursor: auto;
+    opacity: .65;
+  }
+}
+
+/*
+** Button styled to looks like a toggle
+*/
+
+.button--toggle {
+  min-width: 5rem;
+  padding: .4rem .8rem .3rem .8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid $black;
+  border-top: 0;
+  &:first-child {
+    border-bottom-left-radius: $button-toggle-border-radius;
+  }
+  &:last-child {
+    border-bottom-right-radius: $button-toggle-border-radius;
+  }
+  &.is-active {
+    color: $white;
+    background-color: $black;
+  }
+}

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import Button from '../../../Button';
 
 class MapToggle extends Component {
    render() {
       return (
-        <ul class="nav nav--toggle">
-          <li class="is-active"><a href="">Snapshot</a></li>
-          <li><a href="">Risk</a></li>
-        </ul>
+        <div className="nav nav--toggle">
+          <Button label="Snapshot" type="toggle" status="active"/>
+          <Button label="Risk" type="toggle" />
+        </div>
       );
    }
 }
