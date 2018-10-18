@@ -17,6 +17,20 @@ class Sidebar extends Component {
             <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
             <ReportedCases label="Suspected" color="#B7E3FE" value="621"/>
           </div>
+          <div className="block">
+            Summary
+            <p>From 1 March to 31 March 2015, the Ebola outbreak in Liberia has affected 207 people
+(69 confirmed, 21 probable, 117 suspected cases).</p>
+            <p>The regions affected by the Ebola outbreak in Liberia are:</p>
+            <ol>
+              <li>Bomi (45)</li>
+              <li>Margibi (29)</li>
+              <li>Gbarpolu (27)</li>
+              <li>Nimba (26)</li>
+              <li>Montserrado (19)</li>
+              <li>Bong (14)</li>
+            </ol>
+          </div>
         </div>
       );
    }
