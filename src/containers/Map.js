@@ -6,7 +6,6 @@ import { guinea, sierraLeone, liberia } from '../assets/countries'
 import Button from '../components/styled-components/Button'
 import ZoomButtons from '../components/styled-components/ZoomButtons'
 import MarkerStyled from '../components/styled-components/MarkerStyled'
-import Container from '../components/styled-components/Container'
 
 import MapToggle from './MapToggle/MapToggle';
 
@@ -169,7 +168,7 @@ class Map extends Component {
   render() {
     const {viewport, settings} = this.state;
     return (
-      <Container ref={ (parentElement) => this.parentElement = parentElement}>
+      <div className="map" ref={ (parentElement) => this.parentElement = parentElement}>
         <MapToggle />
         <ReactMapGL
           {...viewport}
@@ -182,7 +181,7 @@ class Map extends Component {
           <Button disabled={viewport.zoom >= 20} onClick={this.onHandleChangeZoom(1)}>+</Button>
           <Button disabled={viewport.zoom <= 2} onClick={this.onHandleChangeZoom(-1)}>-</Button>
         </ZoomButtons>
-      </Container>
+      </div>
     );
   }
 }

@@ -12,7 +12,7 @@ import {
 } from 'react-bootstrap'
 
 import Header from '../components/styled-components/Header'
-import Container from '../components/styled-components/Container'
+//import Container from '../components/styled-components/Container'
 import ModalButton from '../components/styled-components/ModalButton'
 import {
   LegendWrapper,
@@ -20,7 +20,7 @@ import {
   LegendLevel,
   LegendText
 } from '../components/styled-components/Legend'
-import MapContainer from '../components/styled-components/MapContainer'
+//import MapContainer from '../components/styled-components/MapContainer'
 import ModalTitle from '../components/styled-components/ModalTitle'
 
 // import { injectGlobal } from 'styled-components'
@@ -500,12 +500,12 @@ class MapComponent extends Component {
     }
 
     return (
-        <Container>
-          <MapContainer>
+        <div className="map-parent">
+          <div className="map-container">
             {
               dataLoading ? <Spinner/> : <Map data={mapData} scale={scale} colorFunction={this._resolveColor}/>
             }
-          </MapContainer>
+          </div>
           {
             dataLoading ? <Spinner/> : <div style={
               {
@@ -521,7 +521,7 @@ class MapComponent extends Component {
               </LegendWrapper>
             </div>
           }
-          </Container>
+        </div>
     )
   }
 }
