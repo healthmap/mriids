@@ -4,6 +4,9 @@ import Header from './components/Layout/Header/Header';
 import Map from './components/Layout/Map/Map';
 import Risk from './components/Layout/Risk/Risk';
 import './App.scss';
+import './App.css';
+
+import MapParent from './containers/MapParent'
 
 class App extends Component {
   render() {
@@ -11,7 +14,7 @@ class App extends Component {
       <div className="app">
         <Sidebar />
         <Header />
-        <Map />
+        <MapParent />
         <Risk />
       </div>
     );
