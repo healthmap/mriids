@@ -8,6 +8,8 @@ import ZoomButtons from '../components/styled-components/ZoomButtons'
 import MarkerStyled from '../components/styled-components/MarkerStyled'
 import Container from '../components/styled-components/Container'
 
+import MapToggle from './MapToggle/MapToggle';
+
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZGFtaWFuc2tvbmVjem55IiwiYSI6ImNqOGs2c3hyNTA5cnMyd254aDZnN3k1ZGwifQ.RaPv0-Oe6bz3PQ9XAkH-Rw'
 const MAX_BOUNDS = [
   [-180, -90],
@@ -168,6 +170,7 @@ class Map extends Component {
     const {viewport, settings} = this.state;
     return (
       <Container ref={ (parentElement) => this.parentElement = parentElement}>
+        <MapToggle />
         <ReactMapGL
           {...viewport}
           {...settings}
@@ -185,5 +188,3 @@ class Map extends Component {
 }
 
 export default Map
-
-

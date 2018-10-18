@@ -335,7 +335,7 @@ class MapComponent extends Component {
   }
 
   _resolveColor = (value) => {
-    let color 
+    let color
     if (value === 0) {
       color = "#FDF1DD"
     } else if (value > 0 && value <= 0.1) {
@@ -492,7 +492,7 @@ class MapComponent extends Component {
 
   render () {
     const {rightColumnWidth, dataLoading} = this.state
-    
+
     let mapData, scale
     if (!dataLoading) {
       mapData = this._prepareDataForMap()
@@ -513,7 +513,7 @@ class MapComponent extends Component {
               height: '100%',
               position: 'absolute',
               top: '30%',
-              left: '5%' 
+              left: '5%'
               }}>
               <Header>Case Counts</Header>
               <LegendWrapper>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '../../../Button/Button';
+import Button from '../../components/Button/Button';
 
 class MapToggle extends Component {
    render() {
