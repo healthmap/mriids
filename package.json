@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "node-sass": "^4.9.4",
     "d3-fetch": "^1.1.2",
     "immer": "^1.7.2",
     "mapbox-gl": "^0.50.0",
     "moment": "^2.22.2",
     "moment-range": "^4.0.1",
+    "node-sass": "^4.9.4",
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
+    "react-google-charts": "^3.0.8",
     "react-map-gl": "^3.3.6",
     "react-scripts": "2.0.5",
     "styled-components": "^4.0.0"

@@ -6,6 +6,7 @@ import Risk from './components/Layout/Risk/Risk';
 import './App.scss';
 
 import MapParent from './containers/MapParent'
+import EbolaChartComponent from './containers/Chart/EbolaChartComponent'
 
 class App extends Component {
   render() {
@@ -14,7 +15,8 @@ class App extends Component {
         <Sidebar />
         <Header />
         <MapParent />
-        <Risk />
+        {/* <Risk /> */}
+        <EbolaChartComponent />
       </div>
     );
   }
