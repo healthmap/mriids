@@ -1,0 +1,15 @@
+/*
+** Logo Styles
+*/
+@import "../../stylesheets/variables.scss";
+
+.logo {
+  display: flex;
+  width: $sidebar-width;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: auto;
+    height: 1.8rem;
+  }
+}

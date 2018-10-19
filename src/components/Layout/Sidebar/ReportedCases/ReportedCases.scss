@@ -6,12 +6,15 @@
   margin: .6rem 0;
 }
 
-.reported-cases-label {}
+.reported-cases-label {
+  margin-bottom: .3rem;
+}
 
 .reported-cases-color {
   display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: -.3rem;
   margin-right: .8em;
 }
 

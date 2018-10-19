@@ -3,7 +3,6 @@
 @import "stylesheets/reboot.scss";
 @import "stylesheets/mixins.scss";
 @import "stylesheets/blocks.scss";
-@import "stylesheets/header.scss";
 @import "stylesheets/nav.scss";
 @import "stylesheets/list.scss";
 @import "stylesheets/sidebar.scss";
@@ -30,21 +29,13 @@
   z-index: $z-index--sidebar;
 }
 
-.header {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: $header-height;
-  box-shadow: $box-shadow--bottom;
-  z-index: $z-index--header;
-}
-
 .map-parent {
   position: relative;
   margin-left: $sidebar-width;
   width: calc(100vw - #{$sidebar-width});
   height: calc(100vh - #{$risk-height} - #{$header-height});
   z-index: $z-index--map;
+  overflow: hidden;
 }
 
 .map-container, .map {
