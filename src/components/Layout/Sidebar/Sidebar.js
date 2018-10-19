@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SidebarToggle from './SidebarToggle/SidebarToggle';
+import Select from '../../Select/Select';
 import ReportedCases from './ReportedCases/ReportedCases';
 
 class Sidebar extends Component {
@@ -7,8 +8,8 @@ class Sidebar extends Component {
       return (
         <div className="sidebar">
           <SidebarToggle />
-          <div className="block search">Search</div>
-          <div className="block outbreak">Outbreak</div>
+          <Select name='location' type="location" options={['Guinea','Liberia','Sierra Leone']} defaultValue="Liberia" />
+          <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
           <div className="block">
             <p>Reported cases from:<br />
             1 April 2014 to 31 March 2015</p>

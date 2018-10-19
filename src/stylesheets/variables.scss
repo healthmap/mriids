@@ -10,6 +10,8 @@ $body-bg:                             #fff;
 $lightest-gray:                       #efefef;
 $light-gray:                          #d4d4d4;
 $mid-gray:                            #8e8e8e;
+$dark-gray:                           #666;
+$darkest-gray:                        #333;
 $red:                                 #e43b46;
 $black:                               #000;
 $white:                               #fff;
@@ -25,6 +27,7 @@ $risk-height:                         20rem;
 // BOXSHADOWS
 $box-shadow--default:                  1px 1px 6px 0px rgba(0,0,0,0.10);
 $box-shadow--bottom:                   0 10px 12px -8px rgba(0,0,0,0.10);
+$box-shadow-input-focus:              1px 1px 6px 0px rgba(39,124,218,0.20);
 
 // GLOBAL Z-INDEXES
 $z-index--header:                      3;

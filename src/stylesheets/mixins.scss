@@ -5,3 +5,9 @@
     text-decoration: none;
   }
 }
+
+@mixin form-field-focus() {
+  outline: none;
+  border-color: transparent;
+  box-shadow: $box-shadow-input-focus;
+}
