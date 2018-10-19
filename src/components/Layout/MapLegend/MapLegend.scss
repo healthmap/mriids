@@ -1,0 +1,21 @@
+/*
+** Map Legend
+*/
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.map-legend-item-color {
+  flex: none;
+  width: 2em;
+  height: 2em;
+  margin-right: .5em;
+}
+
+.map-legend-item-value {
+  flex: 1;
+  color: #666;
+}

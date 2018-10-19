@@ -11,15 +11,10 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
-import Header from '../components/styled-components/Header'
+//import Header from '../components/styled-components/Header'
 //import Container from '../components/styled-components/Container'
 import ModalButton from '../components/styled-components/ModalButton'
-import {
-  LegendWrapper,
-  LegendInfo,
-  LegendLevel,
-  LegendText
-} from '../components/styled-components/Legend'
+import MapLegend from '../components/Layout/MapLegend/MapLegend'
 //import MapContainer from '../components/styled-components/MapContainer'
 import ModalTitle from '../components/styled-components/ModalTitle'
 
@@ -385,28 +380,10 @@ class MapComponent extends Component {
     let len = 9
     let components = []
     for (var i = 0; i <= len; i++) {
-      let additionalStyles = {}
-      let additionalStylesForText = {}
-      // This sets the rounded corners for the first and last labels
-      if (i === 9) {
-        additionalStyles['borderTopLeftRadius'] = 6
-        additionalStyles['borderTopRightRadius'] = 6
-        additionalStylesForText['borderTopLeftRadius'] = 6
-      } else if (i === 0) {
-        additionalStyles['borderBottomLeftRadius'] = 6
-        additionalStyles['borderBottomRightRadius'] = 6
-        additionalStylesForText['borderBottomLeftRadius'] = 6
-      }
       var value = i / len
       components.push(
-        <LegendLevel key={`uniqueColorId${i}`}
-                     style={{...additionalStyles, backgroundColor: this._resolveColor(value)}}>
-          <LegendInfo style={{...additionalStylesForText}}>
-            <LegendText>
-              {Math.round(value * scale)}
-            </LegendText>
-          </LegendInfo>
-        </LegendLevel>)
+        <MapLegend key={`uniqueColorId${i}`} color={this._resolveColor(value)} value={Math.round(value * scale)} />
+      )
     }
     // console.log("[MapParent.js][_renderLegend] The components are: ", components)
     return components.reverse()
@@ -507,18 +484,9 @@ class MapComponent extends Component {
             }
           </div>
           {
-            dataLoading ? <Spinner/> : <div style={
-              {
-              width: '100px',
-              height: '100%',
-              position: 'absolute',
-              top: '30%',
-              left: '5%'
-              }}>
-              <Header>Case Counts</Header>
-              <LegendWrapper>
-                {this._renderLegend(scale)}
-              </LegendWrapper>
+            dataLoading ? <Spinner/> : <div className="map-legend">
+              <h3>Case Counts</h3>
+              {this._renderLegend(scale)}
             </div>
           }
         </div>
