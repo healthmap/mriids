@@ -30,7 +30,7 @@ class CustomChart extends React.Component {
 
     return (
       <Chart
-        chartType="AnnotationChart"
+        chartType="ColumnChart"
         columns={this.props.columns}
         rows={this.props.rows}
         options={options}

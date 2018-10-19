@@ -16,8 +16,6 @@ import {
 } from 'react-bootstrap'
 
 import AxisLabels from '../../components/AxisLabels'
-import Header from '../../components/styled-components/Header'
-import RightColumn from '../../components/styled-components/RightColumn'
 // import CountryToggleButtonStyled from '../../components/styled-components/CountryToggleButtonStyled'
 // import ModalButton from '../../components/styled-components/ModalButton'
 // import ProjectionToggleButtonStyled from '../../components/styled-components/ProjectionToggleButtonStyled'
@@ -82,16 +80,17 @@ class EbolaChartComponent extends Component {
   }
 
   _importDataFromCsv = async () => {
-    const filePath = csvLocationPath + 'ebola_epicurve_data' + csvExtension
+    const filePath = csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension
     const data = await d3.csv(filePath)
     let newState = {}
     newState['ebolaData'] = this._prepareEbolaData(data)
-    newState['ebolaDataCombined'] = await d3.csv(csvLocationPath + 'healthmap_projections' + csvExtension)
+    newState['ebolaDataCombined'] = await d3.csv(csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension)
 
     this.setState({
       dataLoading: false,
       ...newState
     })
+    console.log("[EbolaChartComponent][_importDataFromCsv] The ebolaData in the state is", this.state.ebolaData)
   }
 
   _eventCallback = (Chart, event) => {
@@ -238,16 +237,16 @@ class EbolaChartComponent extends Component {
 
     COUNTRIES.forEach((country) => {
       inputData.forEach((item) => {
-        newData[country][item.Projections_from] = {}
-        newData[country][item.Projections_from]['projections'] = {}
+        newData[country][item.projection_from] = {}
+        newData[country][item.projection_from]['projections'] = {}
         projections.forEach((projection) => {
-          newData[country][item.Projections_from]['projections'][projection] = {}
-          newData[country][item.Projections_from]['projections']['originalValue'] = parseFloat(item[country])
+          newData[country][item.projection_from]['projections'][projection] = {}
+          newData[country][item.projection_from]['projections']['originalValue'] = parseFloat(item[country])
           keys.forEach((key) => {
-            newData[country][item.Projections_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
+            newData[country][item.projection_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
           })
         })
-        newData[country][item.Projections_from]['value'] = item[country]
+        newData[country][item.projection_from]['value'] = item[country]
       })
     })
     return newData
