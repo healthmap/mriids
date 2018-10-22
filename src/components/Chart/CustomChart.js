@@ -13,20 +13,33 @@ class CustomChart extends React.Component {
   render () {
     const {projectionFilter} = this.props;
     var options = {
-      displayAnnotations: false,
-      showRowNumber: true,
-      thickness: 2,
-      zoomButtonsOrder: ['1-week',
-        '1-month', '3-months', '6-months', '1-year', 'max'
-      ],
-      displayRangeSelector: true,
-      displayZoomButtons: true
+      isStacked: true
+      // zoomButtonsOrder: ['1-week',
+      //   '1-month', '3-months', '6-months', '1-year', 'max'
+      // ]
     }
 
-    if (projectionFilter) {
-      options.displayRangeSelector = false;
-      options.displayZoomButtons = false;
-    }
+    const controls = [
+      {
+        controlType: 'ChartRangeFilter',
+        options: {
+          filterColumnIndex: 0,
+          ui: {
+            chartType: 'LineChart',
+            chartOptions: {
+              chartArea: { width: '80%', height: '20%' },
+              hAxis: { baselineColor: 'none' },
+            },
+          },
+        },
+        controlPosition: 'bottom',
+        controlWrapperParams: {
+          state: {
+            range: { start: this.props.dateStart, end: this.props.dateEnd },
+          },
+        },
+      }
+    ]
 
     return (
       <Chart
@@ -34,7 +47,8 @@ class CustomChart extends React.Component {
         columns={this.props.columns}
         rows={this.props.rows}
         options={options}
-        graph_id="AnnotationChart"
+        controls={controls}
+        graph_id="ColumnChart"
         width="100%"
         height='95%'
         chartEvents={[

@@ -50,7 +50,7 @@ class EbolaChartComponent extends Component {
       ebolaData: null,
       ebolaDataCombined: null,
       filters: {
-        country: 'Guinea',
+        country: 'All',
         projection: false,
         rightColumnWidth: `${window.innerWidth - 230}px`,
         ...INITIAL_DATE_RANGE
@@ -90,7 +90,7 @@ class EbolaChartComponent extends Component {
       dataLoading: false,
       ...newState
     })
-    console.log("[EbolaChartComponent][_importDataFromCsv] The ebolaData in the state is", this.state.ebolaData)
+    // console.log("[EbolaChartComponent][_importDataFromCsv] The ebolaData in the state is", this.state.ebolaData)
   }
 
   _eventCallback = (Chart, event) => {
@@ -179,13 +179,19 @@ class EbolaChartComponent extends Component {
                 ymax: Number(row['ymax4.aggregated']),
               }
             }
+            console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. nextProjections is: ', nextProjections)
+            console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. projectionDate is: ', projectionDate)
+            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range starts on: ', dateRange.from)
+            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range ends on: ', dateRange.to)
           }
         } else {
           rows.push([projectionDate, parseFloat(row.aggregated)])
         }
 
       })
-    } else {
+    } 
+    
+    else {
       const filteredData = ebolaData[country]
       Object.keys(filteredData).forEach(function (key) {
         let ebolaDailyData = filteredData[key]
@@ -209,11 +215,19 @@ class EbolaChartComponent extends Component {
       oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y, oneWeek.ymax, oneWeek.ymin]
       twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y, twoWeeks.ymax, twoWeeks.ymin]
       monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y, month.ymax, month.ymin]
+      console.log('[EbolaChartComponent.js][_prepareDataForCharts] oneWeekData is: ', oneWeekData)
+      console.log('[EbolaChartComponent.js][_prepareDataForCharts] twoWeeksData is: ', twoWeeksData)
+      console.log('[EbolaChartComponent.js][_prepareDataForCharts] monthData is: ', monthData)
       rows[rows.length - 1][2] = rows[rows.length - 1][1]
       rows[rows.length - 1][3] = rows[rows.length - 1][1]
       rows[rows.length - 1][4] = rows[rows.length - 1][1]
       rows = [...rows, oneWeekData, twoWeeksData, monthData]
+      console.log('[EbolaChartComponent.js][_prepareDataForCharts] If state.projection is true, nextProjections are: ', nextProjections)
     }
+
+    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The columns are: ', columns)
+    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The rows are: ', rows)
+    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The projectionsData is: ', projectionsData)
 
     return {
       columns,
@@ -468,6 +482,8 @@ class EbolaChartComponent extends Component {
                       columns={chartData.columns}
                       rows={chartData.rows}
                       projections={chartData.projectionsData}
+                      dateStart={this.state.filters.dateRange.from}
+                      dateEnd={this.state.filters.dateRange.to}
                       eventCallback={this._eventCallback}
                       eventReadyCallback={this._eventReadyCallback}
                       projectionFilter={projection}/>
