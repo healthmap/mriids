@@ -20,7 +20,7 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 
 const INITIAL_DATE_RANGE = {
   dateRange: {
-    from: new Date(2014, 4, 14),
+    from: new Date(2014, 9, 1),
     to: new Date(2016, 0, 20)
   }
 }
@@ -37,7 +37,6 @@ class App extends Component {
       filters: {
         country: 'All',
         projection: false,
-        rightColumnWidth: `${window.innerWidth - 230}px`,
         ...INITIAL_DATE_RANGE
       },
       modal: {
@@ -65,8 +64,40 @@ class App extends Component {
       dataLoading: false,
       ...newState
     })
-    console.log('[App.js][_importDataFromCsv] The ebolaData is: ', this.state.ebolaData)
-    console.log('[App.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
+    // console.log('[App.js][_importDataFromCsv] The ebolaData is: ', this.state.ebolaData)
+    // console.log('[App.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
+  }
+
+  _prepareEbolaData = (inputData) => {
+    const keys = ['y', 'ymin', 'ymax']
+    const projections = ['oneWeek', 'twoWeeks', 'month']
+    const projectionsMapping = {
+      oneWeek: 1,
+      twoWeeks: 2,
+      month: 4
+    }
+
+    let newData = {
+      'Guinea': {}, 'Liberia': {}, 'Sierra Leone': {}
+    }
+
+    COUNTRIES.forEach((country) => {
+      inputData.forEach((item) => {
+        // console.log("[_prepareEbolaData] Each item is: ", item)
+        newData[country][item.projection_from] = {}
+        newData[country][item.projection_from]['projections'] = {}
+        projections.forEach((projection) => {
+          newData[country][item.projection_from]['projections'][projection] = {}
+          newData[country][item.projection_from]['projections']['originalValue'] = parseFloat(item[country])
+          keys.forEach((key) => {
+            newData[country][item.projection_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
+          })
+        })
+        newData[country][item.projection_from]['value'] = item[country]
+      })
+    })
+    // console.log("[App.js][_prepareEbolaData] The prepared ebola data is: ", newData)
+    return newData
   }
 
   _eventCallback = (Chart, event) => {
@@ -100,38 +131,6 @@ class App extends Component {
     this.setState({
       chartObject: Chart
     })
-  }
-
-  _prepareEbolaData = (inputData) => {
-    const keys = ['y', 'ymin', 'ymax']
-    const projections = ['oneWeek', 'twoWeeks', 'month']
-    const projectionsMapping = {
-      oneWeek: 1,
-      twoWeeks: 2,
-      month: 4
-    }
-
-    let newData = {
-      'Guinea': {}, 'Liberia': {}, 'Sierra Leone': {}
-    }
-
-    COUNTRIES.forEach((country) => {
-      inputData.forEach((item) => {
-        // console.log("[_prepareEbolaData] Each item is: ", item)
-        newData[country][item.projection_from] = {}
-        newData[country][item.projection_from]['projections'] = {}
-        projections.forEach((projection) => {
-          newData[country][item.projection_from]['projections'][projection] = {}
-          newData[country][item.projection_from]['projections']['originalValue'] = parseFloat(item[country])
-          keys.forEach((key) => {
-            newData[country][item.projection_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
-          })
-        })
-        newData[country][item.projection_from]['value'] = item[country]
-      })
-    })
-    // console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
-    return newData
   }
 
   _handleCountryChange = (country) => {
@@ -194,7 +193,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Sidebar />
+        <Sidebar stateDataFromApp={this.state} />
         <Header />
         <MapParent stateDataFromApp={this.state} />
         <EbolaChartComponent stateDataFromApp={this.state} />

@@ -15,7 +15,7 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 class MapComponent extends Component {
 
   _prepareDataForMap = () => {
-    console.log('[MapParent.js][_prepareDataForMap] The data coming from App.js is: ', this.props.stateDataFromApp)
+    // console.log('[MapParent.js][_prepareDataForMap] The data coming from App.js is: ', this.props.stateDataFromApp)
     const {ebolaData, filters: {dateRange}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
     let mapData = {}
