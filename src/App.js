@@ -35,7 +35,7 @@ class App extends Component {
       ebolaData: null,
       ebolaDataCombined: null,
       filters: {
-        country: 'Guinea',
+        country: 'All',
         projection: false,
         rightColumnWidth: `${window.innerWidth - 230}px`,
         ...INITIAL_DATE_RANGE
@@ -59,7 +59,7 @@ class App extends Component {
     const data = await d3.csv(filePath)
     let newState = {}
     newState['ebolaData'] = this._prepareEbolaData(data)
-    newState['ebolaDataCombined'] = await d3.csv(csvLocationPath + 'healthmap_projections' + csvExtension)
+    newState['ebolaDataCombined'] = await d3.csv(csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension)
 
     this.setState({
       dataLoading: false,
@@ -102,120 +102,6 @@ class App extends Component {
     })
   }
 
-  _prepareDataForCharts = () => {
-    const {ebolaData, ebolaDataCombined, filters: {country, projection, dateRange}} = this.state
-    let rows = []
-    let projectionsData = {}
-    let nextProjections
-    const columns = [
-      {
-        type: 'date',
-        label: 'Date',
-      },
-      {
-        type: 'number',
-        label: 'Ebola Cases',
-      },
-    ]
-    if (projection) {
-      columns.push({
-        type: 'number',
-        label: 'Projection',
-      })
-      columns.push({
-        type: 'number',
-        label: 'Projection error max',
-      })
-      columns.push({
-        type: 'number',
-        label: 'Projection error min',
-      })
-    }
-    if (country === 'All') {
-      ebolaDataCombined.forEach(function (row) {
-        let projectionDate = new Date(row.projection_from)
-        if (projection) {
-          if (moment(projectionDate).isBetween(moment(dateRange.from), moment(dateRange.to))) {
-            rows.push([projectionDate, parseFloat(row.aggregated)])
-            rows[rows.length - 1].push(null, null, null)
-            nextProjections = {
-              oneWeek: {
-                y: Number(row['y1.aggregated']),
-                ymin: Number(row['ymin1.aggregated']),
-                ymax: Number(row['ymax1.aggregated']),
-              },
-              twoWeeks: {
-                y: Number(row['y2.aggregated']),
-                ymin: Number(row['ymin2.aggregated']),
-                ymax: Number(row['ymax2.aggregated']),
-              },
-              month: {
-                y: Number(row['y4.aggregated']),
-                ymin: Number(row['ymin4.aggregated']),
-                ymax: Number(row['ymax4.aggregated']),
-              }
-            }
-          }
-        } else {
-          rows.push([projectionDate, parseFloat(row.aggregated)])
-        }
-
-      })
-    } else {
-      const filteredData = ebolaData[country]
-      Object.keys(filteredData).forEach(function (key) {
-        let ebolaDailyData = filteredData[key]
-
-        if (projection) {
-          if (moment(key).isBetween(moment(dateRange.from), moment(dateRange.to))) {
-            rows.push([new Date(key), parseFloat(ebolaDailyData.value)])
-            rows[rows.length - 1].push(null, null, null)
-            nextProjections = ebolaDailyData.projections
-          }
-        } else {
-          rows.push([new Date(key), parseFloat(ebolaDailyData.value)])
-        }
-
-      })
-    }
-
-    if (projection) {
-      const {oneWeek, twoWeeks, month} = nextProjections
-      let oneWeekData, twoWeeksData, monthData
-      oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y, oneWeek.ymax, oneWeek.ymin]
-      twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y, twoWeeks.ymax, twoWeeks.ymin]
-      monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y, month.ymax, month.ymin]
-      rows[rows.length - 1][2] = rows[rows.length - 1][1]
-      rows[rows.length - 1][3] = rows[rows.length - 1][1]
-      rows[rows.length - 1][4] = rows[rows.length - 1][1]
-      rows = [...rows, oneWeekData, twoWeeksData, monthData]
-    }
-    return {
-      columns,
-      rows,
-      projectionsData
-    }
-  }
-
-  _prepareDataForMap = () => {
-    const {ebolaData, filters: {dateRange}} = this.state
-    const momentDateRange = moment().range(dateRange.from, dateRange.to)
-    let mapData = {}
-    COUNTRIES.map((country) => {
-      mapData[country] = 0
-      let filteredData = ebolaData[country]
-      Object.keys(filteredData).forEach(function (key) {
-        let ebolaDailyData = filteredData[key]
-        if (momentDateRange.contains(moment(key))) {
-          mapData[country] += parseInt(ebolaDailyData.value)
-        }
-      })
-    })
-
-    console.log('[App.js][_prepareDataForMap] The mapData is: ', mapData)
-    return mapData
-  }
-
   _prepareEbolaData = (inputData) => {
     const keys = ['y', 'ymin', 'ymax']
     const projections = ['oneWeek', 'twoWeeks', 'month']
@@ -246,39 +132,6 @@ class App extends Component {
     })
     // console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
     return newData
-  }
-
-  _prepareEbolaDataOld = (inputData) => {
-    const keys = ['y', 'ymin', 'ymax']
-    const projections = ['oneWeek', 'twoWeeks', 'month']
-    const projectionsMapping = {
-      oneWeek: 1,
-      twoWeeks: 2,
-      month: 4
-    }
-
-    const a = COUNTRIES.map((country) => {
-      const data = inputData.map((item) => {
-        const dateProjections = projections.map((projection) => {
-          const projectionData = keys.map((key) => {
-            return {
-              [key]: item[`${key}${projectionsMapping[projection]}.${country}`]
-            }
-          })
-          return {aaa: projectionData}
-        })
-        return {
-          [item.Projections_from]: {
-            value: [item[country]],
-            projections: dateProjections
-          }
-        }
-      })
-      return {
-        [country]: data
-      }
-    })
-    return a
   }
 
   _handleCountryChange = (country) => {
@@ -344,7 +197,7 @@ class App extends Component {
         <Sidebar />
         <Header />
         <MapParent stateDataFromApp={this.state} />
-        <EbolaChartComponent />
+        <EbolaChartComponent stateDataFromApp={this.state} />
       </div>
     );
   }
