@@ -310,53 +310,6 @@ class App extends Component {
     })
   }
 
-  _resolveColor = (value) => {
-    let color
-    if (value === 0) {
-      color = "#FDF1DD"
-    } else if (value > 0 && value <= 0.1) {
-      color = "#FBE7C6"
-    } else if (value > 0.1 && value <= 0.2) {
-      color = "#F8D1B6"
-    } else if (value > 0.2 && value <= 0.3) {
-      color = "#F5BCA7"
-    } else if (value > 0.3 && value <= 0.4) {
-      color = "#F1A697"
-    } else if (value > 0.4 && value <= 0.5) {
-      color = "#EE9187"
-    } else if (value > 0.5 && value <= 0.6) {
-      color = "#EB7C77"
-    } else if (value > 0.6 && value <= 0.7) {
-      color = "#E86769"
-    } else if (value > 0.7 && value <= 0.8) {
-      color = "#E55259"
-    } else if (value > 0.8) {
-      color = "#E23D4A"
-    }
-    return color
-  }
-
-  _resolveScale = (mapData) => {
-    let maxValue = Math.max(...Object.values(mapData))
-    if (maxValue < 20) {
-      maxValue = 20
-    } else if (maxValue < 50) {
-      maxValue = 50
-    } else if (maxValue < 500) {
-      maxValue = Math.ceil(maxValue / 50) * 50
-    } else if (maxValue < 1000) {
-      maxValue = Math.ceil(maxValue / 100) * 100
-    } else if (maxValue < 5000) {
-      maxValue = Math.ceil(maxValue / 500) * 500
-    } else {
-      maxValue = Math.ceil(maxValue / 1000) * 1000
-    }
-
-    return maxValue
-  }
-
-  
-
   _changeDateRange = (by, period, method, field) => () => {
     this.setState(
       produce(draft => {
@@ -390,7 +343,7 @@ class App extends Component {
       <div className="app">
         <Sidebar />
         <Header />
-        <MapParent />
+        <MapParent stateDataFromApp={this.state} />
         <EbolaChartComponent />
       </div>
     );

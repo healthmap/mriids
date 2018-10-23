@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as d3 from 'd3-fetch'
 import Spinner from '../components/Spinner'
 import Moment from 'moment'
 import { extendMoment } from 'moment-range'
@@ -10,62 +9,14 @@ import MapLegend from '../components/Layout/MapLegend/MapLegend'
 
 
 const moment = extendMoment(Moment)
-const csvLocationPath = 'csv/'
-const csvExtension = '.csv'
-
 
 const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 
-const INITIAL_DATE_RANGE = {
-  dateRange: {
-    from: new Date(2014, 4, 14),
-    to: new Date(2016, 0, 20)
-  }
-}
-
 class MapComponent extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      dataLoading: true,
-      ebolaData: null,
-      ebolaDataCombined: null,
-      filters: {
-        country: 'Guinea',
-        projection: false,
-        ...INITIAL_DATE_RANGE
-      },
-      modal: {
-        show: false,
-        text: '',
-        title: ''
-      },
-      chartObject: {}
-    }
-  }
-
-  componentWillMount () {
-    this._importDataFromCsv()
-  }
-
-  _importDataFromCsv = async () => {
-    // const filePath = csvLocationPath + 'ebola_epicurve_data' + csvExtension
-    const filePath = csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension
-    const data = await d3.csv(filePath)
-    let newState = {}
-    newState['ebolaData'] = this._prepareEbolaData(data)
-    newState['ebolaDataCombined'] = await d3.csv(csvLocationPath + 'healthmap_projections' + csvExtension)
-
-    this.setState({
-      dataLoading: false,
-      ...newState
-    })
-    console.log('[MapParent.js][_importDataFromCsv] The ebolaData is: ', this.state.ebolaData)
-    console.log('[MapParent.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
-  }
 
   _prepareDataForMap = () => {
-    const {ebolaData, filters: {dateRange}} = this.state
+    console.log('[MapParent.js][_prepareDataForMap] The data coming from App.js is: ', this.props.stateDataFromApp)
+    const {ebolaData, filters: {dateRange}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
     let mapData = {}
     COUNTRIES.map((country) => {
@@ -113,35 +64,6 @@ class MapComponent extends Component {
     })
     // console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
     return newData
-  }
-
-  _handleCountryChange = (country) => {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        filters: {
-          ...prevState.filters,
-          country: country
-        }
-      }
-    })
-  }
-
-  _handleProjectionChange = (projection) => {
-    this.setState((prevState) => {
-        return {
-          ...prevState,
-          filters: {
-            ...prevState.filters,
-            projection: projection
-          }
-        }
-    }, () => {
-      this.state.chartObject.chart.setVisibleChartRange(
-        this.state.filters.dateRange.from,
-        moment(this.state.filters.dateRange.to).add(1, 'month').toDate()
-      )
-    })
   }
 
   _resolveColor = (value) => {
@@ -205,7 +127,7 @@ class MapComponent extends Component {
   }
 
   render () {
-    const {dataLoading} = this.state
+    const {dataLoading} = this.props.stateDataFromApp
 
     let mapData, scale
     if (!dataLoading) {
