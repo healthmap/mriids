@@ -52,7 +52,6 @@ class EbolaChartComponent extends Component {
       filters: {
         country: 'All',
         projection: false,
-        rightColumnWidth: `${window.innerWidth - 230}px`,
         ...INITIAL_DATE_RANGE
       },
       modal: {
@@ -66,17 +65,6 @@ class EbolaChartComponent extends Component {
 
   componentWillMount () {
     this._importDataFromCsv()
-  }
-
-  componentDidMount () {
-    this.setState({
-      rightColumnWidth: `${window.innerWidth - 230}px`
-    })
-    window.addEventListener('resize', () => {
-      this.setState({
-        rightColumnWidth: `${window.innerWidth - 230}px`
-      })
-    })
   }
 
   _importDataFromCsv = async () => {
@@ -94,6 +82,7 @@ class EbolaChartComponent extends Component {
   }
 
   _eventCallback = (Chart, event) => {
+    console.log('[EbolaChartComponent.js][_eventCallback] The event is: ', event)
     if (this.state.filters.projection) {
       Chart.chart.setVisibleChartRange(this.state.filters.dateRange.from, this.state.filters.dateRange.to)
     }
@@ -118,12 +107,17 @@ class EbolaChartComponent extends Component {
         }
       }
     })
+    // console.log('[EbolaChartComponent.js][_eventCallback] The date range is: ', this.state.filters.dateRange)
   }
 
   _eventReadyCallback = (Chart, event) => {
+    // console.log('[EbolaChartComponent][_eventReadyCallback] This was triggered! The chartObject is: ', Chart)
+    // console.log('[EbolaChartComponent][_eventReadyCallback] The event is: ', event)
     this.setState({
       chartObject: Chart
     })
+    // console.log('[EbolaChartComponent][_eventReadyCallback] The chartObject in the state is: ', this.state.chartObject)
+    // console.log('[EbolaChartComponent][_eventReadyCallback] The date range in the state is: ', this.state.filters.dateRange)
   }
 
   _prepareDataForCharts = () => {
@@ -179,8 +173,8 @@ class EbolaChartComponent extends Component {
                 ymax: Number(row['ymax4.aggregated']),
               }
             }
-            console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. nextProjections is: ', nextProjections)
-            console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. projectionDate is: ', projectionDate)
+            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. nextProjections is: ', nextProjections)
+            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. projectionDate is: ', projectionDate)
             // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range starts on: ', dateRange.from)
             // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range ends on: ', dateRange.to)
           }
@@ -215,19 +209,19 @@ class EbolaChartComponent extends Component {
       oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y, oneWeek.ymax, oneWeek.ymin]
       twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y, twoWeeks.ymax, twoWeeks.ymin]
       monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y, month.ymax, month.ymin]
-      console.log('[EbolaChartComponent.js][_prepareDataForCharts] oneWeekData is: ', oneWeekData)
-      console.log('[EbolaChartComponent.js][_prepareDataForCharts] twoWeeksData is: ', twoWeeksData)
-      console.log('[EbolaChartComponent.js][_prepareDataForCharts] monthData is: ', monthData)
+      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] oneWeekData is: ', oneWeekData)
+      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] twoWeeksData is: ', twoWeeksData)
+      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] monthData is: ', monthData)
       rows[rows.length - 1][2] = rows[rows.length - 1][1]
       rows[rows.length - 1][3] = rows[rows.length - 1][1]
       rows[rows.length - 1][4] = rows[rows.length - 1][1]
       rows = [...rows, oneWeekData, twoWeeksData, monthData]
-      console.log('[EbolaChartComponent.js][_prepareDataForCharts] If state.projection is true, nextProjections are: ', nextProjections)
+      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] If state.projection is true, nextProjections are: ', nextProjections)
     }
 
-    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The columns are: ', columns)
-    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The rows are: ', rows)
-    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The projectionsData is: ', projectionsData)
+    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The columns are: ', columns)
+    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The rows are: ', rows)
+    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The projectionsData is: ', projectionsData)
 
     return {
       columns,
@@ -266,39 +260,6 @@ class EbolaChartComponent extends Component {
     return newData
   }
 
-  _prepareEbolaDataOld = (inputData) => {
-    const keys = ['y', 'ymin', 'ymax']
-    const projections = ['oneWeek', 'twoWeeks', 'month']
-    const projectionsMapping = {
-      oneWeek: 1,
-      twoWeeks: 2,
-      month: 4
-    }
-
-    const a = COUNTRIES.map((country) => {
-      const data = inputData.map((item) => {
-        const dateProjections = projections.map((projection) => {
-          const projectionData = keys.map((key) => {
-            return {
-              [key]: item[`${key}${projectionsMapping[projection]}.${country}`]
-            }
-          })
-          return {aaa: projectionData}
-        })
-        return {
-          [item.Projections_from]: {
-            value: [item[country]],
-            projections: dateProjections
-          }
-        }
-      })
-      return {
-        [country]: data
-      }
-    })
-    return a
-  }
-
   _handleCountryChange = (country) => {
     this.setState((prevState) => {
       return {
@@ -327,68 +288,6 @@ class EbolaChartComponent extends Component {
       )
     })
   }
-
-  _resolveColor = (value) => {
-    var hue, s, l
-    if (value < 0.5) {
-      hue = 175
-      s = ((-145 * value) + 105).toString(10) // s = '98%' / 40
-      l = (((value) * 180) + 11).toString(10) // l = '20%' / 92
-    } else if (value > 0.5) {
-      hue = 40
-      s = (((value) * 90) - 4).toString(10) // s = '46%' / 87
-      l = (((-133 * value) + 163)).toString(10) // l = '90%' / 30
-    } else {
-      hue = 0
-      s = 100
-      l = 100
-    }
-    return ['hsl(', hue, ',', s, '%,', l, '%)'].join('')
-  }
-
-  // _handleModalHide = () => {
-  //   this.setState({
-  //     modal: {
-  //       show: false,
-  //       text: ''
-  //     }
-  //   })
-  // }
-
-  // _handleModalShow = (title = 'Modal name', text = 'Modal text') => {
-  //   this.setState({
-  //     modal: {
-  //       show: true,
-  //       text: text,
-  //       title: title
-  //     }
-  //   })
-  // }
-
-  // _renderModal = () => {
-  //   const {modal: {show, text, title}} = this.state
-  //   return (
-  //     <Modal
-  //       show={show}
-  //       onHide={this._handleModalHide}
-  //       bsSize="sm"
-  //       aria-labelledby="contained-modal-title-lg"
-  //     >
-  //       <Modal.Header closeButton>
-  //         <ModalTitle>{title}</ModalTitle>
-  //       </Modal.Header>
-  //       <Modal.Body>
-  //         <p>
-  //           {text}
-  //         </p>
-  //       </Modal.Body>
-  //       <Modal.Footer>
-  //         <ModalButton secondary onClick={this._handleModalHide}>Secondary</ModalButton>
-  //         <ModalButton onClick={this._handleModalHide}>Call to action</ModalButton>
-  //       </Modal.Footer>
-  //     </Modal>
-  //   )
-  // }
 
   _renderTooltip = (text) => (
     <Tooltip id="tooltip">
@@ -425,7 +324,7 @@ class EbolaChartComponent extends Component {
   }
 
   render () {
-    const {filters: {country, projection}, rightColumnWidth, dataLoading} = this.state
+    const {filters: {country, projection}, dataLoading} = this.state
     
     let chartData
     if (!dataLoading) {
@@ -496,13 +395,3 @@ class EbolaChartComponent extends Component {
 }
 
 export default EbolaChartComponent;
-
-// const Image = styled.img`
-//   margin-right: 10px;
-// `
-
-// injectGlobal`
-//   .google-visualization-atl .border {
-//       border: none!important;
-//   }
-//   `
