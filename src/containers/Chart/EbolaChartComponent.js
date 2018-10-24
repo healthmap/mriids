@@ -21,7 +21,7 @@ const moment = extendMoment(Moment)
 class EbolaChartComponent extends Component {
 
   _prepareDataForCharts = () => {
-    console.log('[EbolaChartComponent.js][_prepareDataForCharts] The state data is coming from App.js is: ', this.props.stateDataFromApp)
+    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The state data is coming from App.js is: ', this.props.stateDataFromApp)
     const {ebolaData, ebolaDataCombined, filters: {country, projection, dateRange}} = this.props.stateDataFromApp
     let rows = []
     let projectionsData = {}

@@ -133,16 +133,19 @@ class App extends Component {
     })
   }
 
-  _handleCountryChange = (country) => {
+  _handleCountryChange = (event) => {
+    console.log('[App.js][_handleCountryChange] The country selected is: ', event.target.value)
+    let selectedCountry = event.target.value
     this.setState((prevState) => {
       return {
         ...prevState,
         filters: {
           ...prevState.filters,
-          country: country
+          country: selectedCountry
         }
       }
     })
+    // console.log('[App.js][_handleCountryChange] The country selected is: ', this.state.filters.country)
   }
 
   _handleProjectionChange = (projection) => {
@@ -193,7 +196,10 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Sidebar stateDataFromApp={this.state} />
+        <Sidebar 
+        stateDataFromApp={this.state}
+        changeCountry={this._handleCountryChange} 
+        />
         <Header />
         <MapParent stateDataFromApp={this.state} />
         <EbolaChartComponent stateDataFromApp={this.state} />

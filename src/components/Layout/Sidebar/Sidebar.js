@@ -27,7 +27,7 @@ class Sidebar extends Component {
       })
     })
 
-    console.log("[Sidebar.js][_prepareCountryEbolaData] The countryEbolaData is: ", countryEbolaData)
+    // console.log("[Sidebar.js][_prepareCountryEbolaData] The countryEbolaData is: ", countryEbolaData)
     return countryEbolaData
   }
 
@@ -57,7 +57,13 @@ class Sidebar extends Component {
       return (
         <div className="sidebar">
           <SidebarToggle />
-          <Select name='location' type="location" options={['All','Guinea','Liberia','Sierra Leone']} defaultValue="All" />
+          <Select changeCountry={this.props.changeCountry} name='location' type="location" options={['All','Guinea','Liberia','Sierra Leone']} countryValueFromState={this.props.stateDataFromApp.filters.country} />
+          {/* <select value={this.props.stateDataFromApp.filters.country} name='location' >
+            <option value="All">All</option>
+            <option value="Guinea">Guinea</option>
+            <option value="Liberia">Liberia</option>
+            <option value="Sierra Leone">Sierra Leone</option>
+          </select> */}
           <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
           <div className="block">
             <p>Reported cases from:<br />

@@ -30,7 +30,7 @@ class MapComponent extends Component {
       })
     })
 
-    console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
+    // console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
     return mapData
   }
 
