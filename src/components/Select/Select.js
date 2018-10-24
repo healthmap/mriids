@@ -13,7 +13,7 @@ class Select extends Component {
 
   render() {
     return (
-      <select className={this.props.type} name={this.props.name} defaultValue={this.props.defaultValue}>
+      <select className={this.props.type} name={this.props.name} value={this.props.countryValueFromState} onChange={this.props.changeCountry}>
         {this._renderOptions(this.props.options)}
       </select>
     )
