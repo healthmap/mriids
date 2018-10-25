@@ -102,36 +102,39 @@ class App extends Component {
   }
 
   _eventCallback = (Chart, event) => {
-    if (this.state.filters.projection) {
-      Chart.chart.setVisibleChartRange(this.state.filters.dateRange.from, this.state.filters.dateRange.to)
-    }
-    if (event.end - event.start < sevenDaysInSeconds) {
-      let minDate = moment(event.start).add(7, 'days')
-      if (Chart.chart.hN.max > minDate) {
-        Chart.chart.setVisibleChartRange(event.start, minDate.toDate())
-      } else {
-        minDate = moment(event.end).subtract(7, 'days')
-        Chart.chart.setVisibleChartRange(minDate.toDate(), event.end)
-      }
-    }
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        filters: {
-          ...prevState.filters,
-          dateRange: {
-            from: event.start,
-            to: event.end
-          }
-        }
-      }
-    })
+    console.log('[App.js][_eventCallback] THIS FUNCTION IS BEING TRIGGERED')
+    // if (this.state.filters.projection) {
+    //   Chart.chart.setVisibleChartRange(this.state.filters.dateRange.from, this.state.filters.dateRange.to)
+    // }
+    // if (event.end - event.start < sevenDaysInSeconds) {
+    //   let minDate = moment(event.start).add(7, 'days')
+    //   if (Chart.chart.hN.max > minDate) {
+    //     Chart.chart.setVisibleChartRange(event.start, minDate.toDate())
+    //   } else {
+    //     minDate = moment(event.end).subtract(7, 'days')
+    //     Chart.chart.setVisibleChartRange(minDate.toDate(), event.end)
+    //   }
+    // }
+    // this.setState((prevState) => {
+    //   return {
+    //     ...prevState,
+    //     filters: {
+    //       ...prevState.filters,
+    //       dateRange: {
+    //         from: event.start,
+    //         to: event.end
+    //       }
+    //     }
+    //   }
+    // })
   }
 
   _eventReadyCallback = (Chart, event) => {
+    console.log('[App.js][_eventReadyCallback] THIS FUNCTION IS BEING TRIGGERED')
     this.setState({
       chartObject: Chart
     })
+    console.log('[App.js][_eventReadyCallback] The Chart object is: ', Chart)
   }
 
   _handleCountryChange = (event) => {
@@ -203,7 +206,7 @@ class App extends Component {
         />
         <Header />
         <MapParent stateDataFromApp={this.state} />
-        <EbolaChartComponent stateDataFromApp={this.state} />
+        <EbolaChartComponent eventCallback={this._eventCallback} eventReadyCallback={this._eventReadyCallback} stateDataFromApp={this.state} />
       </div>
     );
   }

@@ -189,16 +189,17 @@ class EbolaChartComponent extends Component {
               {
                 dataLoading ? <Spinner/> :
                   <AxisLabels
-                    xAxis="Time" yAxis="Ebola Cases"
-                    renderTooltip={this._renderTooltip} position="right">
+                    // xAxis="Time" yAxis="Ebola Cases"
+                    // renderTooltip={this._renderTooltip} position="right"
+                    >
                     <CustomChart
                       columns={chartData.columns}
                       rows={chartData.rows}
                       projections={chartData.projectionsData}
                       dateStart={this.props.stateDataFromApp.filters.dateRange.from}
                       dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
-                      eventCallback={this._eventCallback}
-                      eventReadyCallback={this._eventReadyCallback}
+                      eventCallback={this.props.eventCallback}
+                      eventReadyCallback={this.props.eventReadyCallback}
                       projectionFilter={projection}/>
                   </AxisLabels>
               }

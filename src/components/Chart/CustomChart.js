@@ -53,7 +53,7 @@ class CustomChart extends React.Component {
         height='95%'
         chartEvents={[
           {
-            eventName: 'rangechange',
+            eventName: 'select',
             callback: this.props.eventCallback
         }, {
             eventName: 'ready',
