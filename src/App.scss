@@ -19,17 +19,6 @@
   width: 100vw;
 }
 
-.sidebar {
-  position: absolute;
-  top: $header-height;
-  left: 0;
-  bottom: 0;
-  width: $sidebar-width;
-  background-color: $lightest-gray;
-  overflow: auto;
-  z-index: $z-index--sidebar;
-}
-
 .map-parent {
   position: relative;
   margin-left: $sidebar-width;

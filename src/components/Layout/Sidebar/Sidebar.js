@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Moment from 'moment'
 import { extendMoment } from 'moment-range'
 
+import SidebarWrapper from '../../styled-components/SidebarWrapper';
+
 import SidebarToggle from './SidebarToggle/SidebarToggle';
 import Select from '../../Select/Select';
 import ReportedCases from './ReportedCases/ReportedCases';
@@ -45,7 +47,7 @@ class Sidebar extends Component {
         let countryEbolaData = this._prepareCountryEbolaData()
         ebolaData = countryEbolaData[filters.country]
       }
-      
+
       // This adds the country name to the sidebar
       let country
       if (!dataLoading && filters.country === "All") {
@@ -55,7 +57,7 @@ class Sidebar extends Component {
       }
 
       return (
-        <div className="sidebar">
+        <SidebarWrapper>
           <SidebarToggle />
           <Select changeCountry={this.props.changeCountry} name='location' type="location" options={['All','Guinea','Liberia','Sierra Leone']} countryValueFromState={this.props.stateDataFromApp.filters.country} />
           {/* <select value={this.props.stateDataFromApp.filters.country} name='location' >
@@ -87,7 +89,7 @@ class Sidebar extends Component {
               <li>Bong (14)</li>
             </ol>
           </div>
-        </div>
+        </SidebarWrapper>
       );
    }
 }
