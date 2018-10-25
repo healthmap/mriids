@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from './components/Layout/Sidebar/Sidebar';
-import Header from './components/Layout/Header/Header';
+//import Header from './components/Layout/Header/Header';
 import * as d3 from 'd3-fetch'
 import produce from 'immer'
 import Moment from 'moment'
@@ -8,6 +8,7 @@ import { extendMoment } from 'moment-range'
 
 import './App.scss';
 
+import Header from './containers/Header';
 import MapParent from './containers/MapParent'
 import EbolaChartComponent from './containers/Chart/EbolaChartComponent'
 
@@ -197,9 +198,9 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Sidebar 
+        <Sidebar
         stateDataFromApp={this.state}
-        changeCountry={this._handleCountryChange} 
+        changeCountry={this._handleCountryChange}
         />
         <Header />
         <MapParent stateDataFromApp={this.state} />
