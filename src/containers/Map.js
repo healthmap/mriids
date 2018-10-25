@@ -73,7 +73,8 @@ class Map extends Component {
         type: 'fill',
         paint: {
           "fill-color": this._resolveColor('Sierra Leone'),
-          "fill-outline-color": 'black'
+          "fill-outline-color": 'black',
+          "fill-opacity": 1
         }
       });
       map.addLayer({
@@ -82,7 +83,8 @@ class Map extends Component {
         type: 'fill',
         paint: {
           "fill-color": this._resolveColor('Guinea'),
-          "fill-outline-color": 'black'
+          "fill-outline-color": 'black',
+          "fill-opacity": 1
         }
       });
       map.addLayer({
@@ -91,8 +93,8 @@ class Map extends Component {
         type: 'fill',
         paint: {
           "fill-color": this._resolveColor('Liberia'),
-          "fill-outline-color": 'black'
-
+          "fill-outline-color": 'black',
+          "fill-opacity": 1
         }
       });
     })
@@ -111,9 +113,20 @@ class Map extends Component {
   componentDidUpdate() {
     const map = this.mapRef.getMap()
     const countries = ['Sierra Leone', 'Liberia', 'Guinea']
-    if (this.state.mapStylesLoaded) {
+    if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country === "All") {
       countries.forEach((layer) => {
         map.setPaintProperty(layer, 'fill-color', this._resolveColor(layer))
+        map.setPaintProperty(layer, 'fill-opacity', 1)
+      })
+    } else if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country !== "All") {
+      let country = this.props.stateDataFromApp.filters.country
+      countries.forEach((layer) => {
+        if (layer === country) {
+        map.setPaintProperty(layer, 'fill-color', this._resolveColor(layer))
+        map.setPaintProperty(layer, 'fill-opacity', 1)
+        } else {
+          map.setPaintProperty(layer, 'fill-opacity', 0)
+        }
       })
     }
   }

@@ -34,38 +34,6 @@ class MapComponent extends Component {
     return mapData
   }
 
-  _prepareEbolaData = (inputData) => {
-    const keys = ['y', 'ymin', 'ymax']
-    const projections = ['oneWeek', 'twoWeeks', 'month']
-    const projectionsMapping = {
-      oneWeek: 1,
-      twoWeeks: 2,
-      month: 4
-    }
-
-    let newData = {
-      'Guinea': {}, 'Liberia': {}, 'Sierra Leone': {}
-    }
-
-    COUNTRIES.forEach((country) => {
-      inputData.forEach((item) => {
-        // console.log("[_prepareEbolaData] Each item is: ", item)
-        newData[country][item.projection_from] = {}
-        newData[country][item.projection_from]['projections'] = {}
-        projections.forEach((projection) => {
-          newData[country][item.projection_from]['projections'][projection] = {}
-          newData[country][item.projection_from]['projections']['originalValue'] = parseFloat(item[country])
-          keys.forEach((key) => {
-            newData[country][item.projection_from]['projections'][projection][key] = parseFloat(item[`${key}${projectionsMapping[projection]}.${country}`])
-          })
-        })
-        newData[country][item.projection_from]['value'] = item[country]
-      })
-    })
-    // console.log("[MapParent.js][_prepareEbolaData] The ebola data is: ", newData)
-    return newData
-  }
-
   _resolveColor = (value) => {
     let color
     if (value === 0) {
@@ -139,7 +107,7 @@ class MapComponent extends Component {
         <div className="map-parent">
           <div className="map-container">
             {
-              dataLoading ? <Spinner/> : <Map data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+              dataLoading ? <Spinner/> : <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
             }
           </div>
           {

@@ -68,6 +68,7 @@ class App extends Component {
     // console.log('[App.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
   }
 
+  // This prepares the imported csv data to be saved in state.ebolaData
   _prepareEbolaData = (inputData) => {
     const keys = ['y', 'ymin', 'ymax']
     const projections = ['oneWeek', 'twoWeeks', 'month']
@@ -134,7 +135,7 @@ class App extends Component {
   }
 
   _handleCountryChange = (event) => {
-    console.log('[App.js][_handleCountryChange] The country selected is: ', event.target.value)
+    // console.log('[App.js][_handleCountryChange] The country selected is: ', event.target.value)
     let selectedCountry = event.target.value
     this.setState((prevState) => {
       return {
