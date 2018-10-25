@@ -26,6 +26,7 @@
   bottom: 0;
   width: $sidebar-width;
   background-color: $lightest-gray;
+  overflow: auto;
   z-index: $z-index--sidebar;
 }
 
@@ -54,6 +55,7 @@
 }
 
 .risk {
+  flex: none;
   padding-left: $sidebar-width;
   height: $risk-height;
 }

@@ -84,8 +84,8 @@ class EbolaChartComponent extends Component {
         }
 
       })
-    } 
-    
+    }
+
     else {
       const filteredData = ebolaData[country]
       Object.keys(filteredData).forEach(function (key) {
@@ -139,17 +139,17 @@ class EbolaChartComponent extends Component {
 
   render () {
     const {filters: {country, projection}, dataLoading} = this.props.stateDataFromApp
-    
+
     let chartData
     if (!dataLoading) {
       chartData = this._prepareDataForCharts()
     }
 
     return (
-          <ChartContainer>
-            <EbolaChart projections={projection}>
+          <div className="risk">
+            <EbolaChart projections={projection} id="ebola-chart">
               <Title>
-                <OverlayTrigger 
+                <OverlayTrigger
                   placement="top"
                   overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}>
                   <p>Ebola Cases</p>
@@ -174,7 +174,7 @@ class EbolaChartComponent extends Component {
                       Period End: {moment(this.props.stateDataFromApp.filters.dateRange.to).format('MMM, DD, YYYY')}
                     </div>
                     <div style={{alignItems: 'center', justifyContent: 'flex-start', display: 'flex'}}>
-                      Adjust end: 
+                      Adjust end:
                       <ButtonGroup>
                         <Button onClick={this._changeDateRange(7, 'days', 'add', 'to')}>Add 7 days</Button>
                         <Button onClick={this._changeDateRange(7, 'days', 'subtract', 'to')}>Subtract 7 days</Button>
@@ -182,10 +182,10 @@ class EbolaChartComponent extends Component {
                     </div>
                   </div>
                 </div>
-                
+
               }
               </Title>
-              
+
               {
                 dataLoading ? <Spinner/> :
                   <AxisLabels
@@ -203,7 +203,7 @@ class EbolaChartComponent extends Component {
                   </AxisLabels>
               }
             </EbolaChart>
-          </ChartContainer>
+          </div>
     )
   }
 }
