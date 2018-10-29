@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import Spinner from '../../components/Spinner'
 import Moment from 'moment'
 import { extendMoment } from 'moment-range'
+import {Range} from 'rc-slider'
+import 'rc-slider/assets/index.css';
 
 import CustomChart from '../../components/Chart/CustomChart'
 import {
-  Button,
-  ButtonGroup,
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
@@ -60,18 +60,18 @@ class EbolaChartComponent extends Component {
             nextProjections = {
               oneWeek: {
                 y: Number(row['y1.aggregated']),
-                ymin: Number(row['ymin1.aggregated']),
-                ymax: Number(row['ymax1.aggregated']),
+                // ymin: Number(row['ymin1.aggregated']),
+                // ymax: Number(row['ymax1.aggregated']),
               },
               twoWeeks: {
                 y: Number(row['y2.aggregated']),
-                ymin: Number(row['ymin2.aggregated']),
-                ymax: Number(row['ymax2.aggregated']),
+                // ymin: Number(row['ymin2.aggregated']),
+                // ymax: Number(row['ymax2.aggregated']),
               },
               month: {
                 y: Number(row['y4.aggregated']),
-                ymin: Number(row['ymin4.aggregated']),
-                ymax: Number(row['ymax4.aggregated']),
+                // ymin: Number(row['ymin4.aggregated']),
+                // ymax: Number(row['ymax4.aggregated']),
               }
             }
             // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. nextProjections is: ', nextProjections)
@@ -84,6 +84,7 @@ class EbolaChartComponent extends Component {
         }
 
       })
+      // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 91 the rows are: ', rows)
     } 
     
     else {
@@ -117,7 +118,7 @@ class EbolaChartComponent extends Component {
       rows[rows.length - 1][3] = rows[rows.length - 1][1]
       rows[rows.length - 1][4] = rows[rows.length - 1][1]
       rows = [...rows, oneWeekData, twoWeeksData, monthData]
-      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] If state.projection is true, nextProjections are: ', nextProjections)
+      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] If projection is true at row 112, the rows are: ', rows)
     }
 
     // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The columns are: ', columns)
@@ -145,7 +146,10 @@ class EbolaChartComponent extends Component {
       chartData = this._prepareDataForCharts()
     }
 
+
+
     return (
+      <div>
           <ChartContainer>
             <EbolaChart projections={projection}>
               <Title>
@@ -154,38 +158,7 @@ class EbolaChartComponent extends Component {
                   overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}>
                   <p>Ebola Cases</p>
                 </OverlayTrigger>
-                {
-                projection &&
-                <div style={{display: 'flex', flex: 1, flexDirection: 'row', marginLeft: '30px' }}>
-                  <div style={{display: 'flex', flexDirection: 'column', }}>
-                    <div style={{alignItems: 'flex-start', justifyContent: 'flex-start', display: 'flex'}}>
-                      Period Start: {moment(this.props.stateDataFromApp.filters.dateRange.from).format('MMM, DD, YYYY')}
-                    </div>
-                    <div style={{alignItems: 'center', justifyContent: 'flex-start', display: 'flex'}}>
-                      Adjust start:
-                      <ButtonGroup>
-                        <Button onClick={this._changeDateRange(7, 'days', 'add', 'from')}>Add 7 days</Button>
-                        <Button onClick={this._changeDateRange(7, 'days', 'subtract', 'from')}>Subtract 7 days</Button>
-                      </ButtonGroup>
-                    </div>
-                  </div>
-                  <div style={{display: 'flex', flexDirection: 'column', marginLeft: '30px'}}>
-                    <div style={{alignItems: 'flex-start', justifyContent: 'flex-start', display: 'flex'}}>
-                      Period End: {moment(this.props.stateDataFromApp.filters.dateRange.to).format('MMM, DD, YYYY')}
-                    </div>
-                    <div style={{alignItems: 'center', justifyContent: 'flex-start', display: 'flex'}}>
-                      Adjust end: 
-                      <ButtonGroup>
-                        <Button onClick={this._changeDateRange(7, 'days', 'add', 'to')}>Add 7 days</Button>
-                        <Button onClick={this._changeDateRange(7, 'days', 'subtract', 'to')}>Subtract 7 days</Button>
-                      </ButtonGroup>
-                    </div>
-                  </div>
-                </div>
-                
-              }
               </Title>
-              
               {
                 dataLoading ? <Spinner/> :
                   <AxisLabels
@@ -198,13 +171,23 @@ class EbolaChartComponent extends Component {
                       projections={chartData.projectionsData}
                       dateStart={this.props.stateDataFromApp.filters.dateRange.from}
                       dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
-                      eventCallback={this.props.eventCallback}
                       eventReadyCallback={this.props.eventReadyCallback}
                       projectionFilter={projection}/>
                   </AxisLabels>
               }
             </EbolaChart>
           </ChartContainer>
+          <div>
+              <Range 
+              style={{width: '75%', margin: '0 auto'}} 
+              min={0} 
+              max={68} 
+              defaultValue={[0, 68]} 
+              tipFormatter={value => `Week ${value}`}
+              onChange={this.props.changeChartDateRange}
+              />
+          </div>
+      </div>
     )
   }
 }

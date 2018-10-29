@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import Sidebar from './components/Layout/Sidebar/Sidebar';
 import Header from './components/Layout/Header/Header';
 import * as d3 from 'd3-fetch'
-import produce from 'immer'
-import Moment from 'moment'
-import { extendMoment } from 'moment-range'
 
 import './App.scss';
 
 import MapParent from './containers/MapParent'
 import EbolaChartComponent from './containers/Chart/EbolaChartComponent'
 
-const moment = extendMoment(Moment)
 const csvLocationPath = 'csv/'
 const csvExtension = '.csv'
 
@@ -21,11 +17,9 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 const INITIAL_DATE_RANGE = {
   dateRange: {
     from: new Date(2014, 9, 1),
-    to: new Date(2016, 0, 20)
+    to: new Date(2016, 1, 20)
   }
 }
-
-const sevenDaysInSeconds = 60 * 60 * 24 * 7 * 1000
 
 class App extends Component {
   constructor (props) {
@@ -36,7 +30,7 @@ class App extends Component {
       ebolaDataCombined: null,
       filters: {
         country: 'All',
-        projection: false,
+        projection: true,
         ...INITIAL_DATE_RANGE
       },
       modal: {
@@ -68,7 +62,7 @@ class App extends Component {
     // console.log('[App.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
   }
 
-  // This prepares the imported csv data to be saved in state.ebolaData
+  // This prepares the imported csv data to be saved in state.ebolaData. It splits the data by country and sets the projections into 'oneWeek', 'twoWeeks', and 'month'
   _prepareEbolaData = (inputData) => {
     const keys = ['y', 'ymin', 'ymax']
     const projections = ['oneWeek', 'twoWeeks', 'month']
@@ -101,40 +95,36 @@ class App extends Component {
     return newData
   }
 
-  _eventCallback = (Chart, event) => {
-    console.log('[App.js][_eventCallback] THIS FUNCTION IS BEING TRIGGERED')
-    // if (this.state.filters.projection) {
-    //   Chart.chart.setVisibleChartRange(this.state.filters.dateRange.from, this.state.filters.dateRange.to)
-    // }
-    // if (event.end - event.start < sevenDaysInSeconds) {
-    //   let minDate = moment(event.start).add(7, 'days')
-    //   if (Chart.chart.hN.max > minDate) {
-    //     Chart.chart.setVisibleChartRange(event.start, minDate.toDate())
-    //   } else {
-    //     minDate = moment(event.end).subtract(7, 'days')
-    //     Chart.chart.setVisibleChartRange(minDate.toDate(), event.end)
-    //   }
-    // }
-    // this.setState((prevState) => {
-    //   return {
-    //     ...prevState,
-    //     filters: {
-    //       ...prevState.filters,
-    //       dateRange: {
-    //         from: event.start,
-    //         to: event.end
-    //       }
-    //     }
-    //   }
-    // })
+  _chartRangeHandler = (value) => {
+    // console.log("[App.js][_chartRangeHandler] The minimum value is: ", value[0])
+    let fromDate = new Date(INITIAL_DATE_RANGE.dateRange.from)
+    // console.log("[App.js][_chartRangeHandler] The starting FROM date is: ", fromDate)
+    fromDate.setDate(fromDate.getDate() + (7 * value[0]))
+    // console.log("[App.js][_chartRangeHandler] The NEW FROM date that will be in the state is: ", fromDate)
+    let toDate = new Date(INITIAL_DATE_RANGE.dateRange.to)
+    // console.log('[App.js][_chartRangeHandler] The starting TO date is: ', toDate)
+    toDate.setDate(toDate.getDate() + (7 * (value[1] - 68)))
+    // console.log("[App.js][_chartRangeHandler] The maximum value is: ", value[1])
+    // console.log('[App.js][_chartRangeHandler] The NEW TO date in the state is: ', toDate)
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        filters: {
+          ...prevState.filters,
+          dateRange: {
+            from: fromDate,
+            to: toDate
+          }
+        }
+      }
+    })
   }
 
   _eventReadyCallback = (Chart, event) => {
-    console.log('[App.js][_eventReadyCallback] THIS FUNCTION IS BEING TRIGGERED')
+    // console.log('[App.js][_eventReadyCallback] THIS FUNCTION IS BEING TRIGGERED')
     this.setState({
       chartObject: Chart
     })
-    console.log('[App.js][_eventReadyCallback] The Chart object is: ', Chart)
   }
 
   _handleCountryChange = (event) => {
@@ -161,39 +151,6 @@ class App extends Component {
             projection: projection
           }
         }
-    }, () => {
-      this.state.chartObject.chart.setVisibleChartRange(
-        this.state.filters.dateRange.from,
-        moment(this.state.filters.dateRange.to).add(1, 'month').toDate()
-      )
-    })
-  }
-
-  _changeDateRange = (by, period, method, field) => () => {
-    this.setState(
-      produce(draft => {
-          const date = moment(draft.filters.dateRange[field])
-
-          if (method === 'add') {
-            let newDate = date.clone().add(by, period)
-            if (field === 'from') {
-              if (newDate.isAfter(moment(draft.filters.dateRange.to).clone().subtract(by, period)) || newDate.isSame(moment(draft.filters.dateRange.to).clone().subtract(by, period))) {
-                newDate = moment(draft.filters.dateRange.from)
-              }
-            }
-            draft.filters.dateRange[field] = newDate.toDate()
-          } else {
-            let newDate = date.clone().subtract(by, period)
-            if (field === 'to') {
-              if (newDate.clone().subtract(by, period).isSame(moment(draft.filters.dateRange.from)) || newDate.clone().subtract(by, period).isBefore(moment(draft.filters.dateRange.from))) {
-                newDate = moment(draft.filters.dateRange.to)
-              }
-            }
-            draft.filters.dateRange[field] = newDate.toDate()
-          }
-      }
-    ), () => {
-      this.state.chartObject.chart.setVisibleChartRange(this.state.filters.dateRange.from, moment(this.state.filters.dateRange.to).add(1, 'month').toDate())
     })
   }
 
@@ -206,7 +163,13 @@ class App extends Component {
         />
         <Header />
         <MapParent stateDataFromApp={this.state} />
-        <EbolaChartComponent eventCallback={this._eventCallback} eventReadyCallback={this._eventReadyCallback} stateDataFromApp={this.state} />
+        <EbolaChartComponent 
+        eventReadyCallback={this._eventReadyCallback} 
+        stateDataFromApp={this.state}
+        toggleProjectionChange={this._handleProjectionChange}
+        changeDateRange={this._changeDateRange}
+        changeChartDateRange={this._chartRangeHandler}
+        />
       </div>
     );
   }
