@@ -149,34 +149,32 @@ class EbolaChartComponent extends Component {
 
 
     return (
-      <div>
-          <ChartContainer>
-            <EbolaChart projections={projection}>
-              <Title>
-                <OverlayTrigger
-                  placement="top"
-                  overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}>
-                  <p>Ebola Cases</p>
-                </OverlayTrigger>
-              </Title>
-              {
-                dataLoading ? <Spinner/> :
-                  <AxisLabels
-                    // xAxis="Time" yAxis="Ebola Cases"
-                    // renderTooltip={this._renderTooltip} position="right"
-                    >
-                    <CustomChart
-                      columns={chartData.columns}
-                      rows={chartData.rows}
-                      projections={chartData.projectionsData}
-                      dateStart={this.props.stateDataFromApp.filters.dateRange.from}
-                      dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
-                      eventReadyCallback={this.props.eventReadyCallback}
-                      projectionFilter={projection}/>
-                  </AxisLabels>
-              }
-            </EbolaChart>
-          </ChartContainer>
+        <ChartContainer>
+          <EbolaChart projections={projection}>
+            <Title>
+              <OverlayTrigger
+                placement="top"
+                overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}>
+                <p>Ebola Cases</p>
+              </OverlayTrigger>
+            </Title>
+            {
+              dataLoading ? <Spinner/> :
+                <AxisLabels
+                  // xAxis="Time" yAxis="Ebola Cases"
+                  // renderTooltip={this._renderTooltip} position="right"
+                  >
+                  <CustomChart
+                    columns={chartData.columns}
+                    rows={chartData.rows}
+                    projections={chartData.projectionsData}
+                    dateStart={this.props.stateDataFromApp.filters.dateRange.from}
+                    dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
+                    eventReadyCallback={this.props.eventReadyCallback}
+                    projectionFilter={projection}/>
+                </AxisLabels>
+            }
+          </EbolaChart>
           <div>
               <Range
               style={{width: '75%', margin: '0 auto'}}
@@ -187,7 +185,7 @@ class EbolaChartComponent extends Component {
               onChange={this.props.changeChartDateRange}
               />
           </div>
-      </div>
+        </ChartContainer>
     )
   }
 }

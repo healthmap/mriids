@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Sidebar from './components/Layout/Sidebar/Sidebar';
-//import Header from './components/Layout/Header/Header';
 import * as d3 from 'd3-fetch'
 
 import './App.scss';
@@ -164,8 +163,8 @@ class App extends Component {
         />
         <Header />
         <MapParent stateDataFromApp={this.state} />
-        <EbolaChartComponent 
-        eventReadyCallback={this._eventReadyCallback} 
+        <EbolaChartComponent
+        eventReadyCallback={this._eventReadyCallback}
         stateDataFromApp={this.state}
         toggleProjectionChange={this._handleProjectionChange}
         changeDateRange={this._changeDateRange}
