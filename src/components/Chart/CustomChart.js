@@ -12,7 +12,17 @@ class CustomChart extends React.Component {
 
   render () {
     var options = {
-      isStacked: true
+      isStacked: true,
+      hAxis : {
+        textStyle : {
+            fontSize: 10 // or the number you want
+        }
+      },
+      vAxis : {
+        textStyle : {
+            fontSize: 10 // or the number you want
+        }
+      },
       // zoomButtonsOrder: ['1-week',
       //   '1-month', '3-months', '6-months', '1-year', 'max'
       // ]
