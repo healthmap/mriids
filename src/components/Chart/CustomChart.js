@@ -5,8 +5,7 @@ class CustomChart extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return (
       JSON.stringify(nextProps.columns) !== JSON.stringify(this.props.columns) ||
-      JSON.stringify(nextProps.rows) !== JSON.stringify(this.props.rows) ||
-      nextProps.projectionFilter !== this.props.projectionFilter
+      JSON.stringify(nextProps.rows) !== JSON.stringify(this.props.rows) 
     )
   }
 

@@ -30,7 +30,7 @@ class App extends Component {
       ebolaDataCombined: null,
       filters: {
         country: 'All',
-        projection: true,
+        projection: false,
         ...INITIAL_DATE_RANGE
       },
       modal: {
@@ -118,6 +118,7 @@ class App extends Component {
         }
       }
     })
+    // console.log('[App.js][_chartRangeHandler] The current state is', this.state)
   }
 
   _eventReadyCallback = (Chart, event) => {
