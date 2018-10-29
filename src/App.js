@@ -143,13 +143,13 @@ class App extends Component {
     // console.log('[App.js][_handleCountryChange] The country selected is: ', this.state.filters.country)
   }
 
-  _handleProjectionChange = (projection) => {
+  _handleProjectionChange = () => {
     this.setState((prevState) => {
         return {
           ...prevState,
           filters: {
             ...prevState.filters,
-            projection: projection
+            projection: !prevState.filters.projection
           }
         }
     })

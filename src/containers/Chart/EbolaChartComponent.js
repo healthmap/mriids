@@ -13,7 +13,6 @@ import {
 
 import AxisLabels from '../../components/AxisLabels'
 import EbolaChart from '../../components/styled-components/EbolaChart'
-import OnOffSwitch from '../../components/styled-components/OnOffSwitch'
 import ChartContainer from '../../components/styled-components/ChartContainer'
 import Title from '../../components/styled-components/Title'
 
@@ -144,7 +143,7 @@ class EbolaChartComponent extends Component {
   )
 
   render () {
-    const {filters: {country, projection}, dataLoading} = this.props.stateDataFromApp
+    const {filters: {country}, dataLoading} = this.props.stateDataFromApp
 
     let chartData
     if (!dataLoading) {
@@ -179,7 +178,7 @@ class EbolaChartComponent extends Component {
                     />
                 </AxisLabels>
             }
-            <ProjectionToggle />
+            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} />
           </EbolaChart>
           <div>
               <Range
