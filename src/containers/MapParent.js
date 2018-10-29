@@ -35,30 +35,56 @@ class MapComponent extends Component {
   }
 
   _resolveColor = (value) => {
-    let color
-    if (value === 0) {
-      color = "#FDF1DD"
-    } else if (value > 0 && value <= 0.1) {
-      color = "#FBE7C6"
-    } else if (value > 0.1 && value <= 0.2) {
-      color = "#F8D1B6"
-    } else if (value > 0.2 && value <= 0.3) {
-      color = "#F5BCA7"
-    } else if (value > 0.3 && value <= 0.4) {
-      color = "#F1A697"
-    } else if (value > 0.4 && value <= 0.5) {
-      color = "#EE9187"
-    } else if (value > 0.5 && value <= 0.6) {
-      color = "#EB7C77"
-    } else if (value > 0.6 && value <= 0.7) {
-      color = "#E86769"
-    } else if (value > 0.7 && value <= 0.8) {
-      color = "#E55259"
-    } else if (value > 0.8) {
-      color = "#E23D4A"
+    if (!this.props.stateDataFromApp.filters.projection) {
+      let color
+      if (value === 0) {
+        color = "#FDF1DD"
+      } else if (value > 0 && value <= 0.1) {
+        color = "#FBE7C6"
+      } else if (value > 0.1 && value <= 0.2) {
+        color = "#F8D1B6"
+      } else if (value > 0.2 && value <= 0.3) {
+        color = "#F5BCA7"
+      } else if (value > 0.3 && value <= 0.4) {
+        color = "#F1A697"
+      } else if (value > 0.4 && value <= 0.5) {
+        color = "#EE9187"
+      } else if (value > 0.5 && value <= 0.6) {
+        color = "#EB7C77"
+      } else if (value > 0.6 && value <= 0.7) {
+        color = "#E86769"
+      } else if (value > 0.7 && value <= 0.8) {
+        color = "#E55259"
+      } else if (value > 0.8) {
+        color = "#E23D4A"
+      }
+      return color
+    } else if (this.props.stateDataFromApp.filters.projection) {
+      let color
+      if (value === 0) {
+        color = "#FDF1DD"
+      } else if (value > 0 && value <= 0.1) {
+        color = "#D3E6D2"
+      } else if (value > 0.1 && value <= 0.2) {
+        color = "#AADBC7"
+      } else if (value > 0.2 && value <= 0.3) {
+        color = "#83CFBC"
+      } else if (value > 0.3 && value <= 0.4) {
+        color = "#5BC4B2"
+      } else if (value > 0.4 && value <= 0.5) {
+        color = "#36B9A7"
+      } else if (value > 0.5 && value <= 0.6) {
+        color = "#32B1A2"
+      } else if (value > 0.6 && value <= 0.7) {
+        color = "#2DAA9E"
+      } else if (value > 0.7 && value <= 0.8) {
+        color = "#29A199"
+      } else if (value > 0.8) {
+        color = "#259994"
+      }
+      return color
     }
-    return color
-  }
+}
 
   _resolveScale = (mapData) => {
     let maxValue = Math.max(...Object.values(mapData))

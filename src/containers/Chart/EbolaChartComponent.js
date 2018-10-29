@@ -82,10 +82,11 @@ class EbolaChartComponent extends Component {
             // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range starts on: ', dateRange.from)
             // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range ends on: ', dateRange.to)
           }
-        } else {
+        } else if (!projection) {
+          if (moment(projectionDate).isBetween(moment(dateRange.from), moment(dateRange.to))) {
           rows.push([projectionDate, parseFloat(row.aggregated)])
         }
-
+      }
       })
       // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 91 the rows are: ', rows)
     }
@@ -101,10 +102,11 @@ class EbolaChartComponent extends Component {
             rows[rows.length - 1].push(null, null, null)
             nextProjections = ebolaDailyData.projections
           }
-        } else {
+        } else if (!projection) {
+          if (moment(key).isBetween(moment(dateRange.from), moment(dateRange.to))) {
           rows.push([new Date(key), parseFloat(ebolaDailyData.value)])
         }
-
+      }
       })
     }
 
@@ -149,15 +151,14 @@ class EbolaChartComponent extends Component {
       chartData = this._prepareDataForCharts()
     }
 
-
-
     return (
         <ChartContainer>
-          <EbolaChart projections={projection}>
+          <EbolaChart>
             <Title>
               <OverlayTrigger
                 placement="top"
-                overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}>
+                overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}
+                >
                 <p>Ebola Cases</p>
               </OverlayTrigger>
             </Title>
@@ -174,7 +175,8 @@ class EbolaChartComponent extends Component {
                     dateStart={this.props.stateDataFromApp.filters.dateRange.from}
                     dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
                     eventReadyCallback={this.props.eventReadyCallback}
-                    projectionFilter={projection}/>
+                    // projectionFilter={projection}
+                    />
                 </AxisLabels>
             }
             <ProjectionToggle />
