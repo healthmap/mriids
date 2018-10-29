@@ -13,8 +13,11 @@ import {
 
 import AxisLabels from '../../components/AxisLabels'
 import EbolaChart from '../../components/styled-components/EbolaChart'
+import OnOffSwitch from '../../components/styled-components/OnOffSwitch'
 import ChartContainer from '../../components/styled-components/ChartContainer'
 import Title from '../../components/styled-components/Title'
+
+import ProjectionToggle from '../ProjectionToggle'
 
 const moment = extendMoment(Moment)
 
@@ -174,6 +177,7 @@ class EbolaChartComponent extends Component {
                     projectionFilter={projection}/>
                 </AxisLabels>
             }
+            <ProjectionToggle />
           </EbolaChart>
           <div>
               <Range
