@@ -18,15 +18,6 @@
   width: 100vw;
 }
 
-.map-parent {
-  position: relative;
-  margin-left: $sidebar-width;
-  width: calc(100vw - #{$sidebar-width});
-  height: calc(100vh - #{$risk-height} - #{$header-height});
-  z-index: $z-index--map;
-  overflow: hidden;
-}
-
 .map-container, .map {
   width: 100%;
   height: 100%;

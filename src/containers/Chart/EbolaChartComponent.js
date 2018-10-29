@@ -7,7 +7,7 @@ import 'rc-slider/assets/index.css';
 
 import CustomChart from '../../components/Chart/CustomChart'
 import {
-  OverlayTrigger,
+  //OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
 
@@ -153,14 +153,6 @@ class EbolaChartComponent extends Component {
     return (
         <ChartContainer>
           <EbolaChart>
-            <Title>
-              <OverlayTrigger
-                placement="top"
-                overlay={this._renderTooltip(`Mouseover placeholder ebola cases ${country}`)}
-                >
-                <p>Ebola Cases</p>
-              </OverlayTrigger>
-            </Title>
             {
               dataLoading ? <Spinner/> :
                 <AxisLabels

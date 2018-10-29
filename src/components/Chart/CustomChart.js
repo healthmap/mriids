@@ -5,7 +5,7 @@ class CustomChart extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return (
       JSON.stringify(nextProps.columns) !== JSON.stringify(this.props.columns) ||
-      JSON.stringify(nextProps.rows) !== JSON.stringify(this.props.rows) 
+      JSON.stringify(nextProps.rows) !== JSON.stringify(this.props.rows)
     )
   }
 
@@ -18,9 +18,6 @@ class CustomChart extends React.Component {
         },
         gridlines: {
           color: '#ececec',
-          units: {
-            months: {format: ['MMM']},
-          },
         },
         minorGridlines: {
           color: '#ececec',

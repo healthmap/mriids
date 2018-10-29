@@ -5,6 +5,7 @@ import { extendMoment } from 'moment-range'
 
 import Map from './Map'
 
+import MapWrapper from '../components/styled-components/MapWrapper'
 import MapLegend from '../components/Layout/MapLegend/MapLegend'
 
 
@@ -130,19 +131,19 @@ class MapComponent extends Component {
     }
 
     return (
-        <div className="map-parent">
-          <div className="map-container">
-            {
-              dataLoading ? <Spinner/> : <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
-            }
-          </div>
+      <MapWrapper>
+        <div className="map-container">
           {
-            dataLoading ? <Spinner/> : <div className="map-legend">
-              <h3>Case Counts</h3>
-              {this._renderLegend(scale)}
-            </div>
+            dataLoading ? <Spinner/> : <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
           }
         </div>
+        {
+          dataLoading ? <Spinner/> : <div className="map-legend">
+            <h3>Case Counts</h3>
+            {this._renderLegend(scale)}
+          </div>
+        }
+      </MapWrapper>
     )
   }
 }
