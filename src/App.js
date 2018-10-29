@@ -30,7 +30,7 @@ class App extends Component {
       ebolaDataCombined: null,
       filters: {
         country: 'All',
-        projection: true,
+        projection: false,
         ...INITIAL_DATE_RANGE
       },
       modal: {
@@ -118,6 +118,7 @@ class App extends Component {
         }
       }
     })
+    // console.log('[App.js][_chartRangeHandler] The current state is', this.state)
   }
 
   _eventReadyCallback = (Chart, event) => {
@@ -142,13 +143,13 @@ class App extends Component {
     // console.log('[App.js][_handleCountryChange] The country selected is: ', this.state.filters.country)
   }
 
-  _handleProjectionChange = (projection) => {
+  _handleProjectionChange = () => {
     this.setState((prevState) => {
         return {
           ...prevState,
           filters: {
             ...prevState.filters,
-            projection: projection
+            projection: !prevState.filters.projection
           }
         }
     })

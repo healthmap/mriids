@@ -9,10 +9,10 @@ class ProjectionToggle extends Component {
         <ProjectionToggleWrapper>
           Projection
           <OnOffSwitch>
-            <input type="checkbox" name="projection" id="projection-switch" />
-            <label for="projection-switch">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
+            <input onChange={this.props.toggleProjectionChange} type="checkbox" name="projection" id="projection-switch" />
+            <label htmlFor="projection-switch">
+              <span className="onoffswitch-inner"></span>
+              <span className="onoffswitch-switch"></span>
             </label>
           </OnOffSwitch>
         </ProjectionToggleWrapper>
