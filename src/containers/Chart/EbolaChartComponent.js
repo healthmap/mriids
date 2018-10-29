@@ -180,14 +180,14 @@ class EbolaChartComponent extends Component {
             <ProjectionToggle />
           </EbolaChart>
           <div>
-              <Range
-              style={{width: '75%', margin: '0 auto'}}
+            <Range
+              style={{width: '80%', marginTop: '20px', marginLeft: '80px'}}
               min={0}
               max={68}
               defaultValue={[0, 68]}
               tipFormatter={value => `Week ${value}`}
               onChange={this.props.changeChartDateRange}
-              />
+            />
           </div>
         </ChartContainer>
     )

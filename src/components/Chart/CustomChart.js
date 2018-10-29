@@ -13,15 +13,40 @@ class CustomChart extends React.Component {
   render () {
     var options = {
       isStacked: true,
-      hAxis : {
-        textStyle : {
-            fontSize: 10 // or the number you want
+      hAxis: {
+        textStyle: {
+          fontSize: 11,
+        },
+        gridlines: {
+          color: '#ececec',
+          units: {
+            months: {format: ['MMM']},
+          },
+        },
+        minorGridlines: {
+          color: '#ececec',
+        },
+      },
+      vAxis: {
+        textStyle: {
+            fontSize: 11,
+        },
+        gridlines: {
+          color: '#ececec',
+        },
+        minorGridlines: {
+          color: '#ececec',
+        },
+        baselineColor: '#ccc',
+      },
+      legend: {
+        textStyle: {
+          fontSize: 11,
         }
       },
-      vAxis : {
-        textStyle : {
-            fontSize: 10 // or the number you want
-        }
+      chartArea: {
+        left: 80,
+        width: '80%',
       },
       // zoomButtonsOrder: ['1-week',
       //   '1-month', '3-months', '6-months', '1-year', 'max'
@@ -36,7 +61,7 @@ class CustomChart extends React.Component {
         options={options}
         graph_id="ColumnChart"
         width="100%"
-        height='95%'
+        height='100%'
         chartEvents={[
           {
             eventName: 'ready',
