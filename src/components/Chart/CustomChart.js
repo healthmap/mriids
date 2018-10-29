@@ -11,7 +11,6 @@ class CustomChart extends React.Component {
   }
 
   render () {
-    const {projectionFilter} = this.props;
     var options = {
       isStacked: true
       // zoomButtonsOrder: ['1-week',
@@ -19,47 +18,21 @@ class CustomChart extends React.Component {
       // ]
     }
 
-    const controls = [
-      {
-        controlType: 'ChartRangeFilter',
-        options: {
-          filterColumnIndex: 0,
-          ui: {
-            chartType: 'LineChart',
-            chartOptions: {
-              chartArea: { width: '80%', height: '20%' },
-              hAxis: { baselineColor: 'none' },
-            },
-          },
-        },
-        controlPosition: 'bottom',
-        controlWrapperParams: {
-          state: {
-            range: { start: this.props.dateStart, end: this.props.dateEnd },
-          },
-        },
-      }
-    ]
-
     return (
       <Chart
         chartType="ColumnChart"
         columns={this.props.columns}
         rows={this.props.rows}
         options={options}
-        controls={controls}
         graph_id="ColumnChart"
         width="100%"
         height='95%'
         chartEvents={[
           {
-            eventName: 'rangechange',
-            callback: this.props.eventCallback
-        }, {
             eventName: 'ready',
             callback: this.props.eventReadyCallback
-        }
-          ]}
+          }
+        ]}
       />
     )
   }
