@@ -16,8 +16,8 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 class MapComponent extends Component {
 
   _prepareDataForMap = () => {
-    // console.log('[MapParent.js][_prepareDataForMap] The data coming from App.js is: ', this.props.stateDataFromApp)
-    const {ebolaData, filters: {dateRange}} = this.props.stateDataFromApp
+    // console.log('[MapParent.js][_prepareDataForMap] The ebolaData is: ', this.props.stateDataFromApp.ebolaData)
+    const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
     let mapData = {}
     COUNTRIES.map((country) => {
@@ -25,8 +25,14 @@ class MapComponent extends Component {
       let filteredData = ebolaData[country]
       Object.keys(filteredData).forEach(function (key) {
         let ebolaDailyData = filteredData[key]
-        if (momentDateRange.contains(moment(key))) {
-          mapData[country] += parseInt(ebolaDailyData.value)
+        if (!projection) {
+          if (momentDateRange.contains(moment(key))) {
+            mapData[country] += parseInt(ebolaDailyData.value)
+          }
+        } else if (projection) {
+          if (momentDateRange.contains(moment(key))) {
+            mapData[country] += parseInt(ebolaDailyData.projections.month.y)
+          }
         }
       })
     })
