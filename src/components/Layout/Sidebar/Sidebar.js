@@ -59,26 +59,26 @@ class Sidebar extends Component {
       return (
         <SidebarWrapper>
           <SidebarToggle />
-          <Select changeCountry={this.props.changeCountry} name='location' type="location" options={['All','Guinea','Liberia','Sierra Leone']} countryValueFromState={this.props.stateDataFromApp.filters.country} />
-          {/* <select value={this.props.stateDataFromApp.filters.country} name='location' >
-            <option value="All">All</option>
-            <option value="Guinea">Guinea</option>
-            <option value="Liberia">Liberia</option>
-            <option value="Sierra Leone">Sierra Leone</option>
-          </select> */}
+          <Select 
+          changeCountry={this.props.changeCountry} 
+          name='location' 
+          type="location" 
+          options={['All','Guinea','Liberia','Sierra Leone']} 
+          countryValueFromState={this.props.stateDataFromApp.filters.country} 
+          />
           <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
           <div className="block">
             <p>Reported cases from:<br />
-            6 October 2014 to 18 January 2016</p>
-            <h2>{ebolaData}</h2>
-            <ReportedCases label="Confirmed" color="#4D73CE" value="589"/>
-            <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
-            <ReportedCases label="Suspected" color="#B7E3FE" value="621"/>
+            {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</p>
+            {/* <h2>{ebolaData}</h2> */}
+            <ReportedCases label="Suspected and confirmed" color="#4D73CE" value={ebolaData}/>
+            {/* <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
+            <ReportedCases label="Suspected" color="#B7E3FE" value="621"/> */}
           </div>
           <div className="block">
             Summary
-            <p>From 6 October 2014 to 18 January 2016, the Ebola outbreak in {country} has affected 207 people
-(69 confirmed, 21 probable, 117 suspected cases).</p>
+            <p>From {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}, the Ebola outbreak in {country} has affected {ebolaData} people
+(suspected and confirmed cases).</p>
             <p>The regions affected by the Ebola outbreak in Liberia are:</p>
             <ol>
               <li>Bomi (45)</li>
