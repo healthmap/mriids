@@ -129,12 +129,19 @@ class MapComponent extends Component {
   }
 
   render () {
-    const {dataLoading} = this.props.stateDataFromApp
+    const {dataLoading, filters: {projection}} = this.props.stateDataFromApp
 
     let mapData, scale
     if (!dataLoading) {
       mapData = this._prepareDataForMap()
       scale = this._resolveScale(mapData)
+    }
+
+    let legendHeader
+    if (projection) {
+      legendHeader = 'Projected Case Counts'
+    } else {
+      legendHeader = "Case Counts"
     }
 
     return (
@@ -145,7 +152,7 @@ class MapComponent extends Component {
           }
           {
             dataLoading ? <Spinner/> : <MapLegendWrapper><BlockDropshadow>
-              <h3>Case Counts</h3>
+              <h3>{legendHeader}</h3>
               {this._renderLegend(scale)}
             </BlockDropshadow></MapLegendWrapper>
           }
