@@ -6,6 +6,8 @@ import { extendMoment } from 'moment-range'
 import Map from './Map'
 
 import {BlockDropshadow} from '../components/styled-components/Block'
+import SvgIcon from '../components/SvgIcon'
+import CountToggle from '../components/CountToggle'
 import {MapOuterWrapper, MapInnerWrapper, MapLegendWrapper, MapFiltersWrapper} from '../components/styled-components/MapWrappers'
 import MapLegend from '../components/Layout/MapLegend/MapLegend'
 
@@ -154,6 +156,7 @@ class MapComponent extends Component {
             dataLoading ? <Spinner/> : <MapLegendWrapper><BlockDropshadow>
               <h3>{legendHeader}</h3>
               {this._renderLegend(scale)}
+              <CountToggle status='off' />
             </BlockDropshadow></MapLegendWrapper>
           }
           <MapFiltersWrapper>
