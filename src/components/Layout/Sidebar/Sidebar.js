@@ -3,6 +3,7 @@ import Moment from 'moment'
 import { extendMoment } from 'moment-range'
 
 import SidebarWrapper from '../../styled-components/SidebarWrapper';
+import {BlockPadded} from '../../styled-components/Block';
 
 import SidebarToggle from './SidebarToggle/SidebarToggle';
 import Select from '../../Select/Select';
@@ -67,19 +68,19 @@ class Sidebar extends Component {
           countryValueFromState={this.props.stateDataFromApp.filters.country}
           />
           <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
-          <div className="block">
+          <BlockPadded>
             <p>Reported cases from:<br />
             {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</p>
             {/* <h2>{ebolaData}</h2> */}
             <ReportedCases label="Suspected and confirmed" color="#4D73CE" value={ebolaData}/>
             {/* <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
             <ReportedCases label="Suspected" color="#B7E3FE" value="621"/> */}
-          </div>
-          <div className="block">
+          </BlockPadded>
+          <BlockPadded>
             Summary
             <p>From {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}, the Ebola outbreak in {country} has affected {ebolaData} people
 (suspected and confirmed cases).</p>
-          </div>
+          </BlockPadded>
         </SidebarWrapper>
       );
    }

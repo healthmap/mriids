@@ -5,7 +5,8 @@ import { extendMoment } from 'moment-range'
 
 import Map from './Map'
 
-import MapWrapper from '../components/styled-components/MapWrapper'
+import {BlockDropshadow} from '../components/styled-components/Block'
+import {MapOuterWrapper, MapInnerWrapper, MapLegendWrapper, MapFiltersWrapper} from '../components/styled-components/MapWrappers'
 import MapLegend from '../components/Layout/MapLegend/MapLegend'
 
 
@@ -137,19 +138,19 @@ class MapComponent extends Component {
     }
 
     return (
-      <MapWrapper>
-        <div className="map-container">
+      <MapOuterWrapper>
+        <MapInnerWrapper>
           {
             dataLoading ? <Spinner/> : <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
           }
-        </div>
-        {
-          dataLoading ? <Spinner/> : <div className="map-legend">
-            <h3>Case Counts</h3>
-            {this._renderLegend(scale)}
-          </div>
-        }
-      </MapWrapper>
+          {
+            dataLoading ? <Spinner/> : <MapLegendWrapper><BlockDropshadow>
+              <h3>Case Counts</h3>
+              {this._renderLegend(scale)}
+            </BlockDropshadow></MapLegendWrapper>
+          }
+        </MapInnerWrapper>
+      </MapOuterWrapper>
     )
   }
 }
