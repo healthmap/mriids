@@ -178,6 +178,7 @@ class EbolaChartComponent extends Component {
             style={{width: '80%', marginTop: '20px', marginLeft: '80px'}}
             min={0}
             max={68}
+            dots
             defaultValue={[0, 68]}
             tipFormatter={value => `Week ${value}`}
             onChange={this.props.changeChartDateRange}
