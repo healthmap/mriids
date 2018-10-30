@@ -20,13 +20,17 @@ export const MapInnerWrapper = styled.div`
 
 export const MapLegendWrapper = styled.div`
   position: absolute;
+  width: 9rem;
   left: 2rem;
   bottom: 7rem;
+  >div {
+    width: 100%;
+  }
 `
 
 export const MapFiltersWrapper = styled.div`
   position: absolute;
-  left: 11.5rem;
+  left: 12rem;
   bottom: 7rem;
   h3 {
     font-size: .8em;
