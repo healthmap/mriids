@@ -156,6 +156,14 @@ class MapComponent extends Component {
               {this._renderLegend(scale)}
             </BlockDropshadow></MapLegendWrapper>
           }
+          <MapFiltersWrapper>
+            <BlockDropshadow>
+              <h3>Coming soon</h3>
+              <label><input type="checkbox" disabled /> Health Facilities</label>
+              <label><input type="checkbox" disabled /> Population Density</label>
+              <label><input type="checkbox" disabled /> Vaccination Coverage</label>
+            </BlockDropshadow>
+          </MapFiltersWrapper>
         </MapInnerWrapper>
       </MapOuterWrapper>
     )

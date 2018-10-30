@@ -26,6 +26,16 @@ export const MapLegendWrapper = styled.div`
 
 export const MapFiltersWrapper = styled.div`
   position: absolute;
-  left: 12rem;
+  left: 11.5rem;
   bottom: 7rem;
+  h3 {
+    font-size: .8em;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  label {
+    display: block;
+    margin: .3em 0;
+    color: #666;
+  }
 `
