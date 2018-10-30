@@ -1,19 +1,32 @@
 import styled from 'styled-components'
 
 const Button = styled.button`
-  font-size: 14px;
+  position: relative;
+  padding: .2em 1.5em;
   color: #000;
-  background: #FAFAFB;
-  border-color: #C4C6CB;
-  border-radius: 4px;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
   outline: none;
-  &[disabled]{
-    color: #828282;
-    background: #ECECEF;
-    border-color: #C4C6CB;
+  &:focus,
+  &.focus {
+    text-decoration: none;
+    outline: 0;
   }
-  &:first-child {
-    margin-bottom: 2px;
+  &:active,
+  &.is-active {
+    color: #fff;
+    background-color: #000;
+    background-image: none;
+    outline: 0;
+    user-select: none;
+  }
+  &:disabled {
+    cursor: auto;
+    opacity: .65;
   }
 `
 

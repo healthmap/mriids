@@ -12,6 +12,8 @@ import {
 } from 'react-bootstrap'
 
 import AxisLabels from '../../components/AxisLabels'
+import Button from '../../components/styled-components/Button'
+import TimespanButtonsWrapper from '../../components/styled-components/TimespanButtonsWrapper'
 import EbolaChart from '../../components/styled-components/EbolaChart'
 import ChartContainer from '../../components/styled-components/ChartContainer'
 import Title from '../../components/styled-components/Title'
@@ -172,16 +174,23 @@ class EbolaChartComponent extends Component {
             }
             <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} />
           </EbolaChart>
-          <div>
-            <Range
-              style={{width: '80%', marginTop: '20px', marginLeft: '80px'}}
-              min={0}
-              max={68}
-              defaultValue={[0, 68]}
-              tipFormatter={value => `Week ${value}`}
-              onChange={this.props.changeChartDateRange}
-            />
-          </div>
+          <Range
+            style={{width: '80%', marginTop: '20px', marginLeft: '80px'}}
+            min={0}
+            max={68}
+            defaultValue={[0, 68]}
+            tipFormatter={value => `Week ${value}`}
+            onChange={this.props.changeChartDateRange}
+          />
+          <TimespanButtonsWrapper>
+            <label>Timespan:</label>
+            <Button>1 week</Button>
+            <Button>1 month</Button>
+            <Button>3 months</Button>
+            <Button>6 months</Button>
+            <Button>1 year</Button>
+            <Button>Max</Button>
+          </TimespanButtonsWrapper>
         </ChartContainer>
     )
   }
