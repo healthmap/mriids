@@ -15,7 +15,7 @@ class Sidebar extends Component {
 
   _prepareCountryEbolaData = () => {
     // console.log('[MapParent.js][_prepareDataForMap] The data coming from App.js is: ', this.props.stateDataFromApp)
-    const {ebolaData, filters: {dateRange}} = this.props.stateDataFromApp
+    const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
     let countryEbolaData = {}
     COUNTRIES.map((country) => {
@@ -23,8 +23,14 @@ class Sidebar extends Component {
       let filteredData = ebolaData[country]
       Object.keys(filteredData).forEach(function (key) {
         let ebolaDailyData = filteredData[key]
-        if (momentDateRange.contains(moment(key))) {
-          countryEbolaData[country] += parseInt(ebolaDailyData.value)
+        if (!projection) {
+          if (momentDateRange.contains(moment(key))) {
+            countryEbolaData[country] += parseInt(ebolaDailyData.value)
+          }
+        } else if (projection) {
+          if (momentDateRange.contains(moment(key))) {
+            countryEbolaData[country] += parseInt(ebolaDailyData.projections.month.y)
+          }
         }
       })
     })
@@ -68,17 +74,17 @@ class Sidebar extends Component {
           />
           <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
           <div className="block">
-            <p>Reported cases from:<br />
+            <p>{filters.projection ? "Projection" : "Reported Cases"} from:<br />
             {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</p>
             {/* <h2>{ebolaData}</h2> */}
-            <ReportedCases label="Suspected and confirmed" color="#4D73CE" value={ebolaData}/>
+            <ReportedCases label={filters.projection ? "Projected cases" : "Suspected and confirmed"} color={filters.projection ? "#CB4627" : "#4D73CE"} value={ebolaData}/>
             {/* <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
             <ReportedCases label="Suspected" color="#B7E3FE" value="621"/> */}
           </div>
           <div className="block">
             Summary
-            <p>From {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}, the Ebola outbreak in {country} has affected {ebolaData} people
-(suspected and confirmed cases).</p>
+            <p>From {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}, the Ebola outbreak in {country} {filters.projection ? "is projected to affect" : "has affected"} {ebolaData} people
+{!filters.projection ? " (suspected and confirmed cases)" : null}.</p>
             <p>The regions affected by the Ebola outbreak in Liberia are:</p>
             <ol>
               <li>Bomi (45)</li>
