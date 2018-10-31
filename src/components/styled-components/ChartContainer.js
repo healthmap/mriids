@@ -4,7 +4,7 @@ import { media } from '../../assets/style-utils'
 const ChartContainer = styled.div`
   flex: none;
   padding-left: 18rem; /* $sidebar-width */
-  height: 25rem; /* $risk-height */
+  height: 28rem; /* $risk-height */
   overflow: hidden;
 `
 
