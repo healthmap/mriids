@@ -4,6 +4,7 @@ import { extendMoment } from 'moment-range'
 
 import SidebarWrapper from '../../styled-components/SidebarWrapper';
 import {BlockPadded} from '../../styled-components/Block';
+import {SelectSearchWrapper, SelectOutbreakWrapper} from '../../styled-components/SelectWrappers';
 
 import SidebarToggle from './SidebarToggle/SidebarToggle';
 import Select from '../../Select/Select';
@@ -66,14 +67,18 @@ class Sidebar extends Component {
       return (
         <SidebarWrapper>
           <SidebarToggle />
-          <Select
-          changeCountry={this.props.changeCountry}
-          name='location'
-          type="location"
-          options={['All','Guinea','Liberia','Sierra Leone']}
-          countryValueFromState={this.props.stateDataFromApp.filters.country}
-          />
-          <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
+          <SelectSearchWrapper>
+            <Select
+            changeCountry={this.props.changeCountry}
+            name='location'
+            type="location"
+            options={['All','Guinea','Liberia','Sierra Leone']}
+            countryValueFromState={this.props.stateDataFromApp.filters.country}
+            />
+          </SelectSearchWrapper>
+          <SelectOutbreakWrapper>
+            <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
+          </SelectOutbreakWrapper>
           <BlockPadded>
             <p>{filters.projection ? "Projection" : "Reported Cases"} from:<br />
             {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</p>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {SelectInput} from '../styled-components/SelectWrappers';
 
 class Select extends Component {
 
@@ -13,11 +14,10 @@ class Select extends Component {
 
   render() {
     return (
-      <select className={this.props.type} name={this.props.name} value={this.props.countryValueFromState} onChange={this.props.changeCountry}>
+      <SelectInput name={this.props.name} value={this.props.countryValueFromState} onChange={this.props.changeCountry}>
         {this._renderOptions(this.props.options)}
-      </select>
+      </SelectInput>
     )
   }
 }
-
 export default Select;
