@@ -9,6 +9,10 @@ const SidebarWrapper = styled.div`
   background-color: #efefef; /* $lightest-gray make variable */
   overflow: auto;
   z-index: 2; /* $z-index--sidebar make variable */
+  h4 {
+    padding-top: 1em;
+    border-top: 1px solid #666;
+  }
 `
 
 export default SidebarWrapper;

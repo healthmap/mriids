@@ -80,15 +80,15 @@ class Sidebar extends Component {
             <Select name='outbreak' type="outbreak" options={['Ebola Outbreak']} />
           </SelectOutbreakWrapper>
           <BlockPadded>
-            <p>{filters.projection ? "Projection" : "Reported Cases"} from:<br />
-            {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</p>
+            <p><strong>{filters.projection ? "Projection" : "Reported Cases"} from:<br />
+            {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</strong></p>
             {/* <h2>{ebolaData}</h2> */}
             <ReportedCases label={filters.projection ? "Projected cases" : "Suspected and confirmed"} color={filters.projection ? "#CB4627" : "#4D73CE"} value={ebolaData}/>
             {/* <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
             <ReportedCases label="Suspected" color="#B7E3FE" value="621"/> */}
           </BlockPadded>
           <BlockPadded>
-            Summary
+            <h4>SUMMARY</h4>
             <p>From {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}, the Ebola outbreak in {country} {filters.projection ? "is projected to affect" : "has affected"} {ebolaData} people
 {!filters.projection ? " (suspected and confirmed cases)" : null}.</p>
           </BlockPadded>
