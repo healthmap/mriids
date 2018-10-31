@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 const TimespanButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
   margin: 25px 0 0 80px;
   button {
     margin-right: .2em;

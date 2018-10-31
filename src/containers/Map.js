@@ -3,7 +3,7 @@ import ReactMapGL, { Popup } from 'react-map-gl';
 import { ScaleControl } from 'mapbox-gl';
 import { guinea, sierraLeone, liberia } from '../assets/countries'
 
-import Button from '../components/styled-components/Button'
+import {Button} from '../components/styled-components/Button'
 import ZoomButtons from '../components/styled-components/ZoomButtons'
 import MarkerStyled from '../components/styled-components/MarkerStyled'
 

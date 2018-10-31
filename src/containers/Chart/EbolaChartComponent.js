@@ -12,10 +12,11 @@ import {
 } from 'react-bootstrap'
 
 import AxisLabels from '../../components/AxisLabels'
-import Button from '../../components/styled-components/Button'
-import TimespanButtonsWrapper from '../../components/styled-components/TimespanButtonsWrapper'
-import EbolaChart from '../../components/styled-components/EbolaChart'
+import {Button, ButtonIcon, ButtonLink} from '../../components/styled-components/Button'
 import ChartContainer from '../../components/styled-components/ChartContainer'
+import EbolaChart from '../../components/styled-components/EbolaChart'
+import SvgIcon from '../../components/SvgIcon'
+import TimespanButtonsWrapper from '../../components/styled-components/TimespanButtonsWrapper'
 import Title from '../../components/styled-components/Title'
 
 import ProjectionToggle from '../ProjectionToggle'
@@ -191,6 +192,9 @@ class EbolaChartComponent extends Component {
             <Button>6 months</Button>
             <Button>1 year</Button>
             <Button>Max</Button>
+            <ButtonIcon><SvgIcon icon='Previous' size={20} title="Previous" /></ButtonIcon>
+            <ButtonIcon><SvgIcon icon='Next' size={20} title="Next" /></ButtonIcon>
+            <ButtonLink>Reset</ButtonLink>
           </TimespanButtonsWrapper>
         </ChartContainer>
     )
