@@ -16,6 +16,8 @@ const moment = extendMoment(Moment)
 
 const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 
+const RELATIVE_RISK_COUNTRIES = ['Angola', 'Burundi', 'Benin', 'Burkina Faso', 'Botswana', 'Central African Republic', 'Côte d’Ivoire', 'Cameroon', 'Congo - Kinshasa', 'Congo - Brazzaville', 'Comoros', 'Cape Verde', 'Djibouti', 'Algeria', 'Egypt', 'Eritrea', 'Ethiopia', 'Gabon', 'Ghana', 'Guinea', 'Gambia', 'Guinea-Bissau', 'Equatorial Guinea', 'Kenya', 'Liberia', 'Libya', 'Lesotho', 'Morocco', 'Madagascar', 'Mali', 'Mozambique', 'Mauritania', 'Mauritius', 'Malawi', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sudan', 'Senegal', 'St. Helena', 'Sierra Leone', 'Somalia', 'South Sudan', 'São Tomé and Príncipe', 'Swaziland', 'Seychelles', 'Chad', 'Togo', 'Tunisia', 'Tanzania', 'Uganda', 'South Africa', 'Zambia', 'Zimbabwe']
+
 class MapComponent extends Component {
 
   _prepareDataForMap = () => {
@@ -40,8 +42,28 @@ class MapComponent extends Component {
       })
     })
 
-    console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
+    // console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
     return mapData
+  }
+
+  _prepareRiskDataForMap = () => {
+    const {riskData} = this.props.stateDataFromApp
+    let newRiskData = {
+      'Angola': {},'Burundi': {}, 'Benin': {}, 'Burkina Faso': {}, 'Botswana': {}, 'Central African Republic': {}, 'Côte d’Ivoire': {}, 'Cameroon': {}, 'Congo - Kinshasa': {}, 'Congo - Brazzaville': {}, 'Comoros': {}, 'Cape Verde': {}, 'Djibouti': {}, 'Algeria': {}, 'Egypt': {}, 'Eritrea': {}, 'Ethiopia': {}, 'Gabon': {}, 'Ghana': {}, 'Guinea': {}, 'Gambia': {}, 'Guinea-Bissau': {}, 'Equatorial Guinea': {}, 'Kenya': {}, 'Liberia': {}, 'Libya': {}, 'Lesotho': {}, 'Morocco': {}, 'Madagascar': {}, 'Mali': {}, 'Mozambique': {}, 'Mauritania': {}, 'Mauritius': {}, 'Malawi': {}, 'Namibia': {}, 'Niger': {}, 'Nigeria': {}, 'Rwanda': {}, 'Sudan': {}, 'Senegal': {}, 'St. Helena': {}, 'Sierra Leone': {}, 'Somalia': {}, 'South Sudan': {}, 'São Tomé and Príncipe': {}, 'Swaziland': {}, 'Seychelles': {}, 'Chad': {}, 'Togo': {}, 'Tunisia': {}, 'Tanzania': {}, 'Uganda': {}, 'South Africa': {}, 'Zambia': {}, 'Zimbabwe': {}
+    }
+
+    RELATIVE_RISK_COUNTRIES.forEach((country) => {
+      let relativeRisk
+      riskData.forEach((item) => {
+        // console.log('[MapParent.js][_prepareRiskDataForMap] Each item is: ', item)
+        if (item.country === country) {
+          relativeRisk = parseFloat(item.wtd_rel_risk)
+        }
+      })
+      newRiskData[country]['relative_risk'] = relativeRisk
+    })
+    // console.log('[MapParent.js][_prepareRiskDataForMap] The riskData object is: ', newRiskData)
+    return newRiskData
   }
 
   _resolveColor = (value) => {
@@ -133,9 +155,10 @@ class MapComponent extends Component {
   render () {
     const {dataLoading, filters: {projection}} = this.props.stateDataFromApp
 
-    let mapData, scale
+    let mapData, scale, riskData
     if (!dataLoading) {
       mapData = this._prepareDataForMap()
+      riskData = this._prepareRiskDataForMap()
       scale = this._resolveScale(mapData)
     }
 

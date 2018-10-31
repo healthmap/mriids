@@ -28,6 +28,7 @@ class App extends Component {
       dataLoading: true,
       ebolaData: null,
       ebolaDataCombined: null,
+      riskData: null,
       filters: {
         country: 'All',
         projection: false,
@@ -53,6 +54,7 @@ class App extends Component {
     let newState = {}
     newState['ebolaData'] = this._prepareEbolaData(data)
     newState['ebolaDataCombined'] = await d3.csv(csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension)
+    newState['riskData'] = await d3.csv(csvLocationPath + 'weighted_flow' + csvExtension)
 
     this.setState({
       dataLoading: false,
@@ -60,6 +62,7 @@ class App extends Component {
     })
     // console.log('[App.js][_importDataFromCsv] The ebolaData is: ', this.state.ebolaData)
     // console.log('[App.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
+    // console.log('[App.js][_importDataFromCsv] The riskData is: ', this.state.riskData)
   }
 
   // This prepares the imported csv data to be saved in state.ebolaData. It splits the data by country and sets the projections into 'oneWeek', 'twoWeeks', and 'month'
