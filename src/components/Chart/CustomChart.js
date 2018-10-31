@@ -42,7 +42,7 @@ class CustomChart extends React.Component {
       },
       chartArea: {
         left: 80,
-        width: '80%',
+        width: '75%',
       },
       // zoomButtonsOrder: ['1-week',
       //   '1-month', '3-months', '6-months', '1-year', 'max'

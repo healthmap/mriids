@@ -15,6 +15,7 @@ import AxisLabels from '../../components/AxisLabels'
 import {Button, ButtonIcon, ButtonLink} from '../../components/styled-components/Button'
 import ChartContainer from '../../components/styled-components/ChartContainer'
 import EbolaChart from '../../components/styled-components/EbolaChart'
+import {FlexRow} from '../../components/styled-components/LayoutHelpers'
 import SvgIcon from '../../components/SvgIcon'
 import TimespanButtonsWrapper from '../../components/styled-components/TimespanButtonsWrapper'
 import Title from '../../components/styled-components/Title'
@@ -173,17 +174,19 @@ class EbolaChartComponent extends Component {
                     />
                 </AxisLabels>
             }
-            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} />
           </EbolaChart>
-          <Range
-            style={{width: '80%', marginTop: '20px', marginLeft: '80px'}}
-            min={0}
-            max={68}
-            dots
-            defaultValue={[0, 68]}
-            tipFormatter={value => `Week ${value}`}
-            onChange={this.props.changeChartDateRange}
-          />
+          <FlexRow>
+            <Range
+              style={{width: '75%', marginLeft: '80px'}}
+              min={0}
+              max={68}
+              dots
+              defaultValue={[0, 68]}
+              tipFormatter={value => `Week ${value}`}
+              onChange={this.props.changeChartDateRange}
+            />
+            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} />
+          </FlexRow>
           <TimespanButtonsWrapper>
             <label>Timespan:</label>
             <Button>1 week</Button>
