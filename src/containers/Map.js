@@ -3,8 +3,7 @@ import ReactMapGL, { Popup } from 'react-map-gl';
 import { ScaleControl } from 'mapbox-gl';
 import { guinea, sierraLeone, liberia } from '../assets/countries'
 
-import {Button} from '../components/styled-components/Button'
-import ZoomButtons from '../components/styled-components/ZoomButtons'
+import {ZoomButtons, ZoomButton} from '../components/styled-components/ZoomButtons'
 import MarkerStyled from '../components/styled-components/MarkerStyled'
 
 import MapToggle from './MapToggle/MapToggle';
@@ -191,8 +190,8 @@ class Map extends Component {
           onViewportChange={this._onViewportChange}
         />
         <ZoomButtons>
-          <Button disabled={viewport.zoom >= 20} onClick={this.onHandleChangeZoom(1)}>+</Button>
-          <Button disabled={viewport.zoom <= 2} onClick={this.onHandleChangeZoom(-1)}>-</Button>
+          <ZoomButton disabled={viewport.zoom >= 20} onClick={this.onHandleChangeZoom(1)}>+</ZoomButton>
+          <ZoomButton disabled={viewport.zoom <= 2} onClick={this.onHandleChangeZoom(-1)}>-</ZoomButton>
         </ZoomButtons>
       </div>
     );
