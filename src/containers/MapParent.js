@@ -4,6 +4,7 @@ import Moment from 'moment'
 import { extendMoment } from 'moment-range'
 
 import Map from './Map'
+import RiskMap from './RiskMap'
 
 import {BlockDropshadow} from '../components/styled-components/Block'
 import SvgIcon from '../components/SvgIcon'
@@ -19,7 +20,9 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 const RELATIVE_RISK_COUNTRIES = ['Angola', 'Burundi', 'Benin', 'Burkina Faso', 'Botswana', 'Central African Republic', 'Côte d’Ivoire', 'Cameroon', 'Congo - Kinshasa', 'Congo - Brazzaville', 'Comoros', 'Cape Verde', 'Djibouti', 'Algeria', 'Egypt', 'Eritrea', 'Ethiopia', 'Gabon', 'Ghana', 'Guinea', 'Gambia', 'Guinea-Bissau', 'Equatorial Guinea', 'Kenya', 'Liberia', 'Libya', 'Lesotho', 'Morocco', 'Madagascar', 'Mali', 'Mozambique', 'Mauritania', 'Mauritius', 'Malawi', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sudan', 'Senegal', 'St. Helena', 'Sierra Leone', 'Somalia', 'South Sudan', 'São Tomé and Príncipe', 'Swaziland', 'Seychelles', 'Chad', 'Togo', 'Tunisia', 'Tanzania', 'Uganda', 'South Africa', 'Zambia', 'Zimbabwe']
 
 class MapComponent extends Component {
-
+  state = {
+    mapView: 'snapshot'
+  }
   _prepareDataForMap = () => {
     // console.log('[MapParent.js][_prepareDataForMap] The ebolaData is: ', this.props.stateDataFromApp.ebolaData)
     const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
@@ -64,6 +67,14 @@ class MapComponent extends Component {
     })
     // console.log('[MapParent.js][_prepareRiskDataForMap] The riskData object is: ', newRiskData)
     return newRiskData
+  }
+
+  onHandleMapViewChange = (view) => {
+    // console.log('[MapParent.js][onHandleMapViewChange] The value is: ', view)
+    this.setState({
+      ...this.state,
+      mapView: view
+    })
   }
 
   _resolveColor = (value) => {
@@ -137,9 +148,21 @@ class MapComponent extends Component {
     return maxValue
   }
 
-  _renderLegend = (scale) => {
+  renderMap = (mapData, scale) => {
+    if (this.state.mapView === 'risk') {
+      return (
+        <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
+      )
+    } else {
+      return (
+        <Map changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+      )
+    }
+  }
+
+  _renderLegendLevels = (scale) => {
     // This represents the number of levels in the legend
-    // console.log("[MapParent.js][_renderLegend] The scale is: ", scale)
+    // console.log("[MapParent.js][_renderLegendLevels] The scale is: ", scale)
     let len = 9
     let components = []
     for (var i = 0; i <= len; i++) {
@@ -148,12 +171,50 @@ class MapComponent extends Component {
         <MapLegend key={`uniqueColorId${i}`} color={this._resolveColor(value)} value={Math.round(value * scale)} />
       )
     }
-    // console.log("[MapParent.js][_renderLegend] The components are: ", components)
+    // console.log("[MapParent.js][_renderLegendLevels] The components are: ", components)
     return components.reverse()
   }
 
+  _conditionalRenderLegend = (scale) => {
+    let legendHeader
+    if (this.props.stateDataFromApp.filters.projection) {
+      legendHeader = 'Projected Case Counts'
+    } else {
+      legendHeader = "Case Counts"
+    }
+    if (this.state.mapView === 'snapshot') {
+      return (
+        <MapLegendWrapper><BlockDropshadow>
+              <h3>{legendHeader}</h3>
+              {this._renderLegendLevels(scale)}
+              <CountToggle status='off' />
+            </BlockDropshadow>
+            </MapLegendWrapper>
+      )
+    } else {
+      return null
+    }
+  }
+
+  _renderMapFilters = () => {
+    if (this.state.mapView === 'snapshot') {
+      return (
+        <MapFiltersWrapper>
+        <BlockDropshadow>
+          <h3>Coming soon</h3>
+          <label><input type="checkbox" disabled /> Health Facilities</label>
+          <label><input type="checkbox" disabled /> Population Density</label>
+          <label><input type="checkbox" disabled /> Vaccination Coverage</label>
+        </BlockDropshadow>
+      </MapFiltersWrapper>
+      )
+    } else {
+      return null
+    }
+  }
+
   render () {
-    const {dataLoading, filters: {projection}} = this.props.stateDataFromApp
+    const {dataLoading} = this.props.stateDataFromApp
 
     let mapData, scale, riskData
     if (!dataLoading) {
@@ -162,34 +223,22 @@ class MapComponent extends Component {
       scale = this._resolveScale(mapData)
     }
 
-    let legendHeader
-    if (projection) {
-      legendHeader = 'Projected Case Counts'
-    } else {
-      legendHeader = "Case Counts"
-    }
+    // console.log('[MapParent.js][render()] The mapData is: ', mapData)
+    // console.log('[MapParent.js][render()] The dataLoading is: ', dataLoading)
 
     return (
       <MapOuterWrapper>
         <MapInnerWrapper>
           {
-            dataLoading ? <Spinner/> : <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+            // dataLoading ? <Spinner/> : <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
+            dataLoading ? <Spinner/> : this.renderMap(mapData, scale)
           }
           {
-            dataLoading ? <Spinner/> : <MapLegendWrapper><BlockDropshadow>
-              <h3>{legendHeader}</h3>
-              {this._renderLegend(scale)}
-              <CountToggle status='off' />
-            </BlockDropshadow></MapLegendWrapper>
+            dataLoading ? <Spinner/> : this._conditionalRenderLegend(scale)
           }
-          <MapFiltersWrapper>
-            <BlockDropshadow>
-              <h3>Coming soon</h3>
-              <label><input type="checkbox" disabled /> Health Facilities</label>
-              <label><input type="checkbox" disabled /> Population Density</label>
-              <label><input type="checkbox" disabled /> Vaccination Coverage</label>
-            </BlockDropshadow>
-          </MapFiltersWrapper>
+          {
+            this._renderMapFilters()
+          }
         </MapInnerWrapper>
       </MapOuterWrapper>
     )
