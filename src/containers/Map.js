@@ -9,12 +9,11 @@ import MarkerStyled from '../components/styled-components/MarkerStyled'
 
 import MapToggle from './MapToggle/MapToggle';
 
-const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZGFtaWFuc2tvbmVjem55IiwiYSI6ImNqOGs2c3hyNTA5cnMyd254aDZnN3k1ZGwifQ.RaPv0-Oe6bz3PQ9XAkH-Rw'
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY29tcGVwaSIsImEiOiJjam4zaDd0cm4wZWE1M3JsYm8zMnJtcTU2In0.my4lxowcqSdygJmxVgz5sA'
 const MAX_BOUNDS = [
   [-180, -90],
   [180, 90]
 ]
-
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +97,7 @@ class Map extends Component {
         }
       });
     })
+    map.setStyle('mapbox://styles/compepi/cjnxgpr991b6h2rpcvqmh5j4f')
     map.on('style.load', () => {
       this.setState({
         mapStylesLoaded: true
@@ -144,6 +144,7 @@ class Map extends Component {
   _resolveColor = (country) => {
     // console.log("[Map.js][_resolveColor] The country data is: ", country)
     const {data, scale, colorFunction} = this.props;
+    // console.log('[Map.js][_resolveColor] The data coming from props is: ', data)
     const percentage = data[country] / scale
     // console.log("[Map.js][_resolveColor] The percentage for this country is: ", percentage)
     // colorFunction refers to the _resolveColor function in MapParent.js
@@ -180,9 +181,10 @@ class Map extends Component {
 
   render() {
     const {viewport, settings} = this.state;
+
     return (
       <div className="map" ref={ (parentElement) => this.parentElement = parentElement}>
-        <MapToggle />
+        <MapToggle changeMapView={this.props.changeMapView} />
         <ReactMapGL
           {...viewport}
           {...settings}

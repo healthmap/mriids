@@ -4,6 +4,7 @@ import Moment from 'moment'
 import { extendMoment } from 'moment-range'
 
 import Map from './Map'
+import RiskMap from './RiskMap'
 
 import {BlockDropshadow} from '../components/styled-components/Block'
 import SvgIcon from '../components/SvgIcon'
@@ -19,7 +20,9 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 const RELATIVE_RISK_COUNTRIES = ['Angola', 'Burundi', 'Benin', 'Burkina Faso', 'Botswana', 'Central African Republic', 'Côte d’Ivoire', 'Cameroon', 'Congo - Kinshasa', 'Congo - Brazzaville', 'Comoros', 'Cape Verde', 'Djibouti', 'Algeria', 'Egypt', 'Eritrea', 'Ethiopia', 'Gabon', 'Ghana', 'Guinea', 'Gambia', 'Guinea-Bissau', 'Equatorial Guinea', 'Kenya', 'Liberia', 'Libya', 'Lesotho', 'Morocco', 'Madagascar', 'Mali', 'Mozambique', 'Mauritania', 'Mauritius', 'Malawi', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sudan', 'Senegal', 'St. Helena', 'Sierra Leone', 'Somalia', 'South Sudan', 'São Tomé and Príncipe', 'Swaziland', 'Seychelles', 'Chad', 'Togo', 'Tunisia', 'Tanzania', 'Uganda', 'South Africa', 'Zambia', 'Zimbabwe']
 
 class MapComponent extends Component {
-
+  state = {
+    mapView: 'snapshot'
+  }
   _prepareDataForMap = () => {
     // console.log('[MapParent.js][_prepareDataForMap] The ebolaData is: ', this.props.stateDataFromApp.ebolaData)
     const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
@@ -64,6 +67,14 @@ class MapComponent extends Component {
     })
     // console.log('[MapParent.js][_prepareRiskDataForMap] The riskData object is: ', newRiskData)
     return newRiskData
+  }
+
+  onHandleMapViewChange = (view) => {
+    // console.log('[MapParent.js][onHandleMapViewChange] The value is: ', view)
+    this.setState({
+      ...this.state,
+      mapView: view
+    })
   }
 
   _resolveColor = (value) => {
@@ -137,6 +148,18 @@ class MapComponent extends Component {
     return maxValue
   }
 
+  renderMap = (mapData, scale) => {
+    if (this.state.mapView === 'risk') {
+      return (
+        <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
+      )
+    } else {
+      return (
+        <Map changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+      )
+    }
+  }
+
   _renderLegend = (scale) => {
     // This represents the number of levels in the legend
     // console.log("[MapParent.js][_renderLegend] The scale is: ", scale)
@@ -154,6 +177,7 @@ class MapComponent extends Component {
 
   render () {
     const {dataLoading, filters: {projection}} = this.props.stateDataFromApp
+    const {mapView} = this.state
 
     let mapData, scale, riskData
     if (!dataLoading) {
@@ -161,6 +185,9 @@ class MapComponent extends Component {
       riskData = this._prepareRiskDataForMap()
       scale = this._resolveScale(mapData)
     }
+
+    // console.log('[MapParent.js][render()] The mapData is: ', mapData)
+    // console.log('[MapParent.js][render()] The dataLoading is: ', dataLoading)
 
     let legendHeader
     if (projection) {
@@ -173,7 +200,9 @@ class MapComponent extends Component {
       <MapOuterWrapper>
         <MapInnerWrapper>
           {
-            dataLoading ? <Spinner/> : <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+            // dataLoading ? <Spinner/> : <Map changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+            // dataLoading ? <Spinner/> : <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
+            dataLoading ? <Spinner/> : this.renderMap(mapData, scale)
           }
           {
             dataLoading ? <Spinner/> : <MapLegendWrapper><BlockDropshadow>
