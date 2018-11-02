@@ -160,9 +160,9 @@ class MapComponent extends Component {
     }
   }
 
-  _renderLegend = (scale) => {
+  _renderLegendLevels = (scale) => {
     // This represents the number of levels in the legend
-    // console.log("[MapParent.js][_renderLegend] The scale is: ", scale)
+    // console.log("[MapParent.js][_renderLegendLevels] The scale is: ", scale)
     let len = 9
     let components = []
     for (var i = 0; i <= len; i++) {
@@ -171,13 +171,50 @@ class MapComponent extends Component {
         <MapLegend key={`uniqueColorId${i}`} color={this._resolveColor(value)} value={Math.round(value * scale)} />
       )
     }
-    // console.log("[MapParent.js][_renderLegend] The components are: ", components)
+    // console.log("[MapParent.js][_renderLegendLevels] The components are: ", components)
     return components.reverse()
   }
 
+  _conditionalRenderLegend = (scale) => {
+    let legendHeader
+    if (this.props.stateDataFromApp.filters.projection) {
+      legendHeader = 'Projected Case Counts'
+    } else {
+      legendHeader = "Case Counts"
+    }
+    if (this.state.mapView === 'snapshot') {
+      return (
+        <MapLegendWrapper><BlockDropshadow>
+              <h3>{legendHeader}</h3>
+              {this._renderLegendLevels(scale)}
+              <CountToggle status='off' />
+            </BlockDropshadow>
+            </MapLegendWrapper>
+      )
+    } else {
+      return null
+    }
+  }
+
+  _renderMapFilters = () => {
+    if (this.state.mapView === 'snapshot') {
+      return (
+        <MapFiltersWrapper>
+        <BlockDropshadow>
+          <h3>Coming soon</h3>
+          <label><input type="checkbox" disabled /> Health Facilities</label>
+          <label><input type="checkbox" disabled /> Population Density</label>
+          <label><input type="checkbox" disabled /> Vaccination Coverage</label>
+        </BlockDropshadow>
+      </MapFiltersWrapper>
+      )
+    } else {
+      return null
+    }
+  }
+
   render () {
-    const {dataLoading, filters: {projection}} = this.props.stateDataFromApp
-    const {mapView} = this.state
+    const {dataLoading} = this.props.stateDataFromApp
 
     let mapData, scale, riskData
     if (!dataLoading) {
@@ -189,36 +226,19 @@ class MapComponent extends Component {
     // console.log('[MapParent.js][render()] The mapData is: ', mapData)
     // console.log('[MapParent.js][render()] The dataLoading is: ', dataLoading)
 
-    let legendHeader
-    if (projection) {
-      legendHeader = 'Projected Case Counts'
-    } else {
-      legendHeader = "Case Counts"
-    }
-
     return (
       <MapOuterWrapper>
         <MapInnerWrapper>
           {
-            // dataLoading ? <Spinner/> : <Map changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
             // dataLoading ? <Spinner/> : <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
             dataLoading ? <Spinner/> : this.renderMap(mapData, scale)
           }
           {
-            dataLoading ? <Spinner/> : <MapLegendWrapper><BlockDropshadow>
-              <h3>{legendHeader}</h3>
-              {this._renderLegend(scale)}
-              <CountToggle status='off' />
-            </BlockDropshadow></MapLegendWrapper>
+            dataLoading ? <Spinner/> : this._conditionalRenderLegend(scale)
           }
-          <MapFiltersWrapper>
-            <BlockDropshadow>
-              <h3>Coming soon</h3>
-              <label><input type="checkbox" disabled /> Health Facilities</label>
-              <label><input type="checkbox" disabled /> Population Density</label>
-              <label><input type="checkbox" disabled /> Vaccination Coverage</label>
-            </BlockDropshadow>
-          </MapFiltersWrapper>
+          {
+            this._renderMapFilters()
+          }
         </MapInnerWrapper>
       </MapOuterWrapper>
     )
