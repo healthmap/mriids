@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import ReactMapGL, { Popup } from 'react-map-gl';
 import { ScaleControl } from 'mapbox-gl';
 
-import {Button} from '../components/styled-components/Button'
-import {ZoomButtons} from '../components/styled-components/ZoomButtons'
+import {ZoomButtons, ZoomButton} from '../components/styled-components/ZoomButtons'
 
 import MapToggle from './MapToggle/MapToggle';
 
@@ -107,8 +106,8 @@ class RiskMap extends Component {
           // mapStyle={mapboxStyle}
         />
         <ZoomButtons>
-          <Button disabled={viewport.zoom >= 20} onClick={this.onHandleChangeZoom(1)}>+</Button>
-          <Button disabled={viewport.zoom <= 2} onClick={this.onHandleChangeZoom(-1)}>-</Button>
+          <ZoomButton disabled={viewport.zoom >= 20} onClick={this.onHandleChangeZoom(1)}>+</ZoomButton>
+          <ZoomButton disabled={viewport.zoom <= 2} onClick={this.onHandleChangeZoom(-1)}>-</ZoomButton>
         </ZoomButtons>
       </div>
     );
