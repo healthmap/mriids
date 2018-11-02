@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import ReactMapGL, { Popup } from 'react-map-gl';
 import { ScaleControl } from 'mapbox-gl';
 
-import Button from '../components/styled-components/Button'
-import ZoomButtons from '../components/styled-components/ZoomButtons'
+import {Button} from '../components/styled-components/Button'
+import {ZoomButtons} from '../components/styled-components/ZoomButtons'
 
 import MapToggle from './MapToggle/MapToggle';
 
