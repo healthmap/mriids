@@ -237,7 +237,6 @@ class Map extends Component {
 
     return (
       <div className="map" ref={ (parentElement) => this.parentElement = parentElement}>
-        <MapToggle changeMapView={this.props.changeMapView} />
         <ReactMapGL
           {...viewport}
           {...settings}

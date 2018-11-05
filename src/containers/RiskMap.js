@@ -4,8 +4,6 @@ import { ScaleControl } from 'mapbox-gl';
 
 import {ZoomButtons, ZoomButton} from '../components/styled-components/ZoomButtons'
 
-import MapToggle from './MapToggle/MapToggle';
-
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY29tcGVwaSIsImEiOiJjam4zaDd0cm4wZWE1M3JsYm8zMnJtcTU2In0.my4lxowcqSdygJmxVgz5sA'
 const MAX_BOUNDS = [
   [-180, -90],
@@ -96,7 +94,6 @@ class RiskMap extends Component {
 
     return (
       <div className="map" ref={ (parentElement) => this.parentElement = parentElement}>
-        <MapToggle changeMapView={this.props.changeMapView} />
         <ReactMapGL
           {...viewport}
           {...settings}

@@ -10,6 +10,7 @@ import {BlockDropshadow} from '../components/styled-components/Block'
 import SvgIcon from '../components/SvgIcon'
 import CountToggle from '../components/CountToggle'
 import {MapOuterWrapper, MapInnerWrapper, MapLegendWrapper, MapFiltersWrapper} from '../components/styled-components/MapWrappers'
+import MapToggle from './MapToggle/MapToggle'
 import MapLegend from '../components/Layout/MapLegend/MapLegend'
 
 
@@ -229,6 +230,7 @@ class MapComponent extends Component {
     return (
       <MapOuterWrapper>
         <MapInnerWrapper>
+          <MapToggle changeMapView={this.onHandleMapViewChange} active={this.state.mapView} />
           {
             // dataLoading ? <Spinner/> : <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
             dataLoading ? <Spinner/> : this.renderMap(mapData, scale)
