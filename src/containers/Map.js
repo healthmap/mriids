@@ -161,6 +161,34 @@ class Map extends Component {
           'text-halo-width': 1,
         }
       });
+      map.getSource("points").setData({
+        type: "FeatureCollection",
+        features: [{
+          geometry: {
+            type: "Point",
+            coordinates: [-9.3, 5.8],
+          },
+          properties: {
+            title: '(' + this.getCaseCount('Liberia') + ')',
+          }
+        }, {
+          geometry: {
+            type: "Point",
+            coordinates: [-11.02, 10.1],
+          },
+          properties: {
+            title: '(' + this.getCaseCount('Guinea') + ')',
+          }
+        }, {
+          geometry: {
+            type: "Point",
+            coordinates: [-11.8, 7.9],
+          },
+          properties: {
+            title: '(' + this.getCaseCount('Sierra Leone') + ')',
+          }
+        }]
+      })
     }
     const countries = ['Sierra Leone', 'Liberia', 'Guinea']
     if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country === "All") {
@@ -179,11 +207,11 @@ class Map extends Component {
         }
       })
     }
+    console.log('[Map.js][componentDidUpdate()] The source is: ', map.getSource('points'))
   }
 
   getCaseCount = (country) => {
-    console.log('The get caseCount function is returning' + country, this.props.data[country])
-
+    console.log('The get caseCount function is returning ' + country + " " + this.props.data[country])
     return this.props.data[country]
   }
 
