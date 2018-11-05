@@ -12,6 +12,9 @@ class CustomChart extends React.Component {
   render () {
     var options = {
       isStacked: true,
+      bar: {
+        groupWidth: '80%'
+      },
       hAxis: {
         textStyle: {
           fontSize: 11,
@@ -44,9 +47,6 @@ class CustomChart extends React.Component {
         left: 80,
         width: '75%',
       },
-      // zoomButtonsOrder: ['1-week',
-      //   '1-month', '3-months', '6-months', '1-year', 'max'
-      // ]
     }
 
     return (

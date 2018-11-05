@@ -27,7 +27,6 @@ const moment = extendMoment(Moment)
 class EbolaChartComponent extends Component {
 
   _prepareDataForCharts = () => {
-    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The state data is coming from App.js is: ', this.props.stateDataFromApp)
     const {ebolaData, ebolaDataCombined, filters: {country, projection, dateRange}} = this.props.stateDataFromApp
     let rows = []
     let projectionsData = {}
@@ -47,22 +46,24 @@ class EbolaChartComponent extends Component {
         type: 'number',
         label: 'Projection',
       })
-      columns.push({
-        type: 'number',
-        label: 'Projection error max',
-      })
-      columns.push({
-        type: 'number',
-        label: 'Projection error min',
-      })
+      // columns.push({
+      //   type: 'number',
+      //   label: 'Projection error max',
+      // })
+      // columns.push({
+      //   type: 'number',
+      //   label: 'Projection error min',
+      // })
     }
     if (country === 'All') {
+      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The ebolaDataCombined is: ', ebolaDataCombined)
       ebolaDataCombined.forEach(function (row) {
         let projectionDate = new Date(row.projection_from)
         if (projection) {
           if (moment(projectionDate).isBetween(moment(dateRange.from), moment(dateRange.to))) {
             rows.push([projectionDate, parseFloat(row.aggregated)])
-            rows[rows.length - 1].push(null, null, null)
+            // rows[rows.length - 1].push(null, null, null)
+            rows[rows.length - 1].push(null)
             nextProjections = {
               oneWeek: {
                 y: Number(row['y1.aggregated']),
@@ -74,36 +75,41 @@ class EbolaChartComponent extends Component {
                 // ymin: Number(row['ymin2.aggregated']),
                 // ymax: Number(row['ymax2.aggregated']),
               },
+              threeWeeks: {
+                y: Number(row['y3.aggregated']),
+                // ymin: Number(row['ymin3.aggregated']),
+                // ymax: Number(row['ymax3.aggregated']),
+              },
               month: {
                 y: Number(row['y4.aggregated']),
                 // ymin: Number(row['ymin4.aggregated']),
                 // ymax: Number(row['ymax4.aggregated']),
               }
             }
-            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. nextProjections is: ', nextProjections)
-            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. projectionDate is: ', projectionDate)
-            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range starts on: ', dateRange.from)
-            // console.log('[EbolaChartComponent][_prepareDataForCharts] state.country is All. Date range ends on: ', dateRange.to)
           }
+          // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 94, the rows are: ', rows)
         } else if (!projection) {
           if (moment(projectionDate).isBetween(moment(dateRange.from), moment(dateRange.to))) {
           rows.push([projectionDate, parseFloat(row.aggregated)])
         }
       }
       })
-      // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 91 the rows are: ', rows)
+      // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 101 the rows are: ', rows)
     }
 
     else {
       const filteredData = ebolaData[country]
+      // console.log('[EbolaChartComponent][_prepareDataForCharts] The filteredData for each country is: ', filteredData)
       Object.keys(filteredData).forEach(function (key) {
         let ebolaDailyData = filteredData[key]
 
         if (projection) {
           if (moment(key).isBetween(moment(dateRange.from), moment(dateRange.to))) {
             rows.push([new Date(key), parseFloat(ebolaDailyData.value)])
-            rows[rows.length - 1].push(null, null, null)
+            // rows[rows.length - 1].push(null, null, null)
+            rows[rows.length - 1].push(null)
             nextProjections = ebolaDailyData.projections
+            // console.log('[EbolaChartComponent.js][_prepareDataForCharts] At row 111, the nextProjections are: ', nextProjections)
           }
         } else if (!projection) {
           if (moment(key).isBetween(moment(dateRange.from), moment(dateRange.to))) {
@@ -114,23 +120,25 @@ class EbolaChartComponent extends Component {
     }
 
     if (projection) {
-      const {oneWeek, twoWeeks, month} = nextProjections
-      let oneWeekData, twoWeeksData, monthData
-      oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y, oneWeek.ymax, oneWeek.ymin]
-      twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y, twoWeeks.ymax, twoWeeks.ymin]
-      monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y, month.ymax, month.ymin]
-      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] oneWeekData is: ', oneWeekData)
-      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] twoWeeksData is: ', twoWeeksData)
-      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] monthData is: ', monthData)
-      rows[rows.length - 1][2] = rows[rows.length - 1][1]
-      rows[rows.length - 1][3] = rows[rows.length - 1][1]
-      rows[rows.length - 1][4] = rows[rows.length - 1][1]
-      rows = [...rows, oneWeekData, twoWeeksData, monthData]
-      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] If projection is true at row 112, the rows are: ', rows)
+      const {oneWeek, twoWeeks, threeWeeks, month} = nextProjections
+      let oneWeekData, twoWeeksData, threeWeeksData, monthData
+      // oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y, oneWeek.ymax, oneWeek.ymin]
+      oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y]
+      // twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y, twoWeeks.ymax, twoWeeks.ymin]
+      twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y]
+      // threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), null, threeWeeks.y, threeWeeks.ymax, threeWeeks.ymin]
+      threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), null, threeWeeks.y]
+      // monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y, month.ymax, month.ymin]
+      monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y]
+      // rows[rows.length - 1][1] = rows[rows.length - 1][1]
+      // rows[rows.length - 1][2] = rows[rows.length - 1][1]
+      // rows[rows.length - 1][3] = rows[rows.length - 1][1]
+      // rows[rows.length - 1][4] = rows[rows.length - 1][1]
+      rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, monthData]
     }
 
     // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The columns are: ', columns)
-    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The rows are: ', rows)
+    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The rows in line 141 are: ', rows)
     // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The projectionsData is: ', projectionsData)
 
     return {
