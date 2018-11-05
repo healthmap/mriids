@@ -20,9 +20,9 @@ class Map extends Component {
     this.state = {
       mapStylesLoaded: false,
       counts: {
-        SierraLeone: '',
-        Guinea: '',
-        Liberia: '',
+        SierraLeone: props.data['Sierra Leone'],
+        Guinea: props.data['Guinea'],
+        Liberia: props.data['Liberia'],
       },
       viewport: {
         width: 500,
@@ -84,7 +84,7 @@ class Map extends Component {
                 coordinates: [-9.3, 5.8],
               },
               properties: {
-                title: '(' + data['Liberia'] + ')',
+                title: '(' + this.state.counts.Liberia + ')',
               }
             }, {
               geometry: {
@@ -92,7 +92,7 @@ class Map extends Component {
                 coordinates: [-11.02, 10.1],
               },
               properties: {
-                title: '(' + data['Guinea'] + ')',
+                title: '(' + this.state.counts.Guinea + ')',
               }
             }, {
               geometry: {
@@ -100,7 +100,7 @@ class Map extends Component {
                 coordinates: [-11.8, 7.9],
               },
               properties: {
-                title: '(' + data['Sierra Leone'] + ')',
+                title: '(' + this.state.counts.SierraLeone + ')',
               }
             }]
           }
