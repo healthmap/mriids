@@ -19,11 +19,6 @@ class Map extends Component {
 
     this.state = {
       mapStylesLoaded: false,
-      counts: {
-        SierraLeone: props.data['Sierra Leone'],
-        Guinea: props.data['Guinea'],
-        Liberia: props.data['Liberia'],
-      },
       viewport: {
         width: 500,
         height: 300,
@@ -72,54 +67,6 @@ class Map extends Component {
         data: liberia
       });
       map.addLayer({
-        id: "points",
-        type: "symbol",
-        source: {
-          type: "geojson",
-          data: {
-            type: "FeatureCollection",
-            features: [{
-              geometry: {
-                type: "Point",
-                coordinates: [-9.3, 5.8],
-              },
-              properties: {
-                title: '(' + this.state.counts.Liberia + ')',
-              }
-            }, {
-              geometry: {
-                type: "Point",
-                coordinates: [-11.02, 10.1],
-              },
-              properties: {
-                title: '(' + this.state.counts.Guinea + ')',
-              }
-            }, {
-              geometry: {
-                type: "Point",
-                coordinates: [-11.8, 7.9],
-              },
-              properties: {
-                title: '(' + this.state.counts.SierraLeone + ')',
-              }
-            }]
-          }
-        },
-        layout: {
-          'text-field': "{title}",
-          'text-font': ["Open Sans Semibold", "Arial Unicode MS Bold"],
-          'text-offset': [0, 0],
-          'text-anchor': "top",
-          'text-size': 12,
-          'text-line-height': 0,
-          'text-justify': 'center',
-        },
-        paint: {
-          'text-halo-color': 'rgba(255,255,255,1)',
-          'text-halo-width': 1,
-        }
-      });
-      map.addLayer({
         id: 'Sierra Leone',
         source: 'sierra',
         type: 'fill',
@@ -165,6 +112,56 @@ class Map extends Component {
 
   componentDidUpdate() {
     const map = this.mapRef.getMap()
+    if (this.state.mapStylesLoaded) {
+      map.addLayer({
+        id: "points",
+        type: "symbol",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [{
+              geometry: {
+                type: "Point",
+                coordinates: [-9.3, 5.8],
+              },
+              properties: {
+                title: '(' + this.getCaseCount('Liberia') + ')',
+              }
+            }, {
+              geometry: {
+                type: "Point",
+                coordinates: [-11.02, 10.1],
+              },
+              properties: {
+                title: '(' + this.getCaseCount('Guinea') + ')',
+              }
+            }, {
+              geometry: {
+                type: "Point",
+                coordinates: [-11.8, 7.9],
+              },
+              properties: {
+                title: '(' + this.getCaseCount('Sierra Leone') + ')',
+              }
+            }]
+          }
+        },
+        layout: {
+          'text-field': "{title}",
+          'text-font': ["Open Sans Semibold", "Arial Unicode MS Bold"],
+          'text-offset': [0, 0],
+          'text-anchor': "top",
+          'text-size': 12,
+          'text-line-height': 0,
+          'text-justify': 'center',
+        },
+        paint: {
+          'text-halo-color': 'rgba(255,255,255,1)',
+          'text-halo-width': 1,
+        }
+      });
+    }
     const countries = ['Sierra Leone', 'Liberia', 'Guinea']
     if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country === "All") {
       countries.forEach((layer) => {
@@ -184,6 +181,11 @@ class Map extends Component {
     }
   }
 
+  getCaseCount = (country) => {
+    console.log('The get caseCount function is returning' + country, this.props.data[country])
+
+    return this.props.data[country]
+  }
 
   onHandleChangeZoom = level => () => {
     this.setState({
