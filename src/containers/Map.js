@@ -20,6 +20,11 @@ class Map extends Component {
 
     this.state = {
       mapStylesLoaded: false,
+      counts: {
+        SierraLeone: '',
+        Guinea: '',
+        Liberia: '',
+      },
       viewport: {
         width: 500,
         height: 300,
@@ -46,6 +51,7 @@ class Map extends Component {
     window.addEventListener('resize', this._resize);
     this._resize();
     const map = this.mapRef.getMap()
+    const data = this.props.data
     map.on('load', () => {
       map.setMaxBounds(MAX_BOUNDS);
       map.addControl(
@@ -65,6 +71,47 @@ class Map extends Component {
       map.addSource('liberia', {
         type: 'geojson',
         data: liberia
+      });
+      map.addLayer({
+        id: "points",
+        type: "symbol",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [{
+              geometry: {
+                type: "Point",
+                coordinates: [-9.4295, 6.4281],
+              },
+              properties: {
+                title: data['Liberia'],
+              }
+            }, {
+              geometry: {
+                type: "Point",
+                coordinates: [-9.6966, 9.9456],
+              },
+              properties: {
+                title: data['Guinea'],
+              }
+            }, {
+              geometry: {
+                type: "Point",
+                coordinates: [-11.7799, 8.4606],
+              },
+              properties: {
+                title: data['Sierra Leone'],
+              }
+            }]
+          }
+        },
+        layout: {
+          'text-field': "{title}",
+          'text-font': ["Open Sans Semibold", "Arial Unicode MS Bold"],
+          'text-offset': [0, 0.6],
+          'text-anchor': "top",
+        }
       });
       map.addLayer({
         id: 'Sierra Leone',
