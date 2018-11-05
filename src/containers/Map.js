@@ -81,26 +81,26 @@ class Map extends Component {
             features: [{
               geometry: {
                 type: "Point",
-                coordinates: [-9.4295, 6.4281],
+                coordinates: [-9.3, 5.8],
               },
               properties: {
-                title: data['Liberia'],
+                title: '(' + data['Liberia'] + ')',
               }
             }, {
               geometry: {
                 type: "Point",
-                coordinates: [-9.6966, 9.9456],
+                coordinates: [-11.02, 10.1],
               },
               properties: {
-                title: data['Guinea'],
+                title: '(' + data['Guinea'] + ')',
               }
             }, {
               geometry: {
                 type: "Point",
-                coordinates: [-11.7799, 8.4606],
+                coordinates: [-11.8, 7.9],
               },
               properties: {
-                title: data['Sierra Leone'],
+                title: '(' + data['Sierra Leone'] + ')',
               }
             }]
           }
@@ -108,8 +108,15 @@ class Map extends Component {
         layout: {
           'text-field': "{title}",
           'text-font': ["Open Sans Semibold", "Arial Unicode MS Bold"],
-          'text-offset': [0, 0.6],
+          'text-offset': [0, 0],
           'text-anchor': "top",
+          'text-size': 12,
+          'text-line-height': 0,
+          'text-justify': 'center',
+        },
+        paint: {
+          'text-halo-color': 'rgba(255,255,255,1)',
+          'text-halo-width': 1,
         }
       });
       map.addLayer({
