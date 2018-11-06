@@ -120,7 +120,7 @@ class MapComponent extends Component {
       }
       return color
     }
-}
+  }
 
   _resolveScale = (mapData) => {
     let maxValue = Math.max(...Object.values(mapData))
@@ -206,10 +206,26 @@ class MapComponent extends Component {
     }
   }
 
+  _renderRiskLegend = () => {
+    const riskColors = [ '#6c4ce1', '#7c64d3', '#9c8de7', '#c0b6fa', '#dad3fe' ]
+    const riskLabels = [ 'High', '', 'Med', '', 'Low' ]
+    return (
+      <MapLegendWrapper>
+        <BlockDropshadow>
+          <h3>Projected Import Risk</h3>
+          {riskColors.map((color, index) => {
+            return (
+              <MapLegend key={index} color={color} value={riskLabels[index]} />
+            )
+          })}
+        </BlockDropshadow>
+      </MapLegendWrapper>
+    )
+  }
+
   _renderMapFilters = () => {
-    if (this.props.stateDataFromApp.mapView === 'snapshot') {
-      return (
-        <MapFiltersWrapper>
+    return (
+      <MapFiltersWrapper>
         <BlockDropshadow>
           <h3>Coming soon</h3>
           <label><input type="checkbox" disabled /> Health Facilities</label>
@@ -217,10 +233,7 @@ class MapComponent extends Component {
           <label><input type="checkbox" disabled /> Vaccination Coverage</label>
         </BlockDropshadow>
       </MapFiltersWrapper>
-      )
-    } else {
-      return null
-    }
+    )
   }
 
   render () {
@@ -247,6 +260,9 @@ class MapComponent extends Component {
           }
           {
             dataLoading ? <Spinner/> : this._conditionalRenderLegend(scale)
+          }
+          { this.props.stateDataFromApp.mapView === 'risk' &&
+            this._renderRiskLegend()
           }
           {
             this._renderMapFilters()
