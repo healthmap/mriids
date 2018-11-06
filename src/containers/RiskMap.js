@@ -21,7 +21,7 @@ class RiskMap extends Component {
         height: 300,
         latitude: 2.450552,
         longitude: 20.799039,
-        zoom: 2,
+        zoom: 2.75,
         minZoom: 2,
         pitch: 0,
         bearing: 0

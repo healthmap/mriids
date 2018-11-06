@@ -189,7 +189,7 @@ class EbolaChartComponent extends Component {
               min={0}
               max={68}
               dots
-              defaultValue={[0, 68]}
+              defaultValue={[this.props.stateDataFromApp.chartRangeSlider.start, this.props.stateDataFromApp.chartRangeSlider.end]}
               tipFormatter={value => `Week ${value}`}
               onChange={this.props.changeChartDateRange}
             />

@@ -40,6 +40,10 @@ class App extends Component {
         text: '',
         title: ''
       },
+      chartRangeSlider: {
+        start: 0,
+        end: 68
+      },
       chartObject: {}
     }
   }
