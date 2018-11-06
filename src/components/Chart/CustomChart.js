@@ -15,6 +15,7 @@ class CustomChart extends React.Component {
       bar: {
         groupWidth: '80%'
       },
+      colors: ['#4d73ce', '#f8ae32'],
       hAxis: {
         textStyle: {
           fontSize: 11,
