@@ -29,6 +29,7 @@ class App extends Component {
       ebolaData: null,
       ebolaDataCombined: null,
       riskData: null,
+      mapView: 'snapshot',
       filters: {
         country: 'All',
         projection: false,
@@ -160,22 +161,39 @@ class App extends Component {
     })
   }
 
+  _handleMapViewChange = (view) => {
+    console.log('view in app.js is' + view)
+    this.setState((prevState) => {
+      if (prevState.mapView !== view) {
+        return {
+          ...prevState,
+          mapView: view
+        }
+      }
+    })
+  }
+
   render() {
     return (
       <div className="app">
         <Sidebar
-        stateDataFromApp={this.state}
-        changeCountry={this._handleCountryChange}
+          stateDataFromApp={this.state}
+          changeCountry={this._handleCountryChange}
         />
         <Header />
-        <MapParent stateDataFromApp={this.state} />
-        <EbolaChartComponent
-        eventReadyCallback={this._eventReadyCallback}
-        stateDataFromApp={this.state}
-        toggleProjectionChange={this._handleProjectionChange}
-        changeDateRange={this._changeDateRange}
-        changeChartDateRange={this._chartRangeHandler}
+        <MapParent
+          changeMapView={this._handleMapViewChange}
+          stateDataFromApp={this.state}
         />
+        {this.state.mapView === 'snapshot' &&
+          <EbolaChartComponent
+            eventReadyCallback={this._eventReadyCallback}
+            stateDataFromApp={this.state}
+            toggleProjectionChange={this._handleProjectionChange}
+            changeDateRange={this._changeDateRange}
+            changeChartDateRange={this._chartRangeHandler}
+          />
+        }
       </div>
     );
   }
