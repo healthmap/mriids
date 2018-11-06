@@ -126,6 +126,79 @@ class App extends Component {
     // console.log('[App.js][_chartRangeHandler] The current state is', this.state)
   }
 
+  timespanChangeHandler = (value) => {
+    if (value === '1 month') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2014, 10, 1)
+            }
+          }
+        }
+      })
+    }
+    if (value === '3 month') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2015, 0, 1)
+            }
+          }
+        }
+      })
+    }
+    if (value === '6 month') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2015, 3, 1)
+            }
+          }
+        }
+      })
+    }
+    if (value === '1 year') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2015, 9, 1)
+            }
+          }
+        }
+      })
+    }
+    if (value === 'max') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2016, 1, 20)
+            }
+          }
+        }
+      })
+    }
+  }
+
   _eventReadyCallback = (Chart, event) => {
     // console.log('[App.js][_eventReadyCallback] THIS FUNCTION IS BEING TRIGGERED')
     this.setState({
@@ -175,6 +248,7 @@ class App extends Component {
         toggleProjectionChange={this._handleProjectionChange}
         changeDateRange={this._changeDateRange}
         changeChartDateRange={this._chartRangeHandler}
+        timespanChangeHandler={this.timespanChangeHandler}
         />
       </div>
     );

@@ -197,15 +197,15 @@ class EbolaChartComponent extends Component {
           </FlexRow>
           <TimespanButtonsWrapper>
             <label>Timespan:</label>
-            <Button>1 week</Button>
-            <Button>1 month</Button>
-            <Button>3 months</Button>
-            <Button>6 months</Button>
-            <Button>1 year</Button>
-            <Button>Max</Button>
-            <ButtonIcon><SvgIcon icon='Previous' size={20} title="Previous" /></ButtonIcon>
-            <ButtonIcon><SvgIcon icon='Next' size={20} title="Next" /></ButtonIcon>
-            <ButtonLink>Reset</ButtonLink>
+            {/* <Button>1 week</Button> */}
+            <Button onClick={() => this.props.timespanChangeHandler('1 month')}>1 month</Button>
+            <Button onClick={() => this.props.timespanChangeHandler('3 month')}>3 months</Button>
+            <Button onClick={() => this.props.timespanChangeHandler('6 month')}>6 months</Button>
+            <Button onClick={() => this.props.timespanChangeHandler('1 year')}>1 year</Button>
+            <Button onClick={() => this.props.timespanChangeHandler('max')}>Max</Button>
+            {/* <ButtonIcon><SvgIcon icon='Previous' size={20} title="Previous" /></ButtonIcon> */}
+            {/* <ButtonIcon><SvgIcon icon='Next' size={20} title="Next" /></ButtonIcon> */}
+            <ButtonLink onClick={() => this.props.timespanChangeHandler('max')}>Reset</ButtonLink>
           </TimespanButtonsWrapper>
         </ChartContainer>
     )
