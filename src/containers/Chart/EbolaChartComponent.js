@@ -14,7 +14,6 @@ import {
 import AxisLabels from '../../components/AxisLabels'
 import {Button, ButtonIcon, ButtonLink} from '../../components/styled-components/Button'
 import ChartContainer from '../../components/styled-components/ChartContainer'
-import EbolaChart from '../../components/styled-components/EbolaChart'
 import {FlexRow} from '../../components/styled-components/LayoutHelpers'
 import SvgIcon from '../../components/SvgIcon'
 import TimespanButtonsWrapper from '../../components/styled-components/TimespanButtonsWrapper'
@@ -164,25 +163,23 @@ class EbolaChartComponent extends Component {
 
     return (
         <ChartContainer>
-          <EbolaChart>
-            {
-              dataLoading ? <Spinner/> :
-                <AxisLabels
-                  // xAxis="Time" yAxis="Ebola Cases"
-                  // renderTooltip={this._renderTooltip} position="right"
-                  >
-                  <CustomChart
-                    columns={chartData.columns}
-                    rows={chartData.rows}
-                    projections={chartData.projectionsData}
-                    dateStart={this.props.stateDataFromApp.filters.dateRange.from}
-                    dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
-                    eventReadyCallback={this.props.eventReadyCallback}
-                    // projectionFilter={projection}
-                    />
-                </AxisLabels>
-            }
-          </EbolaChart>
+          {
+            dataLoading ? <Spinner/> :
+              <AxisLabels
+                // xAxis="Time" yAxis="Ebola Cases"
+                // renderTooltip={this._renderTooltip} position="right"
+                >
+                <CustomChart
+                  columns={chartData.columns}
+                  rows={chartData.rows}
+                  projections={chartData.projectionsData}
+                  dateStart={this.props.stateDataFromApp.filters.dateRange.from}
+                  dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
+                  eventReadyCallback={this.props.eventReadyCallback}
+                  // projectionFilter={projection}
+                  />
+              </AxisLabels>
+          }
           <FlexRow>
             <Range
               style={{width: '75%', marginLeft: '80px'}}
