@@ -6,7 +6,7 @@ import OnOffSwitch from '../components/styled-components/OnOffSwitch';
 class ProjectionToggle extends Component {
    render() {
       return (
-        <ProjectionToggleWrapper>
+        <ProjectionToggleWrapper className={this.props.status ? 'is-active' : ''}>
           Projection
           <OnOffSwitch>
             <input onChange={this.props.toggleProjectionChange} type="checkbox" name="projection" id="projection-switch" />

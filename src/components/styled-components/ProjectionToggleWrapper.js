@@ -13,6 +13,10 @@ const ProjectionToggleWrapper = styled.div`
   font-weight: bold;
   background-color: #f0f0f0;
   border-radius: 3px;
+  transition: all .3s ease;
+  &.is-active {
+    background-color: #f8ae32;
+  }
 `
 
 export default ProjectionToggleWrapper;

@@ -193,7 +193,7 @@ class EbolaChartComponent extends Component {
               tipFormatter={value => `Week ${value}`}
               onChange={this.props.changeChartDateRange}
             />
-            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} />
+            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} status={this.props.stateDataFromApp.filters.projection} />
           </FlexRow>
           <TimespanButtonsWrapper>
             <label>Timespan:</label>
