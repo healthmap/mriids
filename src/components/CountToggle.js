@@ -25,9 +25,9 @@ class CountToggle extends Component {
   }
 
   render() {
-    const icon = (this.props.status === 'on') ? 'Hide' : 'Show';
+    const icon = (this.props.status) ? 'Hide' : 'Show';
     return (
-      <CountToggleWrapper>
+      <CountToggleWrapper onClick={this.props.toggleMapCaseCounts}>
         <SvgIcon icon={icon} size="20" title={`${icon} Count`} />
         <label>{`${icon} Count`}</label>
       </CountToggleWrapper>

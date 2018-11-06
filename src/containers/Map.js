@@ -143,8 +143,8 @@ class Map extends Component {
       }
     }
 
-    // This loads the case counts layer for all 3 countries once the mapbox style is loaded
-    if (this.state.mapStylesLoaded) {
+    // This loads the case counts layer for all 3 countries once the mapbox style is loaded if the showCaseCounts property in MapParent.js is set to true
+    if (this.state.mapStylesLoaded && this.props.showCaseCounts) {
       map.addLayer({
         id: "points",
         type: "symbol",
@@ -167,21 +167,23 @@ class Map extends Component {
           'text-size': 12,
           'text-line-height': 0,
           'text-justify': 'center',
+          'visibility': 'visible'
         },
         paint: {
           'text-halo-color': 'rgba(255,255,255,1)',
           'text-halo-width': 1,
         }
       });
-    }
+    } 
 
     const countries = ['Sierra Leone', 'Liberia', 'Guinea']
     if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country === "All") {
-      // This adds updates the color layer and case counts for all 3 countries
+      // This adds updates the color layer and case counts for all 3 countries. 
       countries.forEach((layer) => {
         map.setPaintProperty(layer, 'fill-color', this._resolveColor(layer))
         map.setPaintProperty(layer, 'fill-opacity', 1)
-        if (this.state.mapStylesLoaded) {
+        if (this.state.mapStylesLoaded && this.props.showCaseCounts) {
+          // This updates and makes the case counts visible if the showCaseCounts property in MapParent.js is set to true
           map.getSource("points").setData({
             type: "FeatureCollection",
             features: [
@@ -190,6 +192,10 @@ class Map extends Component {
               caseCountLayers['Sierra Leone']
             ]
           })
+          map.setLayoutProperty('points', 'visibility', 'visible')
+        } else if (this.state.mapStylesLoaded && !this.props.showCaseCounts) {
+          // This makes the case counts invisible if the showCaseCounts property in MapParent.js is set to false
+          map.setLayoutProperty('points', 'visibility', 'none')
         }
       })
     } else if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country !== "All") {
@@ -199,15 +205,21 @@ class Map extends Component {
         if (layer === country) {
         map.setPaintProperty(layer, 'fill-color', this._resolveColor(layer))
         map.setPaintProperty(layer, 'fill-opacity', 1)
-        if (this.state.mapStylesLoaded) {
+        if (this.state.mapStylesLoaded && this.props.showCaseCounts) {
+          // This updates and makes the case counts visible if the showCaseCounts property in MapParent.js is set to true
           map.getSource("points").setData({
             type: "FeatureCollection",
             features: [
               caseCountLayers[layer]
             ]
           })
-        }
+          map.setLayoutProperty('points', 'visibility', 'visible')
+          } else if (this.state.mapStylesLoaded && !this.props.showCaseCounts) {
+            // This makes the case counts invisible if the showCaseCounts property in MapParent.js is set to false
+            map.setLayoutProperty('points', 'visibility', 'none')
+          }
         } else {
+          // This removes the color for the non-selected countries
           map.setPaintProperty(layer, 'fill-opacity', 0)
         }
       })

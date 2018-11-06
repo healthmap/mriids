@@ -21,6 +21,9 @@ const COUNTRIES = ['Guinea', 'Liberia', 'Sierra Leone']
 const RELATIVE_RISK_COUNTRIES = ['Angola', 'Burundi', 'Benin', 'Burkina Faso', 'Botswana', 'Central African Republic', 'Côte d’Ivoire', 'Cameroon', 'Congo - Kinshasa', 'Congo - Brazzaville', 'Comoros', 'Cape Verde', 'Djibouti', 'Algeria', 'Egypt', 'Eritrea', 'Ethiopia', 'Gabon', 'Ghana', 'Guinea', 'Gambia', 'Guinea-Bissau', 'Equatorial Guinea', 'Kenya', 'Liberia', 'Libya', 'Lesotho', 'Morocco', 'Madagascar', 'Mali', 'Mozambique', 'Mauritania', 'Mauritius', 'Malawi', 'Namibia', 'Niger', 'Nigeria', 'Rwanda', 'Sudan', 'Senegal', 'St. Helena', 'Sierra Leone', 'Somalia', 'South Sudan', 'São Tomé and Príncipe', 'Swaziland', 'Seychelles', 'Chad', 'Togo', 'Tunisia', 'Tanzania', 'Uganda', 'South Africa', 'Zambia', 'Zimbabwe']
 
 class MapComponent extends Component {
+  state = {
+    showCaseCounts: true
+  }
   _prepareDataForMap = () => {
     // console.log('[MapParent.js][_prepareDataForMap] The ebolaData is: ', this.props.stateDataFromApp.ebolaData)
     const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
@@ -138,14 +141,31 @@ class MapComponent extends Component {
     return maxValue
   }
 
+  toggleMapCaseCounts = () => {
+    this.setState((prevState) => {
+      return {
+      ...prevState,
+      showCaseCounts: !prevState.showCaseCounts
+      }
+    })
+  }
+
   renderMap = (mapData, scale) => {
     if (this.props.stateDataFromApp.mapView === 'risk') {
       return (
-        <RiskMap stateDataFromApp={this.props.stateDataFromApp}/>
+        <RiskMap
+          stateDataFromApp={this.props.stateDataFromApp}
+        />
       )
     } else {
       return (
-        <Map stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+        <Map
+          stateDataFromApp={this.props.stateDataFromApp}
+          data={mapData}
+          scale={scale}
+          colorFunction={this._resolveColor}
+          showCaseCounts={this.state.showCaseCounts}
+        />
       )
     }
   }
@@ -177,7 +197,7 @@ class MapComponent extends Component {
         <MapLegendWrapper><BlockDropshadow>
               <h3>{legendHeader}</h3>
               {this._renderLegendLevels(scale)}
-              <CountToggle status='off' />
+              <CountToggle status={this.state.showCaseCounts} toggleMapCaseCounts={this.toggleMapCaseCounts}/>
             </BlockDropshadow>
             </MapLegendWrapper>
       )
