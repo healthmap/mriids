@@ -8,10 +8,10 @@ const AxisLabels = (props) => {
     return (
       <AxisLabelsWrapper>
         {children}
-        <OverlayTrigger placement="top" overlay={renderTooltip ? renderTooltip(`Mouseover placeholder ${xAxis}`) : null}>
+        <OverlayTrigger placement="top" overlay={renderTooltip ? renderTooltip(`Mouseover placeholder ${xAxis}`) : ''}>
           <AxisXTitle>{xAxis}</AxisXTitle>
         </OverlayTrigger>
-        <OverlayTrigger placement="top" overlay={renderTooltip ? renderTooltip(`Mouseover placeholder ${yAxis}`) : null}>
+        <OverlayTrigger placement="top" overlay={renderTooltip ? renderTooltip(`Mouseover placeholder ${yAxis}`) : ''}>
           <AxisYTitle position={position}>{yAxis}</AxisYTitle>
         </OverlayTrigger>
       </AxisLabelsWrapper>
