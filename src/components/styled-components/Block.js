@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 export const BlockPadded = styled.div`
   padding: 1.3rem;
+  &.reported-cases-wrapper {
+    border-bottom: 1px solid #ccc;
+  }
 `
 
 export const BlockDropshadow = styled.div`

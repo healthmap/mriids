@@ -11,7 +11,6 @@ const SidebarWrapper = styled.div`
   z-index: 2; /* $z-index--sidebar make variable */
   h4 {
     padding-top: 1em;
-    border-top: 1px solid #666;
   }
 `
 
