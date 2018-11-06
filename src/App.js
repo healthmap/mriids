@@ -162,7 +162,6 @@ class App extends Component {
   }
 
   _handleMapViewChange = (view) => {
-    console.log('view in app.js is' + view)
     this.setState((prevState) => {
       if (prevState.mapView !== view) {
         return {

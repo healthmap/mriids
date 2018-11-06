@@ -197,15 +197,11 @@ class EbolaChartComponent extends Component {
           </FlexRow>
           <TimespanButtonsWrapper>
             <label>Timespan:</label>
-            <Button>1 week</Button>
             <Button>1 month</Button>
             <Button>3 months</Button>
             <Button>6 months</Button>
             <Button>1 year</Button>
             <Button>Max</Button>
-            <ButtonIcon><SvgIcon icon='Previous' size={20} title="Previous" /></ButtonIcon>
-            <ButtonIcon><SvgIcon icon='Next' size={20} title="Next" /></ButtonIcon>
-            <ButtonLink>Reset</ButtonLink>
           </TimespanButtonsWrapper>
         </ChartContainer>
     )
