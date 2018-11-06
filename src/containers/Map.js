@@ -112,6 +112,38 @@ class Map extends Component {
 
   componentDidUpdate() {
     const map = this.mapRef.getMap()
+
+    const caseCountLayers = {
+      "Liberia": {
+        geometry: {
+          type: "Point",
+          coordinates: [-9.3, 5.8],
+        },
+        properties: {
+          title: '(' + this.getCaseCount('Liberia') + ')',
+        }
+      },
+      "Guinea": {
+        geometry: {
+          type: "Point",
+          coordinates: [-11.02, 10.1],
+        },
+        properties: {
+          title: '(' + this.getCaseCount('Guinea') + ')',
+        }
+      },
+      "Sierra Leone": {
+        geometry: {
+          type: "Point",
+          coordinates: [-11.8, 7.9],
+        },
+        properties: {
+          title: '(' + this.getCaseCount('Sierra Leone') + ')',
+        }
+      }
+    }
+
+    // This loads the case counts layer for all 3 countries once the mapbox style is loaded
     if (this.state.mapStylesLoaded) {
       map.addLayer({
         id: "points",
@@ -120,31 +152,11 @@ class Map extends Component {
           type: "geojson",
           data: {
             type: "FeatureCollection",
-            features: [{
-              geometry: {
-                type: "Point",
-                coordinates: [-9.3, 5.8],
-              },
-              properties: {
-                title: '(' + this.getCaseCount('Liberia') + ')',
-              }
-            }, {
-              geometry: {
-                type: "Point",
-                coordinates: [-11.02, 10.1],
-              },
-              properties: {
-                title: '(' + this.getCaseCount('Guinea') + ')',
-              }
-            }, {
-              geometry: {
-                type: "Point",
-                coordinates: [-11.8, 7.9],
-              },
-              properties: {
-                title: '(' + this.getCaseCount('Sierra Leone') + ')',
-              }
-            }]
+            features: [
+              caseCountLayers['Liberia'], 
+              caseCountLayers['Guinea'],
+              caseCountLayers['Sierra Leone']
+          ]
           }
         },
         layout: {
@@ -161,57 +173,50 @@ class Map extends Component {
           'text-halo-width': 1,
         }
       });
-      map.getSource("points").setData({
-        type: "FeatureCollection",
-        features: [{
-          geometry: {
-            type: "Point",
-            coordinates: [-9.3, 5.8],
-          },
-          properties: {
-            title: '(' + this.getCaseCount('Liberia') + ')',
-          }
-        }, {
-          geometry: {
-            type: "Point",
-            coordinates: [-11.02, 10.1],
-          },
-          properties: {
-            title: '(' + this.getCaseCount('Guinea') + ')',
-          }
-        }, {
-          geometry: {
-            type: "Point",
-            coordinates: [-11.8, 7.9],
-          },
-          properties: {
-            title: '(' + this.getCaseCount('Sierra Leone') + ')',
-          }
-        }]
-      })
     }
+
     const countries = ['Sierra Leone', 'Liberia', 'Guinea']
     if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country === "All") {
+      // This adds updates the color layer and case counts for all 3 countries
       countries.forEach((layer) => {
         map.setPaintProperty(layer, 'fill-color', this._resolveColor(layer))
         map.setPaintProperty(layer, 'fill-opacity', 1)
+        if (this.state.mapStylesLoaded) {
+          map.getSource("points").setData({
+            type: "FeatureCollection",
+            features: [
+              caseCountLayers['Liberia'], 
+              caseCountLayers['Guinea'],
+              caseCountLayers['Sierra Leone']
+            ]
+          })
+        }
       })
     } else if (this.state.mapStylesLoaded && this.props.stateDataFromApp.filters.country !== "All") {
+      // This updates the color layer and case counts for one country and removes the color and case counts for the other countries.
       let country = this.props.stateDataFromApp.filters.country
       countries.forEach((layer) => {
         if (layer === country) {
         map.setPaintProperty(layer, 'fill-color', this._resolveColor(layer))
         map.setPaintProperty(layer, 'fill-opacity', 1)
+        if (this.state.mapStylesLoaded) {
+          map.getSource("points").setData({
+            type: "FeatureCollection",
+            features: [
+              caseCountLayers[layer]
+            ]
+          })
+        }
         } else {
           map.setPaintProperty(layer, 'fill-opacity', 0)
         }
       })
     }
-    console.log('[Map.js][componentDidUpdate()] The source is: ', map.getSource('points'))
+    // console.log('[Map.js][componentDidUpdate()] The source is: ', map.getSource('points'))
   }
 
   getCaseCount = (country) => {
-    console.log('The get caseCount function is returning ' + country + " " + this.props.data[country])
+    // console.log('The get caseCount function is returning ' + country + " " + this.props.data[country])
     return this.props.data[country]
   }
 
