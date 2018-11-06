@@ -20,6 +20,9 @@ h3 {
   color: #333;
 }
 
+/* fix flickering tooltip in google chart */
+svg > g > g:last-child { pointer-events: none }
+
 /* override rc-slider */
 
 .rc-slider-rail {
