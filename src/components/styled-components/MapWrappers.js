@@ -4,9 +4,12 @@ export const MapOuterWrapper = styled.div`
   position: relative;
   margin-left: 18rem; /* $sidebar-width; */
   width: calc(100vw - 18rem); /* calc(100vw - #{$sidebar-width}); */
-  height: calc(100vh - 28rem - 4.5rem); /* calc(100vh - #{$risk-height} - #{$header-height}); */
+  height: calc(100vh - 4.5rem); /* calc(100vh - #{$risk-height} - #{$header-height}); */
   z-index: 1;
   overflow: hidden;
+  &.has-chart {
+    height: calc(100vh - 28rem - 4.5rem); /* calc(100vh - #{$risk-height} - #{$header-height}); */
+  }
 `
 
 export const MapInnerWrapper = styled.div`

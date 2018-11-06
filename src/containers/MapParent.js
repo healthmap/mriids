@@ -218,7 +218,7 @@ class MapComponent extends Component {
 
 
     return (
-      <MapOuterWrapper>
+      <MapOuterWrapper className={this.props.stateDataFromApp.mapView === 'snapshot' ? 'has-chart' : ''}>
         <MapInnerWrapper>
           <MapToggle changeMapView={this.props.changeMapView} active={this.props.stateDataFromApp.mapView} />
           {
