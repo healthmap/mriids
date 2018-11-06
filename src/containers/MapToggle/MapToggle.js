@@ -4,7 +4,7 @@ import MapToggleWrapper from '../../components/styled-components/MapToggleWrappe
 
 class MapToggle extends Component {
    render() {
-     console.log(this.props.active)
+    //  console.log(this.props.active)
       return (
         <MapToggleWrapper>
           <Button changeMapView={this.props.changeMapView} value='snapshot' label="Snapshot" type="toggle" status={this.props.active === 'snapshot' ? 'active' : '' } />

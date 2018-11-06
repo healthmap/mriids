@@ -22,7 +22,8 @@ const RELATIVE_RISK_COUNTRIES = ['Angola', 'Burundi', 'Benin', 'Burkina Faso', '
 
 class MapComponent extends Component {
   state = {
-    mapView: 'snapshot'
+    mapView: 'snapshot',
+    showCaseCounts: true
   }
   _prepareDataForMap = () => {
     // console.log('[MapParent.js][_prepareDataForMap] The ebolaData is: ', this.props.stateDataFromApp.ebolaData)
@@ -31,7 +32,7 @@ class MapComponent extends Component {
     let mapData = {}
     COUNTRIES.map((country) => {
       mapData[country] = 0
-      let filteredData = ebolaData[country]
+      let filteredData = ebolaData[country] 
       Object.keys(filteredData).forEach(function (key) {
         let ebolaDailyData = filteredData[key]
         if (!projection) {
@@ -149,14 +150,33 @@ class MapComponent extends Component {
     return maxValue
   }
 
+  toggleMapCaseCounts = () => {
+    this.setState((prevState) => {
+      return {
+      ...prevState,
+      showCaseCounts: !prevState.showCaseCounts
+      }
+    })
+  }
+
   renderMap = (mapData, scale) => {
     if (this.state.mapView === 'risk') {
       return (
-        <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
+        <RiskMap 
+        changeMapView={this.onHandleMapViewChange} 
+        stateDataFromApp={this.props.stateDataFromApp}
+        />
       )
     } else {
       return (
-        <Map changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp} data={mapData} scale={scale} colorFunction={this._resolveColor}/>
+        <Map 
+        changeMapView={this.onHandleMapViewChange} 
+        stateDataFromApp={this.props.stateDataFromApp} 
+        data={mapData} 
+        scale={scale} 
+        colorFunction={this._resolveColor}
+        showCaseCounts={this.state.showCaseCounts}
+        />
       )
     }
   }
@@ -188,7 +208,7 @@ class MapComponent extends Component {
         <MapLegendWrapper><BlockDropshadow>
               <h3>{legendHeader}</h3>
               {this._renderLegendLevels(scale)}
-              <CountToggle status='off' />
+              <CountToggle status={this.state.showCaseCounts} toggleMapCaseCounts={this.toggleMapCaseCounts}/>
             </BlockDropshadow>
             </MapLegendWrapper>
       )
