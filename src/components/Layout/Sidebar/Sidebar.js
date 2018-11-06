@@ -83,7 +83,7 @@ class Sidebar extends Component {
             <p><strong>{filters.projection ? "Projection" : "Reported Cases"} from:<br />
             {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</strong></p>
             {/* <h2>{ebolaData}</h2> */}
-            <ReportedCases label={filters.projection ? "Projected cases" : "Suspected and confirmed"} color={filters.projection ? "#CB4627" : "#4D73CE"} value={ebolaData}/>
+            <ReportedCases label={filters.projection ? "Projected cases" : "Suspected and confirmed"} color={filters.projection ? "#F8AE32" : "#4D73CE"} value={ebolaData}/>
             {/* <ReportedCases label="Probable" color="#7BBAFC" value="287"/>
             <ReportedCases label="Suspected" color="#B7E3FE" value="621"/> */}
           </BlockPadded>
