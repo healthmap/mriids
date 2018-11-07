@@ -7,7 +7,6 @@ import 'rc-slider/assets/index.css';
 
 import CustomChart from '../../components/Chart/CustomChart'
 import {
-  //OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
 
@@ -43,70 +42,47 @@ class EbolaChartComponent extends Component {
         type: 'number',
         label: 'Projected future cases',
       })
-      // columns.push({
-      //   type: 'number',
-      //   label: 'Projection error max',
-      // })
-      // columns.push({
-      //   type: 'number',
-      //   label: 'Projection error min',
-      // })
     }
     if (country === 'All') {
-      // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The ebolaDataCombined is: ', ebolaDataCombined)
       ebolaDataCombined.forEach(function (row) {
         let projectionDate = new Date(row.projection_from)
         if (projection) {
           if (moment(projectionDate).isBetween(moment(dateRange.from), moment(dateRange.to))) {
             rows.push([projectionDate, parseFloat(row.aggregated)])
-            // rows[rows.length - 1].push(null, null, null)
             rows[rows.length - 1].push(null)
             nextProjections = {
               oneWeek: {
-                y: Number(row['y1.aggregated']),
-                // ymin: Number(row['ymin1.aggregated']),
-                // ymax: Number(row['ymax1.aggregated']),
+                y: Number(row['y1.aggregated'])
               },
               twoWeeks: {
-                y: Number(row['y2.aggregated']),
-                // ymin: Number(row['ymin2.aggregated']),
-                // ymax: Number(row['ymax2.aggregated']),
+                y: Number(row['y2.aggregated'])
               },
               threeWeeks: {
-                y: Number(row['y3.aggregated']),
-                // ymin: Number(row['ymin3.aggregated']),
-                // ymax: Number(row['ymax3.aggregated']),
+                y: Number(row['y3.aggregated'])
               },
               month: {
-                y: Number(row['y4.aggregated']),
-                // ymin: Number(row['ymin4.aggregated']),
-                // ymax: Number(row['ymax4.aggregated']),
+                y: Number(row['y4.aggregated'])
               }
             }
           }
-          // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 94, the rows are: ', rows)
         } else if (!projection) {
           if (moment(projectionDate).isBetween(moment(dateRange.from), moment(dateRange.to))) {
           rows.push([projectionDate, parseFloat(row.aggregated)])
         }
       }
       })
-      // console.log('[EbolaChartComponent][_prepareDataForCharts] At line 101 the rows are: ', rows)
     }
 
     else {
       const filteredData = ebolaData[country]
-      // console.log('[EbolaChartComponent][_prepareDataForCharts] The filteredData for each country is: ', filteredData)
       Object.keys(filteredData).forEach(function (key) {
         let ebolaDailyData = filteredData[key]
 
         if (projection) {
           if (moment(key).isBetween(moment(dateRange.from), moment(dateRange.to))) {
             rows.push([new Date(key), parseFloat(ebolaDailyData.value)])
-            // rows[rows.length - 1].push(null, null, null)
             rows[rows.length - 1].push(null)
             nextProjections = ebolaDailyData.projections
-            // console.log('[EbolaChartComponent.js][_prepareDataForCharts] At row 111, the nextProjections are: ', nextProjections)
           }
         } else if (!projection) {
           if (moment(key).isBetween(moment(dateRange.from), moment(dateRange.to))) {
@@ -119,18 +95,10 @@ class EbolaChartComponent extends Component {
     if (projection) {
       const {oneWeek, twoWeeks, threeWeeks, month} = nextProjections
       let oneWeekData, twoWeeksData, threeWeeksData, monthData
-      // oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y, oneWeek.ymax, oneWeek.ymin]
       oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y]
-      // twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y, twoWeeks.ymax, twoWeeks.ymin]
       twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y]
-      // threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), null, threeWeeks.y, threeWeeks.ymax, threeWeeks.ymin]
       threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), null, threeWeeks.y]
-      // monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y, month.ymax, month.ymin]
       monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y]
-      // rows[rows.length - 1][1] = rows[rows.length - 1][1]
-      // rows[rows.length - 1][2] = rows[rows.length - 1][1]
-      // rows[rows.length - 1][3] = rows[rows.length - 1][1]
-      // rows[rows.length - 1][4] = rows[rows.length - 1][1]
       rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, monthData]
     }
 
@@ -148,7 +116,7 @@ class EbolaChartComponent extends Component {
   )
 
   render () {
-    const {filters: {country}, dataLoading} = this.props.stateDataFromApp
+    const {filters, dataLoading, chartRangeSlider} = this.props.stateDataFromApp
 
     let chartData
     if (!dataLoading) {
@@ -160,17 +128,14 @@ class EbolaChartComponent extends Component {
           {
             dataLoading ? <Spinner/> :
               <AxisLabels
-                // xAxis="Time" yAxis="Ebola Cases"
-                // renderTooltip={this._renderTooltip} position="right"
                 >
                 <CustomChart
                   columns={chartData.columns}
                   rows={chartData.rows}
                   projections={chartData.projectionsData}
-                  dateStart={this.props.stateDataFromApp.filters.dateRange.from}
-                  dateEnd={this.props.stateDataFromApp.filters.dateRange.to}
+                  dateStart={filters.dateRange.from}
+                  dateEnd={filters.dateRange.to}
                   eventReadyCallback={this.props.eventReadyCallback}
-                  // projectionFilter={projection}
                   />
               </AxisLabels>
           }
@@ -180,22 +145,22 @@ class EbolaChartComponent extends Component {
               min={0}
               max={68}
               dots
-              defaultValue={[this.props.stateDataFromApp.chartRangeSlider.start, this.props.stateDataFromApp.chartRangeSlider.end]}
+              defaultValue={[chartRangeSlider.start, chartRangeSlider.end]}
               tipFormatter={value => `Week ${value}`}
               onChange={this.props.changeChartDateRange}
             />
-            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} status={this.props.stateDataFromApp.filters.projection} />
+            <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} status={filters.projection} />
           </FlexRow>
-          <TimespanButtonsWrapper>
+          {/* <TimespanButtonsWrapper>
             <label>Timespan:</label>
-            {/* <Button>1 week</Button> */}
+            <Button>1 week</Button>
             <Button onClick={() => this.props.timespanChangeHandler('1 month')}>1 month</Button>
             <Button onClick={() => this.props.timespanChangeHandler('3 month')}>3 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('6 month')}>6 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('1 year')}>1 year</Button>
             <Button onClick={() => this.props.timespanChangeHandler('max')}>Max</Button>
             <ButtonLink onClick={() => this.props.timespanChangeHandler('max')}>Reset</ButtonLink>
-          </TimespanButtonsWrapper>
+          </TimespanButtonsWrapper> */}
         </ChartContainer>
     )
   }

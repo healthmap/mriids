@@ -15,11 +15,11 @@ class Header extends Component {
             <Logo />
             <HeaderNavWrapper>
               <li className="is-active"><a href="">Outbreak</a></li>
-              <li><a href="">Historic</a></li>
-              <li><a href="">About</a></li>
+              {/* <li><a href="">Historic</a></li> */}
+              <li><a href="https://github.com/fernandodonaire/mriids2/wiki/MRIIDS" target="_blank">About</a></li>
             </HeaderNavWrapper>
           </div>
-          <div>
+          {/* <div>
             <IconNavWrapper>
               <li><SvgIcon icon='Report' size={15} title="Download PDF Report" /></li>
               <li><SvgIcon icon='Print' size={15} title="Print" /></li>
@@ -31,7 +31,7 @@ class Header extends Component {
               <li><SvgIcon icon='Settings' size={15} title="Settings" /></li>
               <li><SvgIcon icon='Account' size={15} title="My Account" /></li>
             </IconNavWrapper>
-          </div>
+          </div> */}
         </HeaderWrapper>
       );
    }

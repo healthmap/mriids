@@ -23,8 +23,8 @@ class MapComponent extends Component {
   state = {
     showCaseCounts: true
   }
+  
   _prepareDataForMap = () => {
-    // console.log('[MapParent.js][_prepareDataForMap] The ebolaData is: ', this.props.stateDataFromApp.ebolaData)
     const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
     let mapData = {}
@@ -45,7 +45,6 @@ class MapComponent extends Component {
       })
     })
 
-    // console.log("[MapParent.js][_prepareDataForMap] The mapData is: ", mapData)
     return mapData
   }
 
@@ -58,17 +57,16 @@ class MapComponent extends Component {
     RELATIVE_RISK_COUNTRIES.forEach((country) => {
       let relativeRisk
       riskData.forEach((item) => {
-        // console.log('[MapParent.js][_prepareRiskDataForMap] Each item is: ', item)
         if (item.country === country) {
           relativeRisk = parseFloat(item.wtd_rel_risk)
         }
       })
       newRiskData[country]['relative_risk'] = relativeRisk
     })
-    // console.log('[MapParent.js][_prepareRiskDataForMap] The riskData object is: ', newRiskData)
     return newRiskData
   }
 
+  // This sets the colors for the 'snapshot' map view and the map legend
   _resolveColor = (value) => {
     if (!this.props.stateDataFromApp.filters.projection) {
       let color
@@ -140,6 +138,7 @@ class MapComponent extends Component {
     return maxValue
   }
 
+  // This toggles whether the case counts are shown on the map or not
   toggleMapCaseCounts = () => {
     this.setState((prevState) => {
       return {
@@ -149,6 +148,7 @@ class MapComponent extends Component {
     })
   }
 
+  // This renders either the RiskMap or the Map depending on the mapView in the state in App.js
   renderMap = (mapData, scale) => {
     if (this.props.stateDataFromApp.mapView === 'risk') {
       return (
@@ -169,9 +169,8 @@ class MapComponent extends Component {
     }
   }
 
+  // This renders the levels in the map legend
   _renderLegendLevels = (scale) => {
-    // This represents the number of levels in the legend
-    // console.log("[MapParent.js][_renderLegendLevels] The scale is: ", scale)
     let len = 9
     let components = []
     for (var i = 0; i <= len; i++) {
@@ -180,11 +179,11 @@ class MapComponent extends Component {
         <MapLegend key={`uniqueColorId${i}`} color={this._resolveColor(value)} value={Math.round(value * scale)} />
       )
     }
-    // console.log("[MapParent.js][_renderLegendLevels] The components are: ", components)
     return components.reverse()
   }
 
-  _conditionalRenderLegend = (scale) => {
+  // This renders the map legend for the 'snapshot' map
+  _renderSnapshotMapLegend = (scale) => {
     let legendHeader
     if (this.props.stateDataFromApp.filters.projection) {
       legendHeader = 'Total outbreak projections'
@@ -205,6 +204,7 @@ class MapComponent extends Component {
     }
   }
 
+  // This renders the legend for the 'risk' map
   _renderRiskLegend = () => {
     const riskColors = [ '#6c4ce1', '#7c64d3', '#9c8de7', '#c0b6fa', '#dad3fe' ]
     const riskLabels = [ 'High', '', 'Med', '', 'Low' ]
@@ -238,27 +238,21 @@ class MapComponent extends Component {
   render () {
     const {dataLoading} = this.props.stateDataFromApp
 
-    let mapData, scale, riskData
+    let mapData, scale
     if (!dataLoading) {
       mapData = this._prepareDataForMap()
-      riskData = this._prepareRiskDataForMap()
       scale = this._resolveScale(mapData)
     }
-
-    // console.log('[MapParent.js][render()] The mapData is: ', mapData)
-    // console.log('[MapParent.js][render()] The dataLoading is: ', dataLoading)
-
 
     return (
       <MapOuterWrapper className={this.props.stateDataFromApp.mapView === 'snapshot' ? 'has-chart' : ''}>
         <MapInnerWrapper>
           <MapToggle changeMapView={this.props.changeMapView} active={this.props.stateDataFromApp.mapView} />
           {
-            // dataLoading ? <Spinner/> : <RiskMap changeMapView={this.onHandleMapViewChange} stateDataFromApp={this.props.stateDataFromApp}/>
             dataLoading ? <Spinner/> : this.renderMap(mapData, scale)
           }
           {
-            dataLoading ? <Spinner/> : this._conditionalRenderLegend(scale)
+            dataLoading ? <Spinner/> : this._renderSnapshotMapLegend(scale)
           }
           { this.props.stateDataFromApp.mapView === 'risk' &&
             this._renderRiskLegend()

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactMapGL, { Popup } from 'react-map-gl';
+import ReactMapGL from 'react-map-gl';
 import { ScaleControl } from 'mapbox-gl';
 
 import {ZoomButtons, ZoomButton} from '../components/styled-components/ZoomButtons'
@@ -57,7 +57,6 @@ class RiskMap extends Component {
         mapStylesLoaded: true
       })
     })
-    // console.log("[Map.js][componentDidMount()] Before updating the style, the map is: ", map)
   }
 
   componentWillUnmount() {
@@ -100,7 +99,6 @@ class RiskMap extends Component {
           mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
           ref={ map => this.mapRef = map }
           onViewportChange={this._onViewportChange}
-          // mapStyle={mapboxStyle}
         />
         <ZoomButtons>
           <ZoomButton disabled={viewport.zoom >= 20} onClick={this.onHandleChangeZoom(1)}>+</ZoomButton>

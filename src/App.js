@@ -53,7 +53,6 @@ class App extends Component {
   }
 
   _importDataFromCsv = async () => {
-    // const filePath = csvLocationPath + 'ebola_epicurve_data' + csvExtension
     const filePath = csvLocationPath + 'healthmap_projections_updated_10_August_2018' + csvExtension
     const data = await d3.csv(filePath)
     let newState = {}
@@ -65,14 +64,10 @@ class App extends Component {
       dataLoading: false,
       ...newState
     })
-    // console.log('[App.js][_importDataFromCsv] The ebolaData is: ', this.state.ebolaData)
-    // console.log('[App.js][_importDataFromCsv] The ebolaDataCombined is: ', this.state.ebolaDataCombined)
-    // console.log('[App.js][_importDataFromCsv] The riskData is: ', this.state.riskData)
   }
 
   // This prepares the imported csv data to be saved in state.ebolaData. It splits the data by country and sets the projections into 'oneWeek', 'twoWeeks', and 'month'
   _prepareEbolaData = (inputData) => {
-    // const keys = ['y', 'ymin', 'ymax']
     const keys = ['y']
     const projections = ['oneWeek', 'twoWeeks', 'threeWeeks', 'month']
     const projectionsMapping = {
@@ -88,7 +83,6 @@ class App extends Component {
 
     COUNTRIES.forEach((country) => {
       inputData.forEach((item) => {
-        // console.log("[_prepareEbolaData] Each item is: ", item)
         newData[country][item.projection_from] = {}
         newData[country][item.projection_from]['projections'] = {}
         projections.forEach((projection) => {
@@ -101,21 +95,15 @@ class App extends Component {
         newData[country][item.projection_from]['value'] = item[country]
       })
     })
-    // console.log("[App.js][_prepareEbolaData] The prepared ebola data is: ", newData)
     return newData
   }
 
+  // This changes the dateRange in the state when the range in EbobaChartComponent is changed
   _chartRangeHandler = (value) => {
-    // console.log("[App.js][_chartRangeHandler] The minimum value is: ", value[0])
     let fromDate = new Date(INITIAL_DATE_RANGE.dateRange.from)
-    // console.log("[App.js][_chartRangeHandler] The starting FROM date is: ", fromDate)
     fromDate.setDate(fromDate.getDate() + (7 * value[0]))
-    // console.log("[App.js][_chartRangeHandler] The NEW FROM date that will be in the state is: ", fromDate)
     let toDate = new Date(INITIAL_DATE_RANGE.dateRange.to)
-    // console.log('[App.js][_chartRangeHandler] The starting TO date is: ', toDate)
     toDate.setDate(toDate.getDate() + (7 * (value[1] - 68)))
-    // console.log("[App.js][_chartRangeHandler] The maximum value is: ", value[1])
-    // console.log('[App.js][_chartRangeHandler] The NEW TO date in the state is: ', toDate)
     this.setState((prevState) => {
       return {
         ...prevState,
@@ -128,91 +116,92 @@ class App extends Component {
         }
       }
     })
-    // console.log('[App.js][_chartRangeHandler] The current state is', this.state)
   }
 
-  timespanChangeHandler = (value) => {
-    if (value === '1 month') {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          filters: {
-            ...prevState.filters,
-            dateRange: {
-              from: new Date(2014, 9, 1),
-              to: new Date(2014, 10, 1)
-            }
-          }
-        }
-      })
-    }
-    if (value === '3 month') {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          filters: {
-            ...prevState.filters,
-            dateRange: {
-              from: new Date(2014, 9, 1),
-              to: new Date(2015, 0, 1)
-            }
-          }
-        }
-      })
-    }
-    if (value === '6 month') {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          filters: {
-            ...prevState.filters,
-            dateRange: {
-              from: new Date(2014, 9, 1),
-              to: new Date(2015, 3, 1)
-            }
-          }
-        }
-      })
-    }
-    if (value === '1 year') {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          filters: {
-            ...prevState.filters,
-            dateRange: {
-              from: new Date(2014, 9, 1),
-              to: new Date(2015, 9, 1)
-            }
-          }
-        }
-      })
-    }
-    if (value === 'max') {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          filters: {
-            ...prevState.filters,
-            dateRange: {
-              from: new Date(2014, 9, 1),
-              to: new Date(2016, 1, 20)
-            }
-          }
-        }
-      })
-    }
-  }
+  // This function changes the dateRange in state when the timespan buttons in EbolaChartComponent are clicked. 
+  // Will comment this out until this can also update the values in the range in the EbolaChartComponent
+
+  // timespanChangeHandler = (value) => {
+  //   if (value === '1 month') {
+  //     this.setState((prevState) => {
+  //       return {
+  //         ...prevState,
+  //         filters: {
+  //           ...prevState.filters,
+  //           dateRange: {
+  //             from: new Date(2014, 9, 1),
+  //             to: new Date(2014, 10, 1)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
+  //   if (value === '3 month') {
+  //     this.setState((prevState) => {
+  //       return {
+  //         ...prevState,
+  //         filters: {
+  //           ...prevState.filters,
+  //           dateRange: {
+  //             from: new Date(2014, 9, 1),
+  //             to: new Date(2015, 0, 1)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
+  //   if (value === '6 month') {
+  //     this.setState((prevState) => {
+  //       return {
+  //         ...prevState,
+  //         filters: {
+  //           ...prevState.filters,
+  //           dateRange: {
+  //             from: new Date(2014, 9, 1),
+  //             to: new Date(2015, 3, 1)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
+  //   if (value === '1 year') {
+  //     this.setState((prevState) => {
+  //       return {
+  //         ...prevState,
+  //         filters: {
+  //           ...prevState.filters,
+  //           dateRange: {
+  //             from: new Date(2014, 9, 1),
+  //             to: new Date(2015, 9, 1)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
+  //   if (value === 'max') {
+  //     this.setState((prevState) => {
+  //       return {
+  //         ...prevState,
+  //         filters: {
+  //           ...prevState.filters,
+  //           dateRange: {
+  //             from: new Date(2014, 9, 1),
+  //             to: new Date(2016, 1, 20)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
+  // }
 
   _eventReadyCallback = (Chart, event) => {
-    // console.log('[App.js][_eventReadyCallback] THIS FUNCTION IS BEING TRIGGERED')
     this.setState({
       chartObject: Chart
     })
   }
 
+  // This changes the country in this.state.filters.country
   _handleCountryChange = (event) => {
-    // console.log('[App.js][_handleCountryChange] The country selected is: ', event.target.value)
     let selectedCountry = event.target.value
     this.setState((prevState) => {
       return {
@@ -223,9 +212,9 @@ class App extends Component {
         }
       }
     })
-    // console.log('[App.js][_handleCountryChange] The country selected is: ', this.state.filters.country)
   }
 
+  // This toggles the projection filter in the state on/off
   _handleProjectionChange = () => {
     this.setState((prevState) => {
         return {
@@ -238,6 +227,7 @@ class App extends Component {
     })
   }
 
+  // This toggles between 'snapshot' and 'risk' mapView in the state
   _handleMapViewChange = (view) => {
     this.setState((prevState) => {
       if (prevState.mapView !== view) {
@@ -268,7 +258,7 @@ class App extends Component {
             toggleProjectionChange={this._handleProjectionChange}
             changeDateRange={this._changeDateRange}
             changeChartDateRange={this._chartRangeHandler}
-            timespanChangeHandler={this.timespanChangeHandler}
+            // timespanChangeHandler={this.timespanChangeHandler}
           />
         }
       </div>
