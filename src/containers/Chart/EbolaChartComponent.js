@@ -12,12 +12,10 @@ import {
 } from 'react-bootstrap'
 
 import AxisLabels from '../../components/AxisLabels'
-import {Button, ButtonIcon, ButtonLink} from '../../components/styled-components/Button'
+import {Button, ButtonLink} from '../../components/styled-components/Button'
 import ChartContainer from '../../components/styled-components/ChartContainer'
 import {FlexRow} from '../../components/styled-components/LayoutHelpers'
-import SvgIcon from '../../components/SvgIcon'
 import TimespanButtonsWrapper from '../../components/styled-components/TimespanButtonsWrapper'
-import Title from '../../components/styled-components/Title'
 
 import ProjectionToggle from '../ProjectionToggle'
 
@@ -200,8 +198,6 @@ class EbolaChartComponent extends Component {
             <Button onClick={() => this.props.timespanChangeHandler('6 month')}>6 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('1 year')}>1 year</Button>
             <Button onClick={() => this.props.timespanChangeHandler('max')}>Max</Button>
-            {/* <ButtonIcon><SvgIcon icon='Previous' size={20} title="Previous" /></ButtonIcon> */}
-            {/* <ButtonIcon><SvgIcon icon='Next' size={20} title="Next" /></ButtonIcon> */}
             <ButtonLink onClick={() => this.props.timespanChangeHandler('max')}>Reset</ButtonLink>
           </TimespanButtonsWrapper>
         </ChartContainer>
