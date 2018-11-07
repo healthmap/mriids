@@ -41,7 +41,7 @@ class EbolaChartComponent extends Component {
     if (projection) {
       columns.push({
         type: 'number',
-        label: 'Projection',
+        label: 'Projected future cases',
       })
       // columns.push({
       //   type: 'number',
@@ -133,10 +133,6 @@ class EbolaChartComponent extends Component {
       // rows[rows.length - 1][4] = rows[rows.length - 1][1]
       rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, monthData]
     }
-
-    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The columns are: ', columns)
-    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The rows in line 141 are: ', rows)
-    // console.log('[EbolaChartComponent.js][_prepareDataForCharts] The projectionsData is: ', projectionsData)
 
     return {
       columns,

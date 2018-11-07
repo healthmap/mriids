@@ -187,7 +187,7 @@ class MapComponent extends Component {
   _conditionalRenderLegend = (scale) => {
     let legendHeader
     if (this.props.stateDataFromApp.filters.projection) {
-      legendHeader = 'Projected Case Counts'
+      legendHeader = 'Total outbreak projections'
     } else {
       legendHeader = "Case Counts"
     }
