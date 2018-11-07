@@ -7,7 +7,6 @@ import Map from './Map'
 import RiskMap from './RiskMap'
 
 import {BlockDropshadow} from '../components/styled-components/Block'
-import SvgIcon from '../components/SvgIcon'
 import CountToggle from '../components/CountToggle'
 import {MapOuterWrapper, MapInnerWrapper, MapLegendWrapper, MapFiltersWrapper} from '../components/styled-components/MapWrappers'
 import MapToggle from './MapToggle/MapToggle'
