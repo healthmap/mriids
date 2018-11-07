@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { media } from '../../assets/style-utils'
 
 const ChartContainer = styled.div`
   flex: none;

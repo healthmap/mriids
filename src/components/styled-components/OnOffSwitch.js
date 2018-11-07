@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { media } from '../../assets/style-utils'
 
 const OnOffSwitch = styled.div`
   position: relative;
