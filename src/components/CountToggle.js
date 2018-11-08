@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import SvgIcon from './SvgIcon'
 
 export const CountToggleWrapper = styled.div`
+  position: absolute;
+  bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
