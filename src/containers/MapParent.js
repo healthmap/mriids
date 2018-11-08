@@ -8,7 +8,7 @@ import RiskMap from './RiskMap'
 
 import {BlockDropshadow} from '../components/styled-components/Block'
 import CountToggle from '../components/CountToggle'
-import {MapOuterWrapper, MapInnerWrapper, MapLegendWrapper, MapFiltersWrapper} from '../components/styled-components/MapWrappers'
+import {MapOuterWrapper, MapInnerWrapper, MapLegendWrapper, MapLegendWrapperSnapshot, MapLegendItemsWrapper, MapFiltersWrapper} from '../components/styled-components/MapWrappers'
 import MapToggle from './MapToggle/MapToggle'
 import MapLegend from '../components/Layout/MapLegend/MapLegend'
 
@@ -23,7 +23,7 @@ class MapComponent extends Component {
   state = {
     showCaseCounts: true
   }
-  
+
   _prepareDataForMap = () => {
     const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
@@ -192,12 +192,15 @@ class MapComponent extends Component {
     }
     if (this.props.stateDataFromApp.mapView === 'snapshot') {
       return (
-        <MapLegendWrapper><BlockDropshadow>
-              <h3>{legendHeader}</h3>
+        <MapLegendWrapperSnapshot>
+          <BlockDropshadow>
+            <h3>{legendHeader}</h3>
+            <MapLegendItemsWrapper>
               {this._renderLegendLevels(scale)}
-              <CountToggle status={this.state.showCaseCounts} toggleMapCaseCounts={this.toggleMapCaseCounts}/>
-            </BlockDropshadow>
-            </MapLegendWrapper>
+            </MapLegendItemsWrapper>
+            <CountToggle status={this.state.showCaseCounts} toggleMapCaseCounts={this.toggleMapCaseCounts}/>
+          </BlockDropshadow>
+        </MapLegendWrapperSnapshot>
       )
     } else {
       return null
