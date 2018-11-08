@@ -94,6 +94,30 @@ class Sidebar extends Component {
     )
   }
 
+  _renderRiskList = () => {
+    if (this.props.stateDataFromApp.mapView === 'risk') {
+      return (
+        <BlockPadded>
+          <p>The top 10 countries with the highest relative risk of Ebola spread are:</p>
+          <ol>
+            <li>Guinea</li>
+            <li>Nigeria</li>
+            <li>Ivory Coast</li>
+            <li>Sierra Leone</li>
+            <li>Mali</li>
+            <li>Liberia</li>
+            <li>Senegal</li>
+            <li>Ghana</li>
+            <li>Burkina Faso</li>
+            <li>Democratic Republic of the Congo</li>
+          </ol>
+        </BlockPadded>
+      )
+    } else {
+      return null
+    }
+  }
+
    render() {
       const {filters, dataLoading} = this.props.stateDataFromApp
 
@@ -101,9 +125,7 @@ class Sidebar extends Component {
       let ebolaData
       if (!dataLoading && filters.country === 'All') {
         let countryEbolaData = this._prepareCountryEbolaData()
-        // console.log("The ebola data for all countries is: ", countryEbolaData)
         ebolaData = countryEbolaData['Guinea'] + countryEbolaData['Liberia'] + countryEbolaData['Sierra Leone']
-        // console.log('The case counts for all countries is: ', ebolaData)
       } else if (!dataLoading && filters.country !== "All") {
         let countryEbolaData = this._prepareCountryEbolaData()
         ebolaData = countryEbolaData[filters.country]
@@ -142,7 +164,6 @@ class Sidebar extends Component {
             <BlockPadded className="reported-cases-wrapper">
               <p><strong>{filters.projection ? "Projection" : "Reported Cases"} from:<br />
               {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}</strong></p>
-              {/* <h2>{ebolaData}</h2> */}
               <ReportedCases label={filters.projection ? "Total outbreak projections" : "Suspected and confirmed"} color={filters.projection ? "#259994" : "#4D73CE"} value={ebolaData}/>
               {futureProjectedCases}
             </BlockPadded>
@@ -152,6 +173,7 @@ class Sidebar extends Component {
             <p>From {moment(this.props.stateDataFromApp.filters.dateRange.from).format('DD MMM YYYY')} to {moment(this.props.stateDataFromApp.filters.dateRange.to).format('DD MMM YYYY')}, the Ebola outbreak in {country} {filters.projection ? "is projected to affect" : "has affected"} {ebolaData} people
 {!filters.projection ? " (suspected and confirmed cases)" : null}.</p>
           </BlockPadded>
+          {this._renderRiskList()}
         </SidebarWrapper>
       );
    }

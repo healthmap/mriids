@@ -211,7 +211,7 @@ class MapComponent extends Component {
     return (
       <MapLegendWrapper>
         <BlockDropshadow>
-          <h3>Projected Import Risk</h3>
+          <h3>Projected relative risk of spread</h3>
           {riskColors.map((color, index) => {
             return (
               <MapLegend key={index} color={color} value={riskLabels[index]} />
