@@ -60,7 +60,7 @@ class EbolaChartComponent extends Component {
               threeWeeks: {
                 y: Number(row['y3.aggregated'])
               },
-              month: {
+              fourWeeks: {
                 y: Number(row['y4.aggregated'])
               }
             }
@@ -93,13 +93,13 @@ class EbolaChartComponent extends Component {
     }
 
     if (projection) {
-      const {oneWeek, twoWeeks, threeWeeks, month} = nextProjections
-      let oneWeekData, twoWeeksData, threeWeeksData, monthData
+      const {oneWeek, twoWeeks, threeWeeks, fourWeeks} = nextProjections
+      let oneWeekData, twoWeeksData, threeWeeksData, fourWeeksData
       oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y]
       twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y]
       threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), null, threeWeeks.y]
-      monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y]
-      rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, monthData]
+      fourWeeksData = [moment(rows[rows.length - 1][0]).add(4, 'weeks').toDate(), null, fourWeeks.y]
+      rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, fourWeeksData]
     }
 
     return {

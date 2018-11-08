@@ -61,7 +61,7 @@ class Sidebar extends Component {
               threeWeeks: {
                 y: Number(row['y3.aggregated'])
               },
-              month: {
+              fourWeeks: {
                 y: Number(row['y4.aggregated'])
               }
             }
@@ -80,14 +80,14 @@ class Sidebar extends Component {
           }
       })
     }
-      const {oneWeek, twoWeeks, threeWeeks, month} = nextProjections
-      let oneWeekData, twoWeeksData, threeWeeksData, monthData
+      const {oneWeek, twoWeeks, threeWeeks, fourWeeks} = nextProjections
+      let oneWeekData, twoWeeksData, threeWeeksData, fourWeeksData
       oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), oneWeek.y]
       twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), twoWeeks.y]
       threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), threeWeeks.y]
-      monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), month.y]
+      fourWeeksData = [moment(rows[rows.length - 1][0]).add(4, 'weeks').toDate(), fourWeeks.y]
 
-      let combinedFutureProjections = oneWeekData[1] + twoWeeksData[1] + threeWeeksData[1] + monthData[1]
+      let combinedFutureProjections = oneWeekData[1] + twoWeeksData[1] + threeWeeksData[1] + fourWeeksData[1]
 
     return (
       <ReportedCases label="Projected future cases" color="#F8AE32" value={Math.round(combinedFutureProjections)}/>
