@@ -11,6 +11,7 @@ export const ZoomButtons = styled.div`
   box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.10);
   border-radius: .5rem;
   background-color: #fff;
+  overflow: hidden;
 `
 
 export const ZoomButton = styled.button`
