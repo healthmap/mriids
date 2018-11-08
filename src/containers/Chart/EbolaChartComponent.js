@@ -60,7 +60,7 @@ class EbolaChartComponent extends Component {
               threeWeeks: {
                 y: Number(row['y3.aggregated'])
               },
-              month: {
+              fourWeeks: {
                 y: Number(row['y4.aggregated'])
               }
             }
@@ -93,13 +93,13 @@ class EbolaChartComponent extends Component {
     }
 
     if (projection) {
-      const {oneWeek, twoWeeks, threeWeeks, month} = nextProjections
-      let oneWeekData, twoWeeksData, threeWeeksData, monthData
+      const {oneWeek, twoWeeks, threeWeeks, fourWeeks} = nextProjections
+      let oneWeekData, twoWeeksData, threeWeeksData, fourWeeksData
       oneWeekData = [moment(rows[rows.length - 1][0]).add(7, 'days').toDate(), null, oneWeek.y]
       twoWeeksData = [moment(rows[rows.length - 1][0]).add(2, 'weeks').toDate(), null, twoWeeks.y]
       threeWeeksData = [moment(rows[rows.length - 1][0]).add(3, 'weeks').toDate(), null, threeWeeks.y]
-      monthData = [moment(rows[rows.length - 1][0]).add(1, 'month').toDate(), null, month.y]
-      rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, monthData]
+      fourWeeksData = [moment(rows[rows.length - 1][0]).add(4, 'weeks').toDate(), null, fourWeeks.y]
+      rows = [...rows, oneWeekData, twoWeeksData, threeWeeksData, fourWeeksData]
     }
 
     return {
@@ -117,7 +117,6 @@ class EbolaChartComponent extends Component {
 
   render () {
     const {filters, dataLoading, chartRangeSlider} = this.props.stateDataFromApp
-
     let chartData
     if (!dataLoading) {
       chartData = this._prepareDataForCharts()
@@ -145,22 +144,22 @@ class EbolaChartComponent extends Component {
               min={0}
               max={68}
               dots
-              defaultValue={[chartRangeSlider.start, chartRangeSlider.end]}
+              value={[chartRangeSlider.start, chartRangeSlider.end]}
               tipFormatter={value => `Week ${value}`}
               onChange={this.props.changeChartDateRange}
             />
             <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} status={filters.projection} />
           </FlexRow>
-          {/* <TimespanButtonsWrapper>
+          <TimespanButtonsWrapper>
             <label>Timespan:</label>
-            <Button>1 week</Button>
+            {/* <Button>1 week</Button> */}
             <Button onClick={() => this.props.timespanChangeHandler('1 month')}>1 month</Button>
             <Button onClick={() => this.props.timespanChangeHandler('3 month')}>3 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('6 month')}>6 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('1 year')}>1 year</Button>
             <Button onClick={() => this.props.timespanChangeHandler('max')}>Max</Button>
             <ButtonLink onClick={() => this.props.timespanChangeHandler('max')}>Reset</ButtonLink>
-          </TimespanButtonsWrapper> */}
+          </TimespanButtonsWrapper>
         </ChartContainer>
     )
   }
