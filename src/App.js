@@ -113,86 +113,109 @@ class App extends Component {
             from: fromDate,
             to: toDate
           }
+        },
+        chartRangeSlider: {
+          start: value[0],
+          end: value[1]
         }
       }
     })
   }
 
   // This function changes the dateRange in state when the timespan buttons in EbolaChartComponent are clicked. 
-  // Will comment this out until this can also update the values in the range in the EbolaChartComponent
 
-  // timespanChangeHandler = (value) => {
-  //   if (value === '1 month') {
-  //     this.setState((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         filters: {
-  //           ...prevState.filters,
-  //           dateRange: {
-  //             from: new Date(2014, 9, 1),
-  //             to: new Date(2014, 10, 1)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-  //   if (value === '3 month') {
-  //     this.setState((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         filters: {
-  //           ...prevState.filters,
-  //           dateRange: {
-  //             from: new Date(2014, 9, 1),
-  //             to: new Date(2015, 0, 1)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-  //   if (value === '6 month') {
-  //     this.setState((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         filters: {
-  //           ...prevState.filters,
-  //           dateRange: {
-  //             from: new Date(2014, 9, 1),
-  //             to: new Date(2015, 3, 1)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-  //   if (value === '1 year') {
-  //     this.setState((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         filters: {
-  //           ...prevState.filters,
-  //           dateRange: {
-  //             from: new Date(2014, 9, 1),
-  //             to: new Date(2015, 9, 1)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-  //   if (value === 'max') {
-  //     this.setState((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         filters: {
-  //           ...prevState.filters,
-  //           dateRange: {
-  //             from: new Date(2014, 9, 1),
-  //             to: new Date(2016, 1, 20)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-  // }
+  timespanChangeHandler = (value) => {
+    if (value === '1 month') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2014, 10, 1)
+            }
+          },
+          chartRangeSlider: {
+            start: 0,
+            end: 4
+          }
+        }
+      })
+    }
+    if (value === '3 month') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2015, 0, 1)
+            }
+          },
+          chartRangeSlider: {
+            start: 0,
+            end: 13
+          }
+        }
+      })
+    }
+    if (value === '6 month') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2015, 3, 1)
+            }
+          },
+          chartRangeSlider: {
+            start: 0,
+            end: 26
+          }
+        }
+      })
+    }
+    if (value === '1 year') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2015, 9, 1)
+            }
+          },
+          chartRangeSlider: {
+            start: 0,
+            end: 52
+          }
+        }
+      })
+    }
+    if (value === 'max') {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            dateRange: {
+              from: new Date(2014, 9, 1),
+              to: new Date(2016, 1, 20)
+            }
+          },
+          chartRangeSlider: {
+            start: 0,
+            end: 68
+          }
+        }
+      })
+    }
+  }
 
   _eventReadyCallback = (Chart, event) => {
     this.setState({
@@ -258,7 +281,7 @@ class App extends Component {
             toggleProjectionChange={this._handleProjectionChange}
             changeDateRange={this._changeDateRange}
             changeChartDateRange={this._chartRangeHandler}
-            // timespanChangeHandler={this.timespanChangeHandler}
+            timespanChangeHandler={this.timespanChangeHandler}
           />
         }
       </div>

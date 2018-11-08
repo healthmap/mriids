@@ -117,7 +117,6 @@ class EbolaChartComponent extends Component {
 
   render () {
     const {filters, dataLoading, chartRangeSlider} = this.props.stateDataFromApp
-
     let chartData
     if (!dataLoading) {
       chartData = this._prepareDataForCharts()
@@ -145,22 +144,22 @@ class EbolaChartComponent extends Component {
               min={0}
               max={68}
               dots
-              defaultValue={[chartRangeSlider.start, chartRangeSlider.end]}
+              value={[chartRangeSlider.start, chartRangeSlider.end]}
               tipFormatter={value => `Week ${value}`}
               onChange={this.props.changeChartDateRange}
             />
             <ProjectionToggle toggleProjectionChange={this.props.toggleProjectionChange} status={filters.projection} />
           </FlexRow>
-          {/* <TimespanButtonsWrapper>
+          <TimespanButtonsWrapper>
             <label>Timespan:</label>
-            <Button>1 week</Button>
+            {/* <Button>1 week</Button> */}
             <Button onClick={() => this.props.timespanChangeHandler('1 month')}>1 month</Button>
             <Button onClick={() => this.props.timespanChangeHandler('3 month')}>3 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('6 month')}>6 months</Button>
             <Button onClick={() => this.props.timespanChangeHandler('1 year')}>1 year</Button>
             <Button onClick={() => this.props.timespanChangeHandler('max')}>Max</Button>
             <ButtonLink onClick={() => this.props.timespanChangeHandler('max')}>Reset</ButtonLink>
-          </TimespanButtonsWrapper> */}
+          </TimespanButtonsWrapper>
         </ChartContainer>
     )
   }
