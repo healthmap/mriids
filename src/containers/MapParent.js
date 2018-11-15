@@ -39,7 +39,7 @@ class MapComponent extends Component {
           }
         } else if (projection) {
           if (momentDateRange.contains(moment(key))) {
-            mapData[country] += parseInt(ebolaDailyData.projections.month.y)
+            mapData[country] += parseInt(ebolaDailyData.projections.fourWeeks.y)
           }
         }
       })

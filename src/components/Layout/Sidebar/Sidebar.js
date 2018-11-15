@@ -31,7 +31,7 @@ class Sidebar extends Component {
           }
         } else if (projection) {
           if (momentDateRange.contains(moment(key))) {
-            countryEbolaData[country] += parseInt(ebolaDailyData.projections.month.y)
+            countryEbolaData[country] += parseInt(ebolaDailyData.projections.fourWeeks.y)
           }
         }
       })

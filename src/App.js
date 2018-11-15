@@ -69,12 +69,12 @@ class App extends Component {
   // This prepares the imported csv data to be saved in state.ebolaData. It splits the data by country and sets the projections into 'oneWeek', 'twoWeeks', and 'month'
   _prepareEbolaData = (inputData) => {
     const keys = ['y']
-    const projections = ['oneWeek', 'twoWeeks', 'threeWeeks', 'month']
+    const projections = ['oneWeek', 'twoWeeks', 'threeWeeks', 'fourWeeks']
     const projectionsMapping = {
       oneWeek: 1,
       twoWeeks: 2,
       threeWeeks: 3,
-      month: 4
+      fourWeeks: 4
     }
 
     let newData = {
