@@ -1,7 +1,7 @@
 import React from 'react';
 import './Logo.scss';
 
-const Logo = ({}) => (
+const Logo = () => (
   <div className="logo">
     <img src="/mriids.svg" alt="mriids" />
   </div>

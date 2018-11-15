@@ -20,7 +20,7 @@ class Sidebar extends Component {
     const {ebolaData, filters: {dateRange, projection}} = this.props.stateDataFromApp
     const momentDateRange = moment().range(dateRange.from, dateRange.to)
     let countryEbolaData = {}
-    COUNTRIES.map((country) => {
+    COUNTRIES.forEach((country) => {
       countryEbolaData[country] = 0
       let filteredData = ebolaData[country]
       Object.keys(filteredData).forEach(function (key) {
