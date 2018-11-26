@@ -16,7 +16,7 @@ class Header extends Component {
             <HeaderNavWrapper>
               <li className="is-active"><a href="">Outbreak</a></li>
               {/* <li><a href="">Historic</a></li> */}
-              <li><a href="https://github.com/fernandodonaire/mriids2/wiki/MRIIDS" target="_blank">About</a></li>
+              <li><a href="https://github.com/ISIDOrg/MRIIDS/wiki/Mapping-the-Risk-of-International-Infectious-Disease-Spread" rel="noopener noreferrer" target="_blank">About</a></li>
             </HeaderNavWrapper>
           </div>
           {/* <div>
