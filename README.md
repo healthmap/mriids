@@ -23,26 +23,28 @@ The MRIIDS front end is build using React 16.5.2
   - [styled-components](https://www.styled-components.com/)
 
   ## Get Started
-  Clone this repo: 
-  ```
-  https://github.com/fernandodonaire/mriids2.git
-  ```
+  1. Clone this repo: 
+      ```
+      https://github.com/healthmap/mriids.git
+      ```
 
-  Change into the directory 
-  ```
-  cd mriids2
-  ```
+  2. Change into the directory 
+      ```
+      cd mriids
+      ```
 
-  Install dependencies
-  ```
-  npm install
-  ```
+  3. Delete the `node-modules` directory (`rm -rf node_modules`) and the `package-lock.json` file.
 
-  While working on the app, you can serve it locally to  http://localhost:3000 by running:
+  4. Install dependencies
+      ```
+      npm install
+      ```
 
-  ```
-  npm start
-  ```
+  5. While working on the app, you can serve it locally to  http://localhost:3000 by running:
+
+      ```
+      npm start
+      ```
 
   ## Deployment
 1. Login to the MRIIDS server
@@ -51,7 +53,7 @@ The MRIIDS front end is build using React 16.5.2
     ```
 2. On home directory (cd ~), clone the latest code from GitHub
     ```
-    sudo git clone https://github.com/fernandodonaire/mriids2.git <NAME YOU WANT FOR THE DIRECTORY>
+    sudo git clone https://github.com/healthmap/mriids.git <NAME YOU WANT FOR THE DIRECTORY>
     ```
 3. Make a directory in /var/www/html/
     ```
