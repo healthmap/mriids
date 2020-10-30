@@ -16,6 +16,7 @@
     "react-dom": "^16.5.2",
     "react-google-charts": "^3.0.8",
     "react-map-gl": "^3.3.6",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "2.0.5",
     "react-toggle": "^4.0.2",
     "styled-components": "^4.0.0"

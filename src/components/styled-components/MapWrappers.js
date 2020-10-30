@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 export const MapOuterWrapper = styled.div`
   position: relative;
-  margin-left: 18rem; /* $sidebar-width; */
-  width: calc(100vw - 18rem); /* calc(100vw - #{$sidebar-width}); */
-  height: calc(100vh - 4.5rem); /* calc(100vh - #{$risk-height} - #{$header-height}); */
+  margin-left: 21.6rem; /* $sidebar-width; */
+  width: calc(100vw - 21.6rem); /* calc(100vw - #{$sidebar-width}); */
+  height: calc(100vh - 5.6rem); /* calc(100vh - #{$risk-height} - #{$header-height}); */
   z-index: 1;
   overflow: hidden;
   &.has-chart {
@@ -55,7 +55,7 @@ export const MapFiltersWrapper = styled.div`
   left: 12rem;
   bottom: 7rem;
   h3 {
-    font-size: .8em;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
   }

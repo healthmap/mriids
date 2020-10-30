@@ -8,7 +8,7 @@ const ProjectionToggleWrapper = styled.div`
   margin-left: 1em;
   padding: .5rem;
   text-transform: uppercase;
-  font-size: .9em;
+  font-size: 1rem;
   font-weight: bold;
   background-color: #f0f0f0;
   border-radius: 3px;
