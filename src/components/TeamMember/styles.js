@@ -4,7 +4,6 @@ export const Title = styled.h2`
   font-size: 2rem;
   margin: 0 0 0.4rem;
   font-weight: 600;
-color:  ${(props) => props.theme.background2};
 `;
 
 export const SubTitle = styled.p`
