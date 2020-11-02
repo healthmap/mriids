@@ -13,11 +13,11 @@ const HeaderNavWrapper = styled.ul`
       margin: 0;
       padding: 0 2rem;
       font-weight: bold;
-	    font-size: 1.2rem;
+      font-size: 1.2rem;
       text-transform: uppercase;
       text-decoration: none;
       &.is-active {
-        background-color: #d4d4d4; 
+        background-color: #d4d4d4;
       }
     }
   }

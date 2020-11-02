@@ -2,11 +2,11 @@ import styled from 'styled-components'
 
 const SidebarWrapper = styled.div`
   position: absolute;
-  top: 5.6rem; /* $header-height make variable */
+  top: ${(props) => props.theme.headerHeight};  
   left: 0;
   bottom: 0;
-  width: 21.6rem; /* $sidebar-width make variable */
-  background-color: #efefef; /* $lightest-gray make variable */
+  width: ${(props) => props.theme.sidebarWidth};  
+  background-color: ${(props) => props.theme.lightestGray};  
   overflow: auto;
   z-index: 2; /* $z-index--sidebar make variable */
   h4 {

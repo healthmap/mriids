@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 export const MapOuterWrapper = styled.div`
   position: relative;
-  margin-left: 21.6rem; /* $sidebar-width; */
-  width: calc(100vw - 21.6rem); /* calc(100vw - #{$sidebar-width}); */
+  margin-left: ${(props) => props.theme.sidebarWidth};  
+  width: calc(100vw - ${(props) => props.theme.sidebarWidth} ); 
   height: calc(100vh - 5.6rem); /* calc(100vh - #{$risk-height} - #{$header-height}); */
   z-index: 1;
   overflow: hidden;
