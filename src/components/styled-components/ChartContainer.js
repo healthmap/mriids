@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const ChartContainer = styled.div`
   flex: none;
   padding-left: ${(props) => props.theme.sidebarWidth};  
-  height: 28rem; /* $risk-height */
+  height: ${(props) => props.theme.riskHeight}; 
   overflow: hidden;
 `
 
